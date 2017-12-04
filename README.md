@@ -2,7 +2,7 @@
 ## About ARC Voucher Store
 ARCV Store is the a service that permits Children's Centres to perform registration and management of families.
 
-[![Build Status](https://travis-ci.org/neontribe/ARCVMarket.svg?branch=0.2/release)](https://travis-ci.org/neontribe/ARCVMarket.svg?branch=master)
+[![Build Status](https://travis-ci.org/neontribe/ARCVStore.svg?branch=0.1/release)](https://travis-ci.org/neontribe/ARCVStore.svg?branch=master)
 
 ## Installation of Development instance
 
@@ -17,9 +17,8 @@ ARCV Store is the a service that permits Children's Centres to perform registrat
 
 ## Deployment
 
-<!-- 
 1. Travis will build and test with every push to the repo.
-2. Travis will deploy to staging `https://arcvservice-prealpha.neontribe.org` with every merge to default branch. When default branch is updated, change value in `.travis.yml`.
+2. Travis will deploy to staging `https://voucher-store-staging.alexandrarose.org.uk` with every merge to default branch. When default branch is updated, change value in `.travis.yml`.
 -->
 
 <!--
@@ -32,7 +31,6 @@ ARCV Store is the a service that permits Children's Centres to perform registrat
 5. Use travis cli to encrypt vars and add them to .yml e.g. `travis encrypt DEPLOY_USER=mickeymouse --add` for `$DEPLOY_USER`, `$DEPLOY_IP`, `$DEPLOY_DIR`.
 6. Create an ssh key and `ssh-copy-id -i deploy_key.pub` to server. Encrypt the private half and add to the .yml with `travis encrypt-file deploy_key --add`
 7. delete the `deploy_key` and `deploy_key.pub` from your machine - don't need them anymore.
--->
 
 # Copyright
 This project was developed by :
