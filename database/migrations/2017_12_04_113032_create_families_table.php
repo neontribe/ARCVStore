@@ -15,7 +15,7 @@ class CreateFamiliesTable extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('rvid')->nullable();
+            $table->string('rvid')->nullable(); // Rose Voucher ID; globally unique per participant.
             $table->string('surname');
             $table->timestamps();
         });
