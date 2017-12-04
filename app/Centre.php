@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Center extends Model
+class Centre extends Model
 {
     /**
      * The attributes that are mass assignable.
