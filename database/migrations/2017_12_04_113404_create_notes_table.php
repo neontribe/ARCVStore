@@ -16,9 +16,17 @@ class CreateNotesTable extends Migration
         Schema::create('notes', function (Blueprint $table) {
             $table->increments('id');
             $table->text('content'); // 64k
-            $table->integer('family_id'); // FK Families
-            $table->integer('user_id'); // FK Users
+            $table->integer('family_id')->unsigned(); // FK Families
+            $table->integer('user_id')->unsigned(); // FK Users
             $table->timestamps();
+
+            $table->foreign('family_id')
+                ->references('id')
+                ->on('families');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users');
         });
     }
 

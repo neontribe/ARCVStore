@@ -17,8 +17,12 @@ class CreateChildrenTable extends Migration
             $table->increments('id');
             $table->dateTime('dob');
             $table->boolean('born')->default(false);
-            $table->integer('family_id'); // FK Families
+            $table->integer('family_id')->unsigned(); // FK Families
             $table->timestamps();
+
+            $table->foreign('family_id')
+                ->references('id')
+                ->on('families');
         });
     }
 

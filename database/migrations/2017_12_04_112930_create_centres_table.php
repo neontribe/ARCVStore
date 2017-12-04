@@ -16,8 +16,12 @@ class CreateCentresTable extends Migration
         Schema::create('centres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('sponsor_id'); //FK Sponsor
+            $table->integer('sponsor_id')->unsigned(); //FK Sponsor
             $table->timestamps();
+
+            $table->foreign('sponsor_id')
+                ->references('id')
+                ->on('sponsors');
         });
     }
 

@@ -19,9 +19,17 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();
-            $table->integer('cc_id')->nullable();// Not all Users may have a CC e.g. Admins
+            $table->integer('centre_id')->unsigned()->nullable();// Not all Users may have a CC e.g. Admins
             $table->timestamps();
+
+            $table->foreign('centre_id')
+                ->references('id')
+                ->on('centres');
         });
+
+
+
+
     }
 
     /**

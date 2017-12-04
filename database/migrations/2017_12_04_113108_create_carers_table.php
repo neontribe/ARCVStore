@@ -17,8 +17,12 @@ class CreateCarersTable extends Migration
             $table->increments('id');
             $table->string('firstname');
             $table->string('surname');
-            $table->integer('family_id'); // FK Families
+            $table->integer('family_id')->unsigned(); // FK Families
             $table->timestamps();
+
+            $table->foreign('family_id')
+                ->references('id')
+                ->on('families');
         });
     }
 
