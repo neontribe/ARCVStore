@@ -19,9 +19,7 @@ ARCV Store is the a service that permits Children's Centres to perform registrat
 
 1. Travis will build and test with every push to the repo.
 2. Travis will deploy to staging `https://voucher-store-staging.alexandrarose.org.uk` with every merge to default branch. When default branch is updated, change value in `.travis.yml`.
--->
 
-<!--
 ## CI deploy with Travis set up notes
 
 1. Install travis cli tool wih `gem install travis`
