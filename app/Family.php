@@ -2,20 +2,16 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class Family extends Model
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
     ];
 
     /**
@@ -24,11 +20,25 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
     ];
+
+    public function carers()
+    {
+        return $this->hasMany('App\Carer');
+    }
+
+    public function children()
+    {
+        return $this->hasMany('App\Child');
+    }
 
     public function notes()
     {
         return $this->hasMany('App\Note');
+    }
+
+    public function registrations()
+    {
+        return $this->hasMany('App\Registration');
     }
 }
