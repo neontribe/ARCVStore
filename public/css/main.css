@@ -1,9 +1,12 @@
 body {
 	margin: 0;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 h1 {
 	flex-grow: 1;
+	font-weight: 200;
+	font-size: 3rem;
 }
 
 ul {
@@ -13,7 +16,7 @@ ul {
 }
 
 .header {
-	min-height: 100px;
+	height: 15%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16);
     display: flex;
     align-items: center;
@@ -23,4 +26,29 @@ ul {
 .header img {
 	height: 50px;
 	margin: 0 3rem;
+}
+
+.header li {
+	line-height: 1.5rem;
+}
+
+.content {
+	height: 85%;
+	display: flex;
+	align-items: center;
+	justify-content: center;	
+}
+
+.content ul {
+	margin: 4rem;
+	padding: 0;
+	font-size: 3rem;
+    font-weight: 200;
+}
+
+.content li {
+	border: solid 1px black;
+	padding: 2rem;
+	margin: 1.5rem;
+	border-radius: 1rem;
 }
