@@ -1,0 +1,44 @@
+language: php
+php:
+- '7.0'
+sudo: required
+dist: trusty
+addons:
+  ssh_known_hosts: 46.101.18.83
+before_script:
+- cp .env.travis .env
+- mysql -e 'create database homestead;'
+- composer install --no-interaction
+- php artisan key:generate
+- php artisan passport:keys
+- php artisan migrate --seed --force
+- sudo apt-get update && sudo apt-get install -y libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4
+- sudo apt-get install -y chromium-browser
+- sudo apt-get install -y xvfb gtk2-engines-pixbuf
+- sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
+- sudo apt-get -y install imagemagick x11-apps
+- Xvfb -ac :0 -screen 0 1280x1024x16 &
+- chmod a+x ./vendor/laravel/dusk/bin/chromedriver-linux
+- ./vendor/laravel/dusk/bin/chromedriver-linux --port=8888 &
+- php artisan serve &
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_499e418efa07_key -iv $encrypted_499e418efa07_iv
+  -in deploy_rsa.enc -out deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 deploy_rsa
+- ssh-add deploy_rsa
+deploy:
+  # Deploy to staging.
+  - provider: script
+    skip_cleanup: true
+        script: rsync -r --exclude storage --delete-after --quiet $TRAVIS_BUILD_DIR/* $DEPLOY_USER@$DEPLOY_IP:/var/www/$DEPLOY_DIR
+        on:
+          branch: 0.1/release
+      # Create production release tarball.
+      - provider: script
+        skip_cleanup: true
+        script: tar -czf $TRAVIS_TAG.tar.gz ARCVStore && scp $TRAVIS_TAG.tar.gz $DEPLOY_USER@$DEPLOY_IP:/home/$DEPLOY_USER/releases/store
+        on:
+          tags: true
+    services:
+    - mysql
