@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Note extends Model
+class Center extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -22,14 +22,18 @@ class Note extends Model
     protected $hidden = [
     ];
 
-    public function family()
+    public function registrations()
     {
-        return $this->belongsTo('App\Family');
+        return $this->hasMany('App\Registration');
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo('App\User');
+        return $this->hasMany('App\User');
     }
 
+    public function sponsor()
+    {
+        return $this->belongsTo('App\Sponsor');
+    }
 }
