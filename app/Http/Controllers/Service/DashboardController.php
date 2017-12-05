@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
+use App\User;
 // When we have auth on.
 // use Auth;
 
@@ -17,8 +18,8 @@ class DashboardController extends Controller
         // $user = Auth::user();
         $user = User::find(1);
         $data = [
-            "user_name" => $user->name,k
-            "centre_name" => $user->centre()->name,
+            "user_name" => $user->name,
+            "centre_name" => $user->center()->name,
         ];
         return view('service.dashboard', $data);
     }
