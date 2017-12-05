@@ -45,6 +45,13 @@ input[type="month"] {
 	width: 100%;	
 }
 
+input[type="radio"] {
+	cursor: pointer;
+	width: 38px;
+	height: 38px;
+	opacity: 0;
+}
+
 input:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;	
