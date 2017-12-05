@@ -22,7 +22,7 @@ ul {
 }
 
 i {
-	padding: 0.2 1.5rem;	
+	padding: 0.2rem 1.5rem;	
 }
 
 form {
@@ -32,17 +32,25 @@ form {
 	margin: 0;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="month"] {
 	min-height: 48px;
 	font-size: 1.5em;
 	line-height: 20px;
 	padding: 0 10px;
-	width: calc(100% - 23px);	
+	width: 100%;	
 }
 
 input:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;	
+}
+
+button {
+	background-color: #a74e94;
+	color: white;
+	height: 48px;
+	font-size: 1rem;
 }
 
 .header {
@@ -99,7 +107,23 @@ input:focus {
 	margin: 2rem 0;
 }
 
+.col i {
+	padding: 0.2rem;
+}
+
 .col .collectors {
 	background: white;
 	min-height: 10rem;
+}
+
+.col .other-collectors {
+	
+}
+
+.add button {
+	width: 48px;
+}
+
+.add input {
+	width: calc(100% - 53px);
 }
