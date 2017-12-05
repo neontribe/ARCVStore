@@ -15,6 +15,10 @@ h2 {
 	margin: 0.5rem;
 }
 
+h3 {
+	font-weight: 400;
+}
+
 ul {
 	margin: 0 3rem;
 	text-align: left;
@@ -51,6 +55,17 @@ button {
 	color: white;
 	height: 48px;
 	font-size: 1rem;
+}
+
+table,
+label {
+	width: 100%;
+	font-weight: 200;
+	font-size: 1.5rem;
+}
+
+tr:first-child {
+	font-weight: 400;
 }
 
 .header {
