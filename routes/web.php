@@ -11,6 +11,10 @@
 |
 */
 
+// Service Dashboard route
+Route::get('/dashboard', 'Service\DashboardController@index')->name('service.dashboard');
+
+// Default redirect to Service Dashboard
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('service.dashboard');
 });

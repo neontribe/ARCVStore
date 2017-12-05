@@ -27,6 +27,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public function centre()
+    {
+        return $this->belongsTo('App\Centre');
+    }
+
     public function notes()
     {
         return $this->hasMany('App\Note');
