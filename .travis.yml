@@ -12,33 +12,38 @@ before_script:
 - php artisan key:generate
 - php artisan passport:keys
 - php artisan migrate --seed --force
-- sudo apt-get update && sudo apt-get install -y libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4
+- sudo apt-get update && sudo apt-get install -y libxpm4 libxrender1 libgtk2.0-0 libnss3
+  libgconf-2-4
 - sudo apt-get install -y chromium-browser
 - sudo apt-get install -y xvfb gtk2-engines-pixbuf
 - sudo apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
 - sudo apt-get -y install imagemagick x11-apps
 - Xvfb -ac :0 -screen 0 1280x1024x16 &
 - chmod a+x ./vendor/laravel/dusk/bin/chromedriver-linux
-- ./vendor/laravel/dusk/bin/chromedriver-linux --port=8888 &
+- "./vendor/laravel/dusk/bin/chromedriver-linux --port=8888 &"
 - php artisan serve &
 before_deploy:
-- openssl aes-256-cbc -K $encrypted_499e418efa07_key -iv $encrypted_499e418efa07_iv
-  -in deploy_rsa.enc -out deploy_rsa -d
+- openssl aes-256-cbc -K $encrypted_ef8594de2de0_key -iv $encrypted_ef8594de2de0_iv
+  -in store_deploy_rsa.enc -out ../store_deploy_rsa -d
 - eval "$(ssh-agent -s)"
-- chmod 600 deploy_rsa
-- ssh-add deploy_rsa
+- chmod 600 store_deploy_rsa
+- ssh-add store_deploy_rsa
 deploy:
   # Deploy to staging.
   - provider: script
     skip_cleanup: true
-        script: rsync -r --exclude storage --delete-after --quiet $TRAVIS_BUILD_DIR/* $DEPLOY_USER@$DEPLOY_IP:/var/www/$DEPLOY_DIR
-        on:
-          branch: 0.1/release
-      # Create production release tarball.
-      - provider: script
-        skip_cleanup: true
-        script: tar -czf $TRAVIS_TAG.tar.gz ARCVStore && scp $TRAVIS_TAG.tar.gz $DEPLOY_USER@$DEPLOY_IP:/home/$DEPLOY_USER/releases/store
-        on:
-          tags: true
-    services:
-    - mysql
+    script: rsync -r --exclude storage --delete-after --quiet $TRAVIS_BUILD_DIR/* $DEPLOY_USER@$DEPLOY_IP:/var/www/$DEPLOY_DIR
+    on:
+      branch: 0.1/release
+  - provider: script
+    skip_cleanup: true
+    script: tar -czf $TRAVIS_TAG.tar.gz ARCVStore && scp $TRAVIS_TAG.tar.gz $DEPLOY_USER@$DEPLOY_IP:/home/$DEPLOY_USER/releases/store
+    on:
+      tags: true
+services:
+- mysql
+env:
+  global:
+  - secure: Zh3LYwI2Q1fT8Z+VeUGIDLE4A8DCO17UmdDn+P9nKeFbXBEmPLyQwfISqt+TzBl7UbE3nnRG9ZvmlcoFcy2MCk3ZzMtzLglYI7IE/SFVQIloxvuNQ7C7NmqzBVmk3U6OVEwiuzTTkiTtIur44ECRFGetvwHq/3UriKa+ORtIOtS9zaji7XLUSzCmNVWtCCzVuqSio3egNxC+zjpI7t9rMjevr08xn2wa1vQ+8i22GO7uL1rSixpv703nfFYOmQOffj3D21JJbqXD92pdIrg74aiXHWNc18C+rbchJ/nxMlpmO3o0fkZTWmUnqVErpH4w/iYCQ1UuSiqJY1PxWEHhw2b0Jv9rvy8cXdLLH/FHHDKUe4O48Fo7rk/Jvjl0b8j3KVcKKHFkshZ3/BuptdFxnglNC7BqZt5dnDKb0gIU588hoka7TKjb5JIHwzlKA70WsICG2yf+CVc1//RDhlK5odGtyQiysexDZSfeSFy83lpNmwYto+KXL2wPxs8ApbYwABx9jhxZhLFL6zQ8YY5fqF0RmId2yg59DKSxLsHK2Wo0NcssxbrIAkCiOXs9rmC7hTdZ+p+lNRUHtThGJysTCdpJtqz+zedLVZDgXoZjIofHgmekWeEyxayA5+uGCF/V9OWIW3KLgbmMJx/x/Gl2kuEa2hoI49ss44+CuzqWHPE=
+  - secure: EksHZcMflQV9O5tSbiowvJ0XnR8YILiTcfotLePKuf++VuAKUaRS/UdP24ilgD1OTl3QLoNBF24lyqnzbvYNQpkzKOUxJGk9QOQifP//vMB3e0NThTEmzAEeuwPe+g8JUhCcA1Ctj+MqUqFTHzw5FEkqjze/aYQ2oIo7emvCJhAI0YN3AD7nBh2pVFz1/QJwETGvCnU9j1pSKGFayD6QzRm3atTb8dRZFAd7t9xPvT/BsmLGakKZLa8tN30HA93IuJovF/Wy3us+6RRJN3GdqQbM0Lt7c/mFO061fvRmopFTJSYEfCAIl/bc5z3RjxEfsNcJXfXjbrlszCehmbL3RlY9nGYMhQ1qiR0rzSHg6DpY/JJeQv3nH/BUrUknLN0qKGNCOfGD1DdSr4bX4AlnZCSaEd2WsXMhx+NsR4dEeCO5hc/LO7WUjOgU3jW6GMdbxRHAVXMtvl9Xv4TEQ9PNnfk945qix25uYzkVE4xlUq/Yl6LQ/cEhohm8GvzSZmXvferbQlgGwKetyEKeNMGWuLoCbbijbWJvO0K1jNaaWGX4vRuW3IqcCayp7Ca7bdn4YIdSoq4p24uMf0nqRBc12mdcQ25SMSCduVG8Xg5TuAxMcM3uYLnPXKUMtexOB+0sOiTnHTRhIa0FNiVVjGeU2B48w2EX5TPO24l8itjkTXg=
+  - secure: MmZuk7BcDkoGalIQolGlVb53JNpX9jp33kcXgpdrcO9fxr1rSjEnzgAhVgr7ajZ257xvG9sMZ70RL5XNxtUmkNYYRAPsGQiSCa4cWfy6KxMjKzEnOcCBx4gZmohMUIRfPfpVIIgCnGb/3n8nhVYWO4pDLLtRnXNzIJFGT040g3RdUM5rCzAjSzT+EOVCqJ8f/o4m1scXr/v6lla87Pml3G1KjIMqs4WOjdwzJL+FjxK5QMfbmnMhRs3FzxQwDGp+DMwmb1KOeN6K8zEzxFdkciye1JgmUEPjqV+88yWftu6IQRRresixbKKRjbJw+tpWWegY223aVDyjPxrpS2Fplwz+zYpGVTfco2kW77+mFiYjnyKsd4xXyY3PTBMZoyftvWsGKDaokfIXI38iTVj096FVik9xwvwMCeZnmhsR98UQRWm72Th8eeEbwXzVvjbfB6OGf1lIytRC0Ao+jQ66fKEXsfRw5vPOuAxcWLMJs8Cn2Y4VOuEqpUaZduNEdyoo8qvEKek7XvH5ucHGjOoFwEW+wA7+wgdljFuRKJSjCHY7E6dP/0GHoArClAR3XlLr+2ZyrdAmETdiC7v3C77CCxMftz6WXkDZ85rhtqNyLresfFobEP9V6zDvd4yYmT3iwP4myo7OJNYYOVM/YJAPy53isGWb7QgPDbawrijHxuI=
