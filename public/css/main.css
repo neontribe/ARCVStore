@@ -11,7 +11,7 @@ h1 {
 
 h2 {
 	font-weight: 200;
-	font-size: 2rem;
+	font-size: 1.8rem;
 	margin: 0.5rem;
 }
 
@@ -185,7 +185,7 @@ tr:first-child {
 	background: white;
 	min-height: 10rem;
 	padding: 0.5rem;
-	font-size: 1.1rem;
+	font-size: 1.5rem;
 	font-weight: 200;
 	overflow: auto;
 }
