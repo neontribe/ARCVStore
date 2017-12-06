@@ -107,7 +107,7 @@ input:focus {
 button {
 	background-color: #a74e94;
 	color: white;
-	height: 48px;
+	min-height: 48px;
 	font-size: 1rem;
 }
 
@@ -146,6 +146,7 @@ tr:first-child {
 	align-items: center;
 	justify-content: center;
 	background-color: #f9f9f9;	
+	overflow: auto;
 }
 
 .content ul {
@@ -169,11 +170,11 @@ tr:first-child {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
-	margin: 2.5rem;
+	margin: 2rem;
 }
 
 .col div {
-	margin: 2rem 0;
+	margin: 1rem 0;
 }
 
 .col i {
@@ -186,13 +187,15 @@ tr:first-child {
 	padding: 0.5rem;
 	font-size: 1.1rem;
 	font-weight: 200;
+	overflow: auto;
 }
 
 .col .reminder {
 	font-weight: 200;
 	background: #ECECEC;
 	font-size: 1.5rem;
-	min-height: 2rem;
+	min-height: 8rem;
+	overflow: auto;
 
 }
 
