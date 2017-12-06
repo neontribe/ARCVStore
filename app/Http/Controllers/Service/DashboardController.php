@@ -14,7 +14,6 @@ class DashboardController extends Controller
     {
         // When we have Auth on
         $user = Auth::user();
-        print_r($user);
         $data = [
             "user_name" => $user->name,
             "centre_name" => $user->centre->name,
