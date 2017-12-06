@@ -1,0 +1,39 @@
+language: php
+php:
+- 7.0.22
+sudo: required
+dist: trusty
+addons:
+  ssh_known_hosts: 46.101.18.83
+before_script:
+- bash .travis.install-mysql-5.7.sh
+- cp .env.travis .env
+- mysql -e 'create database homestead;'
+- composer install --no-interaction
+- php artisan key:generate
+- php artisan migrate --seed --force
+- php artisan serve &
+before_deploy:
+- openssl aes-256-cbc -K $encrypted_ef8594de2de0_key -iv $encrypted_ef8594de2de0_iv
+  -in store_deploy_rsa.enc -out store_deploy_rsa -d
+- eval "$(ssh-agent -s)"
+- chmod 600 store_deploy_rsa
+- ssh-add store_deploy_rsa
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: rsync -r --exclude storage --delete-after --quiet $TRAVIS_BUILD_DIR/* $DEPLOY_USER@$DEPLOY_IP:/var/www/$DEPLOY_DIR
+  on:
+    branch: 0.1/release
+- provider: script
+  skip_cleanup: true
+  script: tar -czf $TRAVIS_TAG.tar.gz ARCVStore && scp $TRAVIS_TAG.tar.gz $DEPLOY_USER@$DEPLOY_IP:/home/$DEPLOY_USER/releases/store
+  on:
+    tags: true
+services:
+- mysql
+env:
+  global:
+  - secure: Kv4moBon+ptqYLft/BGvO4KRkBQwY2WPopF3tXW4lNhiooD8NTdNJATxrQSJmf4jH5kl6QzpwcmZzSJiVFZUGkN7MS5aRP/CbMd/nDy3bUhhj5ZxdQeFFNCfZX1pb9TyEo4T8aQjL1+V69p/OdAjVacED80vho/B0zzVArqFQSenA1aalYQoahi2m7QCw+Ej1gj4VP0m5JdLfPBGwgxlrSiTFsd+PCtJ2LxKJ0/GcxzlfylUlNrlHCISCM53Z51H2fEOWoUKxA4DerPxECZPCPp2Cacifrw5Thp9cHZZ8TFvJaWOUXZ6xSlYD5RoT4Y/VGfYIwdctgglXzBkVQueoRGEF0sltTSgDlXn3bBJF0PPfORMfdGvK+dvNp0DajmNpsEExZM2XbT87nY0us25gCtJLGyX4OFHyH6FucY8Ma6TEqqBGZJTBWCs/2tXxb5ZHGPPX6sW/K6G0Wx9jMj23GpBPdI+PRIg+4ILkg0DPywNJ85LgsaP6qybZbmMj/ndDv4zIstT4UJs390ZQWT1Ohhajtf76waJkwOBNdXQWm3HYvLKzmIc8f3rORgyEw+g0KnPRl7VOorrH6rb4YdrUBk1nDQGWu9iEzincA8p1eSPz7A/w99kBFKboKkHP5+7yaFXoW93jdeSupJdvq2ozpiKTp9MAT4LdNTE9vusFBk=
+  - secure: ZRdSFBfQdaBGLeOY2uCXRp4mGngja0P6qu8pjwPOngn7tovB7/Y1r6zmw5/DMAuHKqXk3ptmwAcD9lahEp9Sm3kEDDU/68evSQoibENmpxRhxoQ5fqR5gdn7c+tBOMXthn73hB3zKRMUxjstIAti5bpQwwA8P+CC6nZ6LI7wogcSm56Lv9jMCAw0F7Tc0v0SDSTWueWe6tdw6b8OkRhbV2vEUfzHnT93d4tk20DpS8LJawoVY61DYx0T4LX3AegbRH3iWO5TwihKKxZbyaxw8fCMnzAfjG9snvcKc8/VsxsprXWI4ujHGaOMC84JunFNVwMdeFF9GlRDi1A/iJmaV81DJ5qr+xSVG6YKwlFWGLcBzE0rR3mREoMT0rdalPKAUBp7ZTsXCpeUWoODFyGIgIHeF0+5OF/UBXVBj2nS4VqsOOOIamMh0MJNOWh5HiS81H5J/BVS67cVrHYQsjEqT+LsLe8MklEZGVn499gqXSbm+Kf8az8umGa0FlWwp8hNC1F9IC84liowOKai1DqRXS8++FwWpQCBQrHi0wye00jfM+0mWm9/rovE8GAcuEYBmRMcCgPU8DqhIPnfJYMp6JaDSRbUIrMOi+/hmH9DCiGZxkwUL5ioy1f0y4n9QL56KazmP+y9fV/liFf+hZpIDxtCR5IxdxngKeUaz7xdoq4=
+  - secure: Q5E42rk8Ap3b8qBEebs9CMahVe2kCqtEDXaUiU2HVks62qluIt1jgzxOUvZi/Bj2eupzFaRqLwLtjUgLtE9CxkwnS8Q1FEHEFSuj7h/MK0s8xqRp7xjXkgIMVKcDlCKnl7VejPDzRk872yBrDkR9XjvBvlU3MIVqZ5Ik7I/k5id6vIz3ROk9WizfjeVb6DXm0CyQlLvTyjYeN2VzbUKqZYCLCKaWqUBoZhc3XlVYf3eBO6Jk7ULGsXBgS84wBxIkzMOlKQ9apkQ2IG/5JX1diP/m04B6fZAjpXSFHvkAGSi/pEJgFvRb1arLbqdDQ4W5BD/39C+ljJxcXlDWpE5Clu1ZyAMIEPS3E4R7ok0cagVMVfWb1XNYHfaIQzWlc46FXCoHEJdHjIKNjsIGItRssbNecgT0m0tl4PRYWR/CpKhQUJFrqjInW/37L/52qkojaGj0aDckaT6vLE2GlX+Rv6ZUTExDMrHWVrBL9SZbOmTunfQCkBeckEA43FeNuR0Ajo0Ul1Nr61y3hq9q5WRwG+y+3rtRCSucHh28/G1jBYBTUR4lDIZjjLkwSxBLZIttNl3K7C+WyAcy3iaawnYvJjjAdxMeRLnLHhSy3p8PZDalb5THnbNqNmukM7UqN7pBPP3G/WZsmDondBqGwarfLHHNw1uEvv9XVkvoN3OwrKE=
