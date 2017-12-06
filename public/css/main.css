@@ -48,38 +48,55 @@ input[type="month"] {
 	width: 100%;	
 }
 
-input[type="radio"] {
+input[type="radio"],
+input[type="checkbox"] {
 	cursor: pointer;
 	opacity: 0;
 }
 
-input[type=radio]+label {
+input[type=radio]+label,
+input[type=checkbox]+label {
 	cursor: pointer;
+	margin-left: -20px;
 }
 
-input[type="radio"]+label:before {
+input[type="radio"]+label:before,
+input[type="checkbox"]+label:before {
 	content: "";
 	border: 2px solid;
 	background: #fff;
 	width: 34px;
 	height: 34px;
 	position: absolute;
-	border-radius: 50%;
 	left: 0;
 	cursor: pointer;
 }
 
-input[type="radio"]:checked+label:after {
+input[type="radio"]:checked+label:after,
+input[type="checkbox"]:checked+label:after {
 	content: "";
 	border: 10px solid;
-	border-radius: 50%;
 	position: absolute;
 	width: 0;
 	height: 0;
 	left: 9px;
 	top: 9px;
 	cursor: pointer;
+}
 
+input[type="radio"]+label:before,
+input[type="radio"]:checked+label:after {
+	border-radius: 50%;
+}
+
+input[type="checkbox"]+label:before {
+	top: 10px;
+}
+
+input[type="checkbox"]:checked+label:after {
+	content: "✔";
+	top: 15px;
+	border: 0;
 }
 
 input:focus {
@@ -187,10 +204,8 @@ tr:first-child {
 	width: calc(100% - 53px);
 }
 
-.radios div {
+.user-control {
 	position: relative;
-	padding-left: 38px;
+	padding-left: 55px;
 	margin-bottom: 1rem;
-	float: none;
-	clear: left;
 }
