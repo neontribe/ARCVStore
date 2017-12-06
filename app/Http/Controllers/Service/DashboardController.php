@@ -12,7 +12,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        // When we have Auth on
         $user = Auth::user();
         $data = [
             "user_name" => $user->name,
