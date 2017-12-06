@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $data = [
             "user_name" => $user->name,
-            "centre_name" => $user->centre->name,
+            "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
         return view('service.dashboard', $data);
     }

@@ -22,6 +22,12 @@ class Sponsor extends Model
     protected $hidden = [
     ];
 
+
+    /**
+     * Get the Sponsor's Centres
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function centres()
     {
         return $this->hasMany('App\Centre');

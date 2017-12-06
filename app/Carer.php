@@ -22,6 +22,11 @@ class Carer extends Model
     protected $hidden = [
     ];
 
+    /**
+     * Get the Family this Carer picks up for.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function family()
     {
         return $this->belongsTo('App\Family');

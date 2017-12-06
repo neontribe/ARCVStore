@@ -22,11 +22,19 @@ class Note extends Model
     protected $hidden = [
     ];
 
+    /**
+     * Get the Note's Family
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function family()
     {
         return $this->belongsTo('App\Family');
     }
 
+    /**
+     * Get the Note's author (a User)
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo('App\User');

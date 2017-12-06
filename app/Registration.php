@@ -22,11 +22,21 @@ class Registration extends Model
     protected $hidden = [
     ];
 
+    /**
+     * Get the Registration's Family
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function family()
     {
         return $this->belongsTo('App\Family');
     }
 
+    /**
+     * Get the Registration's Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function centre()
     {
         return $this->belongsTo('App\Centre');
