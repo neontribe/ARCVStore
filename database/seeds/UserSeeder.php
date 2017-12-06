@@ -20,8 +20,7 @@ class UserSeeder extends Seeder
         ]);
 
         // 1 faked user not associated with a random Centre
-        factory(App\User::class)->create([
-        ]);
+        factory(App\User::class)->create();
 
         // 3 faked users associated with random Centres
         factory(App\User::class, 3)->states('withRandomCentre')->create();
