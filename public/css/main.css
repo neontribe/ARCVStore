@@ -52,6 +52,11 @@ input[type="radio"] {
 	opacity: 0;
 }
 
+input[type="radio"]+label:before {
+	content: "";
+	border: 2px solid;
+}
+
 input:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;	
