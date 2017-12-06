@@ -53,6 +53,10 @@ input[type="radio"] {
 	opacity: 0;
 }
 
+input[type=radio]+label {
+	cursor: pointer;
+}
+
 input[type="radio"]+label:before {
 	content: "";
 	border: 2px solid;
@@ -62,9 +66,10 @@ input[type="radio"]+label:before {
 	position: absolute;
 	border-radius: 50%;
 	left: 0;
+	cursor: pointer;
 }
 
-input[type="radio"]+label:after {
+input[type="radio"]:checked+label:after {
 	content: "";
 	border: 10px solid;
 	border-radius: 50%;
@@ -73,6 +78,7 @@ input[type="radio"]+label:after {
 	height: 0;
 	left: 9px;
 	top: 9px;
+	cursor: pointer;
 
 }
 
@@ -185,4 +191,6 @@ tr:first-child {
 	position: relative;
 	padding-left: 38px;
 	margin-bottom: 1rem;
+	float: none;
+	clear: left;
 }
