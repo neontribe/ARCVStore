@@ -1,5 +1,5 @@
 <div class="header">
-    <img src="{{ assets('assets/logo.png') }}">
+    <img src="{{ asset('assets/logo.png') }}">
     <h1>Rose Vouchers</h1>
     <ul>
         <li>User: {{ $user_name }}</li>
