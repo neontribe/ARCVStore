@@ -27,11 +27,21 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * Get the Notes that belong to this User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function notes()
     {
         return $this->hasMany('App\Note');
     }
 
+    /**
+     * Get the User's Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function centre()
     {
         return $this->belongsTo('App\Centre');

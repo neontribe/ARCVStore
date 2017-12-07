@@ -22,6 +22,11 @@ class Child extends Model
     protected $hidden = [
     ];
 
+    /**
+     * Get this Child's Family.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function family()
     {
         return $this->belongsTo('App\Family');

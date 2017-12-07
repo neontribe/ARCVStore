@@ -22,11 +22,21 @@ class Centre extends Model
     protected $hidden = [
     ];
 
+    /**
+     * Get the Registrations for this Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function registrations()
     {
         return $this->hasMany('App\Registration');
     }
 
+    /**
+     * Get the Users who belong to this Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function users()
     {
         return $this->hasMany('App\User');
