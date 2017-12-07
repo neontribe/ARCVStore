@@ -25,9 +25,8 @@ class StoreNewRegistrationRequest extends FormRequest
      */
     public function rules()
     {
-
         $rules = [
-            'cc_reference' => 'string',
+            'cc_reference' => 'string|unique:registrations|nullable',
             'consent' => 'required|acceptance',
             'eligibility' => 'required|in:healthy-start,other',
             'carer' =>  'required|string'
@@ -36,7 +35,7 @@ class StoreNewRegistrationRequest extends FormRequest
         // Dynamic form arrays need loops
         // Secondary carers must be distinct if present
         foreach ($this->request->get('carers') as $k => $v) {
-            $rules['carers.'.$k] = 'distinct';
+            $rules['carers.'.$k] = 'distinct|string';
         }
 
         // Children have a YY-mm format date (eg 2017-05)
