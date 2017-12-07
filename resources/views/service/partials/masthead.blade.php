@@ -1,5 +1,5 @@
 <div class="header">
-    <img src="{{ asset('assets/logo.png') }}">
+    <a href="{{ URL::route("service.base") }}"><img src="{{ asset('assets/logo.png') }}"></a>
     <h1>Rose Vouchers</h1>
     <ul>
         <li>User: {{ $user_name }}</li>
