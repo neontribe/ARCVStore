@@ -31,4 +31,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Note');
     }
+
+    public function centre()
+    {
+        return $this->belongsTo('App\Centre');
+    }
 }
