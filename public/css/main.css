@@ -22,6 +22,7 @@ h3 {
 p {
 	margin: 10px;
 }
+
 ul {
 	margin: 0 3rem;
 	text-align: left;
@@ -46,6 +47,10 @@ input[type="month"] {
 	line-height: 20px;
 	padding: 0 10px;
 	width: 100%;	
+}
+
+input[type="text"]:disabled {
+	background: #ECECEC;
 }
 
 input[type="radio"],
@@ -149,14 +154,14 @@ tr:first-child {
 	overflow: auto;
 }
 
-.content ul {
+.options {
 	margin: 4rem;
 	padding: 0;
 	font-size: 2rem;
     font-weight: 200;
 }
 
-.content li {
+.options li {
 	padding: 2rem;
 	margin: 1.5rem;
 	border-radius: 0.5rem;
@@ -199,11 +204,11 @@ tr:first-child {
 
 }
 
-.add button {
+.small-button-container button {
 	width: 48px;
 }
 
-.add input {
+.small-button-container input {
 	width: calc(100% - 53px);
 }
 
