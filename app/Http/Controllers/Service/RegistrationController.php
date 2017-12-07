@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers\Service;
 
-
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Auth;
 
 class RegistrationController extends Controller
 {
+    /**
+     * Returns the registration page
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $user = Auth::user();
@@ -16,5 +21,14 @@ class RegistrationController extends Controller
             "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
         return view('service.registration', $data);
+    }
+
+    /**
+     * Stores an incoming Registration.
+     *
+     * @param Request $request
+     */
+    public function store(Request $request)
+    {
     }
 }

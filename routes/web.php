@@ -14,10 +14,12 @@
 // Service Dashboard route
 Route::get('/dashboard', 'Service\DashboardController@index')->name('service.dashboard');
 
-// Service Registration Route
-Route::get('/registraton', 'Service\RegistrationController@index')->name('service.registration');
+// Service Registration Routes
+Route::get('/registration', 'Service\RegistrationController@index')->name('service.registration');
+Route::post('/registration', 'Service\RegistrationController@store');
 
 // Default redirect to Service Dashboard
 Route::get('/', function () {
     return redirect()->route('service.dashboard');
 })->name('service.base');
+
