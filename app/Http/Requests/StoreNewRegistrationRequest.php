@@ -25,7 +25,6 @@ class StoreNewRegistrationRequest extends FormRequest
      */
     public function rules()
     {
-        $input = Request::all();
 
         $rules = [
             'cc_reference' => 'string',
@@ -34,11 +33,14 @@ class StoreNewRegistrationRequest extends FormRequest
             'carer' =>  'required|string'
         ];
 
-        foreach ($input['carers'] as $k => $v) {
+        // Dynamic form arrays need loops
+        // Secondary carers must be distinct if present
+        foreach ($this->request->get('carers') as $k => $v) {
             $rules['carers.'.$k] = 'distinct';
         }
 
-        foreach ($input['dob'] as $k => $v) {
+        // Children have a YY-mm format date (eg 2017-05)
+        foreach ($this->request->get('dob') as $k => $v) {
             // validate dateformat is a month.
             $rules['dob'] = 'date_format:YY-mm';
         }
