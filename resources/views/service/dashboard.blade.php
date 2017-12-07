@@ -17,7 +17,7 @@
         </li>
         <li>
             <a href="">
-                <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets for all families<
+                <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets for all families
             </a>
         </li>
     </ul>
