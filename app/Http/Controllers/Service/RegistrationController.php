@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Service;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreNewRegistrationRequest;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -28,7 +29,7 @@ class RegistrationController extends Controller
      *
      * @param Request $request
      */
-    public function store(Request $request)
+    public function store(StoreNewRegistrationRequest $request)
     {
     }
 }
