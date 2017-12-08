@@ -27,7 +27,6 @@ p {
 ul {
 	margin: 0;
 	text-align: left;
-	list-style-type: none;
 	font-weight: 200;
 	font-size: 1.5rem;
 	list-style-type: circle;
@@ -173,7 +172,6 @@ strong {
 
 .content {
 	height: 85%;
-	display: flex;
 	background-color: #f9f9f9;	
 	overflow: auto;
 }
@@ -193,6 +191,10 @@ strong {
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
 	color: white;
 	cursor: pointer;
+}
+
+.row {
+	display: flex;
 }
 
 .col {
@@ -268,12 +270,29 @@ strong {
 	list-style-type: circle;
 }
 
+.check-navigation {
+	width: 100%;
+}
+
+.check-navigation ul {
+	display: flex;
+	justify-content: center;
+}
+
 .check-navigation li {
 	background-color: #a74e94;
     color: white;
     min-height: 48px;
     min-width: 48px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     border-radius: 3px;
     box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
+    width: 40%;
+    padding: 0.5rem;
+    margin: 0 1rem;
+    text-align: center;
+    list-style-type: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
