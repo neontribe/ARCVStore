@@ -127,6 +127,7 @@ button {
 table {
 	border-collapse: collapse;
 	background-color: white;
+	margin: 1rem 0;
 }
 
 table,
@@ -164,6 +165,13 @@ strong {
 .warning p {
 	color: #d2232a;
 	font-weight: 400;
+	margin: 0;
+}
+
+.attention p {
+	color: #e5710b;
+	font-weight: 400;
+	margin: 0;
 }
 
 .header {
