@@ -12,6 +12,7 @@ class Child extends Model
      * @var array
      */
     protected $fillable = [
+        'dob',
     ];
 
     /**

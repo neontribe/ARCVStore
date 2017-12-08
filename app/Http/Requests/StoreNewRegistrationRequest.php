@@ -25,24 +25,24 @@ class StoreNewRegistrationRequest extends FormRequest
      */
     public function rules()
     {
+        /*
+         * These rules validate that the form data is well-formed.
+         * It is NOT responsible for the context validation of that data.
+         */
         $rules = [
-            'cc_reference' => 'string|unique:registrations|nullable',
-            'consent' => 'required|acceptance',
+            // MAY be present; MUST be not-null string; MUST be unique in db
+            'cc_reference' => 'string|nullable|unique:registrations',
+            // MUST be present; MUST be in "yes, on, 1, or true"
+            'consent' => 'required|accepted',
+            // MUST be present; MUST be in listed states
             'eligibility' => 'required|in:healthy-start,other',
-            'carer' =>  'required|string'
+            // MUST be present; MUST be a not-null string
+            'carer' =>  'required|string',
+            // MAY be present; MUST be a distinct, non-null string
+            'carers.*' => 'distinct|string',
+            // MAY be present; MUST be a date format of '2017-07'
+            'kids.*' => 'date_format:YY-mm',
         ];
-
-        // Dynamic form arrays need loops
-        // Secondary carers must be distinct if present
-        foreach ($this->request->get('carers') as $k => $v) {
-            $rules['carers.'.$k] = 'distinct|string';
-        }
-
-        // Children have a YY-mm format date (eg 2017-05)
-        foreach ($this->request->get('dob') as $k => $v) {
-            // validate dateformat is a month.
-            $rules['dob'] = 'date_format:YY-mm';
-        }
 
         return $rules;
     }

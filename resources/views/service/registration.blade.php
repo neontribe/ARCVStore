@@ -3,8 +3,12 @@
 @section('title', 'Dashboard')
 
 @section('content')
+
+    @include('service.partials.flash_notices')
+
     <div class="content">
-        <form>
+        <form action="{{ URL::route("service.registration") }}" method="post" >
+            {!! csrf_field() !!}
             <div class="col">
                 <div>
                     <h2>
@@ -38,7 +42,7 @@
                     <h3>
                         <label for="birth-month">Month + Year of birth (or due date for pregnancy)</label>
                     </h3>
-                    <input id="birth-month" name="dob" type="month" min="1998-01" >
+                    <input id="birth-month" name="kids" type="month" min="1998-01" >
                     <button id="add-collector">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
