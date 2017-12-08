@@ -6,7 +6,7 @@ body {
 h1 {
 	flex-grow: 1;
 	font-weight: 200;
-	font-size: 3rem;
+	font-size: 2.5rem;
 }
 
 h2 {
@@ -30,6 +30,7 @@ ul {
 	list-style-type: none;
 	font-weight: 200;
 	font-size: 1.5rem;
+	list-style-type: circle;
 }
 
 i {
@@ -120,10 +121,13 @@ button {
 	min-height: 48px;
 	min-width: 48px;
 	font-size: 1rem;
+	border-radius: 3px;
+	box-shadow:0 3px 12px -1px rgba(0,0,0,.2);
 }
 
 table {
-	border-collapse: collapse; 
+	border-collapse: collapse;
+	background-color: white;
 }
 
 table,
@@ -143,6 +147,10 @@ thead {
 
 td {
 	border-top: 1px solid #ddd;
+}
+
+strong {
+	font-weight: 400;
 }
 
 .header {
@@ -242,10 +250,30 @@ td {
 .print-button button {
 	min-height: 8rem;
     font-size: 2rem;
-    padding: 2rem;
+    padding: 1.5rem;
     font-weight: 200;
+}
+
+.edit {
+	position: relative;
+}
+
+.edit-button {
+	position: absolute;
+    right: 0;
+    top: 0;
 }
 
 .other-carers-update ul {
 	list-style-type: circle;
+}
+
+.check-navigation li {
+	background-color: #a74e94;
+    color: white;
+    min-height: 48px;
+    min-width: 48px;
+    font-size: 1rem;
+    border-radius: 3px;
+    box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
 }
