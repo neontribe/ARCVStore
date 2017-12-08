@@ -21,12 +21,15 @@ h3 {
 
 p {
 	margin: 10px;
+	font-weight: 200;
 }
 
 ul {
-	margin: 0 3rem;
+	margin: 0;
 	text-align: left;
 	list-style-type: none;
+	font-weight: 200;
+	font-size: 1.5rem;
 }
 
 i {
@@ -52,6 +55,7 @@ input[type="month"] {
 input[type="text"]:disabled {
 	background: #ECECEC;
 	border: 1px solid rgb(238, 238, 238);
+	font-weight: 200;
 }
 
 input[type="radio"],
@@ -150,8 +154,6 @@ tr:first-child {
 .content {
 	height: 85%;
 	display: flex;
-	align-items: center;
-	justify-content: center;
 	background-color: #f9f9f9;	
 	overflow: auto;
 }
@@ -223,4 +225,11 @@ tr:first-child {
 	position: relative;
 	padding-left: 55px;
 	margin-bottom: 1rem;
+}
+
+.print-button {
+	min-height: 8rem;
+    font-size: 2rem;
+    padding: 2rem;
+    font-weight: 200;
 }
