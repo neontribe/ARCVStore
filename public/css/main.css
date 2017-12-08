@@ -152,6 +152,20 @@ strong {
 	font-weight: 400;
 }
 
+.reminder {
+	font-weight: 200;
+	background: #ECECEC;
+	font-size: 1.5rem;
+	min-height: 8rem;
+	overflow: auto;
+
+}
+
+.warning p {
+	color: #d2232a;
+	font-weight: 400;
+}
+
 .header {
 	height: 15%;
     box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
@@ -219,15 +233,6 @@ strong {
 	font-size: 1.5rem;
 	font-weight: 200;
 	overflow: auto;
-}
-
-.col .reminder {
-	font-weight: 200;
-	background: #ECECEC;
-	font-size: 1.5rem;
-	min-height: 8rem;
-	overflow: auto;
-
 }
 
 .small-button-container {
