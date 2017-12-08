@@ -54,7 +54,7 @@ input[type="month"] {
 
 input[type="text"]:disabled {
 	background: #ECECEC;
-	border: 1px solid rgb(238, 238, 238);
+	border: 1px solid #ECECEC;
 	font-weight: 200;
 }
 
@@ -122,6 +122,10 @@ button {
 	font-size: 1rem;
 }
 
+table {
+	border-collapse: collapse; 
+}
+
 table,
 label {
 	width: 100%;
@@ -129,8 +133,16 @@ label {
 	font-size: 1.5rem;
 }
 
-tr:first-child {
+thead {
+	border: solid 2px transparent;
+	border-bottom-color: #BEBEBE;
 	font-weight: 400;
+	padding: 5px;
+	margin: 5px;
+}
+
+td {
+	border-top: 1px solid #ddd;
 }
 
 .header {
@@ -227,9 +239,13 @@ tr:first-child {
 	margin-bottom: 1rem;
 }
 
-.print-button {
+.print-button button {
 	min-height: 8rem;
     font-size: 2rem;
     padding: 2rem;
     font-weight: 200;
+}
+
+.other-carers-update ul {
+	list-style-type: circle;
 }
