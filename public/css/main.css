@@ -51,6 +51,7 @@ input[type="month"] {
 
 input[type="text"]:disabled {
 	background: #ECECEC;
+	border: 1px solid rgb(238, 238, 238);
 }
 
 input[type="radio"],
@@ -203,6 +204,11 @@ tr:first-child {
 	min-height: 8rem;
 	overflow: auto;
 
+}
+
+.small-button-container {
+	display: flex;
+    justify-content: center;
 }
 
 .small-button-container button {
