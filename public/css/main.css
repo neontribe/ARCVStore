@@ -217,6 +217,31 @@ strong {
 	cursor: pointer;
 }
 
+.subnav {
+	width: 100%;
+	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
+	position: relative;
+	height: 8%;
+	display: flex;
+}
+
+.subnav ul {
+	display: flex;
+	justify-content: space-between;
+	padding: 0;
+	width: 100%;
+}
+
+.subnav li {
+	min-height: 48px;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	text-align: center;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+}
+
 .row {
 	display: flex;
 }
@@ -301,29 +326,4 @@ strong {
 
 .check {
 	height: 77%;
-}
-
-.check-navigation {
-	width: 100%;
-	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
-	position: relative;
-	height: 8%;
-	display: flex;
-}
-
-.check-navigation ul {
-	display: flex;
-	justify-content: space-between;
-	padding: 0;
-	width: 100%;
-}
-
-.check-navigation li {
-	min-height: 48px;
-	font-size: 1.5rem;
-	padding: 0.5rem;
-	text-align: center;
-	list-style-type: none;
-	display: flex;
-	align-items: center;
 }
