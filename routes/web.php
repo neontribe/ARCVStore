@@ -17,9 +17,9 @@ Route::get('/dashboard', 'Service\DashboardController@index')->name('service.das
 // Service Registration Routes
 Route::get('/registration', 'Service\RegistrationController@index')->name('service.registration');
 Route::post('/registration', 'Service\RegistrationController@store');
+Route::put('/registration', 'Service\RegistrationController@update');
 
 // Default redirect to Service Dashboard
 Route::get('/', function () {
     return redirect()->route('service.dashboard');
 })->name('service.base');
-
