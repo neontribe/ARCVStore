@@ -17,82 +17,84 @@
 </div>
 <div class="content">
 	<div class="row">
-		<div class="col">
-			<div>
-				<h2>CC ID:</h2>
-				<div class="small-button-container">
-					<input type="text" disabled>
-					<button>
+		<form>
+			<div class="col">
+				<div>
+					<h2>CC ID:</h2>
+					<div class="small-button-container">
+						<input type="text" disabled>
+						<button>
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+				<div>
+					<h2>Main Carer:</h2>
+					<div class="small-button-container">
+						<input type="text" disabled>
+						<button>
+							<i class="fa fa-pencil" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+				<div class="other-carers-update edit">
+					<h2>Other Collectors:</h2>
+					<button class="edit-button">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</button>
+					<ul>
+						<li>Joe Bloggs</li>
+						<li>Joanne Bloggs</li>
+					</ul>
+					<!-- V-show when edit button is clicked
+					<div class="small-button-container">
+						<input type="text">
+						<button name="add-collector">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+						</button>
+					</div> -->
 				</div>
 			</div>
-			<div>
-				<h2>Main Carer:</h2>
-				<div class="small-button-container">
-					<input type="text" disabled>
-					<button>
+			<div class="col">
+				<div class="edit">
+					<h2>Children Signed Up:</h2>
+					<button class="edit-button">
 						<i class="fa fa-pencil" aria-hidden="true"></i>
 					</button>
+					<table>
+						<thead>
+							<tr>
+								<td>Age</td>
+								<td>Month/Year</td>
+								<td>Info</td>
+								<td>Edit</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>3</td>
+								<td>Jan 14</td>
+								<td>On Scheme</td>
+								<td>
+									<button>-</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
-			</div>
-			<div class="other-carers-update edit">
-				<h2>Other Collectors:</h2>
-				<button class="edit-button">
-					<i class="fa fa-pencil" aria-hidden="true"></i>
-				</button>
-				<ul>
-					<li>Joe Bloggs</li>
-					<li>Joanne Bloggs</li>
-				</ul>
-				<!-- V-show when edit button is clicked
-				<div class="small-button-container">
-					<input type="text">
-					<button name="add-collector">
-						<i class="fa fa-plus" aria-hidden="true"></i>
-					</button>
-				</div> -->
-			</div>
-		</div>
-		<div class="col">
-			<div class="edit">
-				<h2>Children Signed Up:</h2>
-				<button class="edit-button">
-					<i class="fa fa-pencil" aria-hidden="true"></i>
-				</button>
-				<table>
-					<thead>
-						<tr>
-							<td>Age</td>
-							<td>Month/Year</td>
-							<td>Info</td>
-							<td>Edit</td>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>3</td>
-							<td>Jan 14</td>
-							<td>On Scheme</td>
-							<td>
-								<button>-</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-			<div>
-				<h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
-				<h3>Month + Year of birth (or due date for pregnancy)</h3>
-				<div class="small-button-container">
-					<input id="month" type="month" min="1998-01">
-					<button name="add-collector">
-						<i class="fa fa-plus" aria-hidden="true"></i>
-					</button>
+				<div>
+					<h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
+					<h3>Month + Year of birth (or due date for pregnancy)</h3>
+					<div class="small-button-container">
+						<input id="month" type="month" min="1998-01">
+						<button name="add-collector">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+						</button>
+					</div>
 				</div>
+				<button type="Submit">Submit</button>
 			</div>
-			<button type="Submit">Submit</button>
-		</div>
+		</form>
 		<div class="col collect">
 			<h2>Arc ID: 123456</h2>
 			<div>
