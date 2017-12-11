@@ -218,8 +218,13 @@ strong {
 	border-radius: 0.5rem;
 	background-color: #a74e94;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
-	color: white;
 	cursor: pointer;
+	list-style-type: none;
+}
+
+.navigation a {
+	color: white;
+	text-decoration: none;
 }
 
 .row {
