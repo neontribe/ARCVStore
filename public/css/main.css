@@ -1,6 +1,11 @@
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	height: 100%;
 }
 
 h1 {
@@ -33,7 +38,7 @@ ul {
 }
 
 i {
-	padding: 0.2rem 1.5rem;	
+	padding: 0.2rem 1.5rem;
 }
 
 form {
@@ -49,7 +54,7 @@ input[type="month"] {
 	font-size: 1.5em;
 	line-height: 20px;
 	padding: 0 10px;
-	width: 100%;	
+	width: 100%;
 }
 
 input[type="text"]:disabled {
@@ -111,7 +116,7 @@ input[type="checkbox"]:checked+label:after {
 
 input:focus {
 	border: 2px solid #dcb9d2;
-	outline: none;	
+	outline: none;
 }
 
 button {
@@ -196,7 +201,7 @@ strong {
 
 .content {
 	height: 85%;
-	background-color: #f9f9f9;	
+	background-color: #f9f9f9;
 	overflow: auto;
 }
 
