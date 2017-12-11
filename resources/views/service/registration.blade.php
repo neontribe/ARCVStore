@@ -42,7 +42,7 @@
                     <h3>
                         <label for="birth-month">Month + Year of birth (or due date for pregnancy)</label>
                     </h3>
-                    <input id="birth-month" name="kids" type="month" min="1998-01" >
+                    <input id="birth-month" name="children" type="month" min="1998-01" >
                     <button id="add-collector">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>

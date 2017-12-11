@@ -54,11 +54,11 @@ class RegistrationController extends Controller
         );
 
         // Create Children
-        $kids = array_map(
-            function ($kid) {
-                return new Child(['dob' => $kid]);
+        $children = array_map(
+            function ($child) {
+                return new Child(['dob' => $child]);
             },
-            (array)$request->get('dob')
+            (array)$request->get('children')
         );
 
         // Create Registration
@@ -71,10 +71,10 @@ class RegistrationController extends Controller
 
         // Try to transact, so we can roll it back
         try {
-            DB::transaction(function () use ($registration, $family, $carers, $kids) {
+            DB::transaction(function () use ($registration, $family, $carers, $children) {
                 $family->save();
                 $family->carers()->saveMany($carers);
-                $family->children()->saveMany($kids);
+                $family->children()->saveMany($children);
                 $registration->family()->associate($family);
                 $registration->centre()->associate(Auth::user()->centre);
                 $registration->save();
