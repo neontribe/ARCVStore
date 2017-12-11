@@ -56,7 +56,13 @@ class RegistrationController extends Controller
         // Create Children
         $children = array_map(
             function ($child) {
-                return new Child(['dob' => $child]);
+                // Note: Carbon uses different time formats than laravel validation
+                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
+                return new Child([
+                        'dob' => Carbon::createFromFormat('Y-m', $child)
+                            ->startOfMonth()
+                            ->format('Y-m-d'),
+                    ]);
             },
             (array)$request->get('children')
         );
@@ -82,7 +88,8 @@ class RegistrationController extends Controller
             // Oops! Log that
         } catch (\Exception $e) {
             Log::error('Bad transaction for ' . __CLASS__ . '@' . __METHOD__ . ' by service user ' . Auth::id());
-            return redirect()->route('service.registration')->withErrors('message', 'Registration failed.');
+            Log::error($e->getTraceAsString());
+            return redirect()->route('service.registration')->withErrors('Registration failed.');
         }
         // Or return the success
         Log::info('Registration ' . $registration->id . ' stored by service user ' . Auth::id());
