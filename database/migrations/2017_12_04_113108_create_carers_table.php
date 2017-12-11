@@ -15,8 +15,7 @@ class CreateCarersTable extends Migration
     {
         Schema::create('carers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('firstname');
-            $table->string('surname');
+            $table->string('name');
             $table->integer('family_id')->unsigned(); // FK Families
             $table->timestamps();
 

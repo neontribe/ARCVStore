@@ -15,7 +15,7 @@ class CreateRegistrationsTable extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('cc_reference'); // The Children's Centre system id
+            $table->string('cc_reference')->nullable(); // The Children's Centre system id
             $table->integer('family_id')->unsigned();
             $table->integer('centre_id')->unsigned();
             $table->string('eligibility');

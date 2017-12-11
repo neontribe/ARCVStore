@@ -1,27 +1,31 @@
 @extends('layouts.service_master')
 
-@section('title', 'Dashboard')
+@section('title', 'Add a new family')
 
 @section('content')
+
+    @include('service.partials.flash_notices')
+
     <div class="content">
-        <form>
+        <form action="{{ URL::route("service.registration") }}" method="post" >
+            {!! csrf_field() !!}
             <div class="col">
                 <div>
                     <h2>
-                        <label for="pri_carer">
+                        <label for="carer">
                             <i class="fa fa-user" aria-hidden="true"></i> Main Carer's full name:
                         </label>
                     </h2>
-                    <input id="pri_carer" type="text">
+                    <input id="carer" name="carer" type="text">
                 </div>
                 <div class="add">
                     <h2>
-                        <label for="sec_carers">
+                        <label for="sec-carers">
                             <i class="fa fa-user" aria-hidden="true"></i> Other voucher collectors:
                         </label>
                     </h2>
-                    <input id="sec_carers" type="text">
-                    <button name="add-collector">
+                    <input id="sec-carers" name="carers" type="text">
+                    <button id="add-collector">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -36,10 +40,10 @@
                         Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span>
                     </h2>
                     <h3>
-                        <label for="birth_month">Month + Year of birth (or due date for pregnancy)</label>
+                        <label for="birth-month">Month + Year of birth (or due date for pregnancy)</label>
                     </h3>
-                    <input id="birth_month" type="month" min="1998-01">
-                    <button name="add-collector">
+                    <input id="birth-month" name="children" type="month" min="1998-01" >
+                    <button id="add-collector">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -75,22 +79,22 @@
             <div class="col">
                 <div>
                     <label for="cc-id">CC ID number:</label>
-                    <input type="text" id="cc-id">
+                    <input type="text" id="cc-id" name="cc_reference">
                 </div>
                 <div>
                     <h2>Reason for receiving Rose Vouchers <span><i class="fa fa-info-circle"
                                                                     aria-hidden="true"></i></span></h2>
                     <div class="user-control">
-                        <input type="radio" id="healthy-start" name="voucher-reason" checked="checked"/>
+                        <input type="radio" id="healthy-start" value="healthy-start" name="eligibility" checked="checked"/>
                         <label for="healthy-start">Healthy Start</label>
                     </div>
                     <div class="user-control">
-                        <input type="radio" id="other" name="voucher-reason"/>
+                        <input type="radio" id="other" value="other" name="eligibility"/>
                         <label for="other">Other Local Criteria</label>
                     </div>
                 </div>
                 <div class="user-control">
-                    <input type="checkbox" id="privacy-statement"/>
+                    <input type="checkbox" id="privacy-statement" name="consent"/>
                     <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                 </div>
                 <button type="Submit">Submit</button>
