@@ -1,6 +1,6 @@
 @extends('layouts.service_master')
 
-@section('title', 'Dashboard')
+@section('title', 'Add a new family')
 
 @section('content')
 

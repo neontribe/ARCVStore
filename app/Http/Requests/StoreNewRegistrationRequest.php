@@ -14,7 +14,7 @@ class StoreNewRegistrationRequest extends FormRequest
      */
     public function authorize()
     {
-        // Todo: replace with check that user cna make this request rather than wave them through.
+        // Todo: replace with check that user can make this request rather than wave them through.
         return true;
     }
 
@@ -37,7 +37,7 @@ class StoreNewRegistrationRequest extends FormRequest
             // MUST be present; MUST be in listed states
             'eligibility' => 'required|in:healthy-start,other',
             // MUST be present; MUST be a not-null string
-            'carer' =>  'required|string',
+            'carer' => 'required|string',
             // MAY be present; MUST be a distinct, non-null string
             'carers.*' => 'distinct|string',
             // MAY be present; MUST be a date format of '2017-07' per http://php.net/manual/en/datetime.formats.date.php
