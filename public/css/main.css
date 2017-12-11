@@ -44,12 +44,14 @@ form {
 }
 
 input[type="text"],
-input[type="month"] {
+input[type="month"],
+input[type="search"] {
 	min-height: 48px;
 	font-size: 1.5em;
 	line-height: 20px;
 	padding: 0 10px;
-	width: 100%;	
+	width: 100%;
+	border: 2px solid #ededed;
 }
 
 input[type="text"]:disabled {
@@ -326,4 +328,9 @@ strong {
 
 .check {
 	height: 77%;
+}
+
+.search .col:first-child {
+	width: 70%;
+	margin-left: 15%;
 }
