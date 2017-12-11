@@ -79,13 +79,13 @@ class RegistrationController extends Controller
                 $registration->centre()->associate(Auth::user()->centre);
                 $registration->save();
             });
-        // Oops! Log that
+            // Oops! Log that
         } catch (\Exception $e) {
-            Log::error('Bad transaction for '. __CLASS__ .'@'. __METHOD__ .' by service user '.Auth::id());
+            Log::error('Bad transaction for ' . __CLASS__ . '@' . __METHOD__ . ' by service user ' . Auth::id());
             return redirect()->route('service.registration')->withErrors('message', 'Registration failed.');
         }
         // Or return the success
-        Log::info('Registration '.$registration->id.' stored by service user '.Auth::id());
+        Log::info('Registration ' . $registration->id . ' stored by service user ' . Auth::id());
         return redirect()->route('service.registration')->with('message', 'Registration saved.');
     }
 }
