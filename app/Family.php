@@ -12,6 +12,7 @@ class Family extends Model
      * @var array
      */
     protected $fillable = [
+        'rvid',
     ];
 
     /**
@@ -23,8 +24,25 @@ class Family extends Model
     ];
 
     /**
+     * Spits out a pseudorandom string to ue an RVID
+     *
+     * @param int $l
+     * @return string
+     */
+    public static function generateRVID($l = 8)
+    {
+        //TODO: make a better guid function that produces human usable strings
+        //TODO: validate this is unique against the DB
+        $str = "";
+        for ($x=0; $x<$l; $x++) {
+            $str .= substr(str_shuffle("2346789BCDFGHJKMPQRTVWXY"), 0, 1);
+        }
+        return "RV-".$str;
+    }
+
+    /**
      * Get the Family's designated Carers
-     * There shuld always be ONE of these!
+     * There should always be ONE of these!
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -12,6 +12,7 @@ class Carer extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
     ];
 
     /**
