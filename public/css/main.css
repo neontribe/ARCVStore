@@ -33,7 +33,7 @@ ul {
 }
 
 i {
-	padding: 0.2rem 1.5rem;	
+	padding: 0.2rem 1.5rem;
 }
 
 form {
@@ -113,7 +113,7 @@ input[type="checkbox"]:checked+label:after {
 
 input:focus {
 	border: 2px solid #dcb9d2;
-	outline: none;	
+	outline: none;
 }
 
 button {
@@ -149,6 +149,8 @@ thead {
 
 td {
 	border-top: 1px solid #ddd;
+	padding: 0.5rem;
+	text-align: center;
 }
 
 strong {
@@ -198,7 +200,7 @@ strong {
 
 .content {
 	height: 85%;
-	background-color: #f9f9f9;	
+	background-color: #f9f9f9;
 	overflow: auto;
 }
 
@@ -330,7 +332,11 @@ strong {
 	height: 77%;
 }
 
+.search {
+	padding-top: 5rem;
+}
+
 .search .col {
 	width: 70%;
-	margin-left: 15%;
+	margin: 0 0 0 15%;
 }
