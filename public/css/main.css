@@ -328,7 +328,8 @@ strong {
 	margin-left: 5%;
 }
 
-.check {
+.check,
+.search {
 	height: 77%;
 }
 
