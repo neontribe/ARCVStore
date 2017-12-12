@@ -1,11 +1,40 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 300;
+}
+
+h1 {
+	font-size: 3rem;
+	width: 100%
+}
+
+.header {
+	display: flex;
+	align-items: center;
+	text-align: center;
+}
+
+.header > img {
+	height: 50px;
+    margin: 2rem 3rem;
+}
+
 .content {
 	display: flex;
 	flex-wrap: wrap;
 	width: 90%;
+	margin-left: 5%;
 }
 
 .content > div {
-	width: 50%;
+	width: 40%;
+	margin: 1% 5%;
 }
 
 .content > table {
