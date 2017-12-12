@@ -1,6 +1,5 @@
 body {
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-	font
 }
 
 h1,
@@ -12,6 +11,20 @@ h3 {
 h1 {
 	font-size: 3rem;
 	width: 100%
+}
+
+th {
+	font-weight: 300;
+	font-size: 1.5rem;
+	padding: 1rem;
+}
+
+td {
+	text-align: center;
+	border: 1px solid black;
+	font-weight: 300;
+	padding: 2rem;
+	font-size: 1.2rem;
 }
 
 .header {
@@ -38,5 +51,14 @@ h1 {
 }
 
 .content > table {
-	width: 100%;
+	width: 90%;
+	margin: 5%;
+	border-collapse: collapse;
+	empty-cells: show;
+
+}
+
+.boxes {
+	border: 1px solid black;
+	margin: 1% 4%;
 }
