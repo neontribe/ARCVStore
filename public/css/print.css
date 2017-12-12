@@ -23,10 +23,12 @@ ul {
 	font-size: 1.2rem;
 }
 
+}
 th {
 	font-weight: 300;
 	font-size: 1.5rem;
 	padding: 1rem;
+	border: 1px solid black;
 }
 
 td {
@@ -35,6 +37,7 @@ td {
 	font-weight: 300;
 	padding: 2rem;
 	font-size: 1.2rem;
+	border: 1px solid black;
 }
 
 .header {
@@ -68,6 +71,7 @@ td {
 	margin: 5% 0;
 	border-collapse: collapse;
 	empty-cells: show;
+	border: 1px solid black;
 
 }
 
