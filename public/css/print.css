@@ -10,7 +10,17 @@ h3 {
 
 h1 {
 	font-size: 3rem;
-	width: 100%
+	width: 100%;
+	margin-left: 5rem;
+}
+
+p {
+	font-size: 1.2rem;
+}
+
+ul {
+	list-style-type: circle;
+	font-size: 1.2rem;
 }
 
 th {
@@ -30,11 +40,10 @@ td {
 .header {
 	display: flex;
 	align-items: center;
-	text-align: center;
 }
 
 .header > img {
-	height: 50px;
+	height: 65px;
     margin: 2rem 3rem;
 }
 
@@ -50,6 +59,10 @@ td {
 	margin: 1% 0;
 }
 
+.content > div:nth-child(-n+2) > p {
+	font-size: 2rem;
+}
+
 .content > table {
 	width: 100%;
 	margin: 5% 0;
@@ -59,7 +72,7 @@ td {
 }
 
 .boxes {
-	width: 45%;
+	width: 44%;
 	border: 1px solid black;
 	margin: 2.4%;
 	min-height: 13rem;
