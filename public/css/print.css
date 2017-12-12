@@ -1,0 +1,13 @@
+.content {
+	display: flex;
+	flex-wrap: wrap;
+	width: 90%;
+}
+
+.content > div {
+	width: 50%;
+}
+
+.content > table {
+	width: 100%;
+}
