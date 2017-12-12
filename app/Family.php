@@ -24,6 +24,40 @@ class Family extends Model
     ];
 
     /**
+     * Attributes to autocalculate and add when we ask.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'entitlement',
+    ];
+
+    /**
+     * Calculates the entitlement
+     *
+     */
+    public function getEntitlementAttribute()
+    {
+        // TODO: continue to resist urge to use a rules engine or a specification pattern
+        $amount = 0;
+
+        foreach ($this->children as $child) {
+            $amount += $child->entitlement;
+        }
+
+        if ($this->expecting) {
+            $amount += 3;
+        }
+        return $amount;
+    }
+
+    public function getExpectingAttribute()
+    {
+        // return true if there is a child that has a false 'born' attribute
+        return $this->children->contains('born', 'false');
+    }
+
+    /**
      * Spits out a pseudorandom string to ue an RVID
      *
      * @param int $l

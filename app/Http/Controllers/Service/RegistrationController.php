@@ -20,14 +20,14 @@ class RegistrationController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function create()
     {
         $user = Auth::user();
         $data = [
             "user_name" => $user->name,
             "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
-        return view('service.registration', $data);
+        return view('service.create_registration', $data);
     }
 
     /**
@@ -92,12 +92,49 @@ class RegistrationController extends Controller
             return redirect()->route('service.registration')->withErrors('Registration failed.');
         }
         // Or return the success
-        Log::info('Registration ' . $registration->id . ' stored by service user ' . Auth::id());
-        return redirect()->route('service.registration')->with('message', 'Registration saved.');
+        Log::info('Registration ' . $registration->id . ' created by service user ' . Auth::id());
+        return redirect()
+            ->route('service.edit_registration', ['id' => $registration->id ])
+            ->with('message', 'Registration created.');
     }
 
-    public function update(Request $request)
+    public function update($id)
     {
+        //
     }
 
+    /**
+     * Show the Registration / Family edit form
+     *
+     * @param integer $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function edit($id)
+    {
+        // Get User and Centre;
+        // TODO: turn this into a masthead view composer on the app service provider.
+        $user = Auth::user();
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+        ];
+
+        // Get the registration, with deep eager-loaded Family (with Children and Carers)
+        $registration = Registration::with([
+            'family' => function ($q) {
+                $q->with('children', 'carers');
+            }
+        ])->findOrFail($id);
+
+        return view('service.edit_registration', array_merge(
+            $data,
+            [
+                'registration' => $registration,
+                'family' => $registration->family,
+                'pri_carer' => $registration->family->carers->shift(),
+                'sec_carers' => $registration->family->carers,
+                'children' => $registration->family->children,
+            ]
+        ));
+    }
 }
