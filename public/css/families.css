@@ -1,5 +1,60 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1 {
+	font-weight: 300;
+	font-size: 2rem;
+	width: 100%;
+	margin-left: 9rem;
+}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+	border: 1px solid black;
+}
+
+
+th {
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 1.5rem;
+	height: 5rem;
+	border: 1px solid black;
+}
+
+td {
+	text-align: center;
+	border: 1px solid black;
+	font-weight: 300;
+	padding: 0.3rem;
+}
+
+td > span {
+	display: block;
+	margin: 0.3rem;
+}
+
+.content {
+	width: 90%;
+	margin-left: 5%;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.header > img {
+	height: 55px;
+	margin: 2rem 3rem;
+}
+
+
 @media print {
 	@page {
-		size: landscape
+		size: landscape;
+		margin: 0;
 	}
 }
