@@ -4,10 +4,11 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-
+use Log;
 class Child extends Model
 {
 
+    // This has a | in the reason field because we want to carry the entity with it.
     const NOTICE_TYPES = [
         'ChildIsAlmostOne' => ['reason' => 'child|almost 1 year old'],
         'ChildIsAlmostBorn' => ['reason' => 'child|almost born'],
@@ -15,8 +16,9 @@ class Child extends Model
         'ChildIsAlmostSchoolAge' => ['reason' => 'child|almost school age'],
     ];
 
+    // This has a | in the reason field because we want to carry the entity with it.
     const CREDIT_TYPES = [
-        'ChildIsUnderOne' => ['reason' => 'child|under 1 yo', 'vouchers' => 3],
+        'ChildIsUnderOne' => ['reason' => 'child|under 1 year old', 'vouchers' => 3],
         'ChildIsUnderSchoolAge' => ['reason' => 'child|under school age', 'vouchers' => 3],
     ];
 
@@ -90,7 +92,11 @@ class Child extends Model
     }
 
     /**
-     * Get an array that indicates Notices and Credits applied to the accunt
+     * Get an array that holds
+     * Notices - array of Notice constants
+     * Credits - array of Credit constants
+     * Eligibility - status of child on scheme
+     * Vouchers - total vouchers this child is permitted
      *
      * These can be used in voucher multipliers
      *
@@ -113,24 +119,18 @@ class Child extends Model
 
             $eligibility = "Pregnancy";
 
-            // Calculate notices.
+            // Calculate notices
             $is_almost_born = ($today->diffInMonths($this->dob) < 1) && ($this->dob->isFuture());
             $is_overdue = ($today->diffInMonths($this->dob) > 1) && ($this->dob->isPast());
 
-            switch (true) {
-                case ($is_almost_born):
-                    $notices[] = self::NOTICE_TYPES['ChildIsAlmostBorn'];
-                    break;
-                case ($is_overdue):
-                    $notices[] = self::NOTICE_TYPES['ChildIsOverDue'];
-                    break;
-                default:
-            }
+            // Add notices
+            ($is_almost_born) ? $notices[] = self::NOTICE_TYPES['ChildIsAlmostBorn'] : false;
+            ($is_overdue) ? $notices[] = self::NOTICE_TYPES['ChildIsOverDue'] : false;
 
         } else {
             // Setup dates
             /** @var Carbon $first_birthday */
-            $first_birthday = $this->dob->addYear();
+            $first_birthday = $this->dob->addYears(1);
             $first_schoolday = $this->calcSchoolStart();
 
             // Calculate credits
@@ -138,23 +138,18 @@ class Child extends Model
             $is_school_age = $today->greaterThanOrEqualTo($first_schoolday);
 
             // Calculate notices
-            $is_almost_one = ($today->diffInMonths($first_birthday) < 1) && ($first_birthday->isFuture());
-            $is_almost_school_age = ($today->diffInMonths($first_schoolday) < 1) && ($first_schoolday->isFuture());
+            $is_almost_one = ($first_birthday->isFuture() &&
+                ($today->diffInMonths($first_birthday) < 1)) ;
+            $is_almost_school_age = ($first_schoolday->isFuture() &&
+                (($today->diffInMonths($first_schoolday) < 1) ? true : false));
 
-            // populate notices and credits arrays.
-            switch (true) {
-                case ($is_almost_one):
-                    $notices[] = self::NOTICE_TYPES["ChildIsAlmostOne"];
-                    //
-                case ($is_almost_school_age):
-                    $notices[] = self::NOTICE_TYPES['ChildIsAlmostSchoolAge'];
-                    //
-                case (!$is_one):
-                    $credits[] = self::CREDIT_TYPES["ChildIsUnderOne"];
-                    //
-                case (!$is_school_age):
-                    $credits[] = self::CREDIT_TYPES["ChildIsUnderSchoolAge"];
-            }
+           // Log::info("!". (($today->diffInMonths($first_schoolday) <= ) ? true : false) ."!");
+
+            // Populate notices and credits arrays.
+            ($is_almost_one) ? $notices[] = self::NOTICE_TYPES["ChildIsAlmostOne"]: false;
+            ($is_almost_school_age) ? $notices[] = self::NOTICE_TYPES['ChildIsAlmostSchoolAge']: false;
+            (!$is_one) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderOne"]: false;
+            (!$is_school_age) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderSchoolAge"] : false;
 
             if (!empty($credits)) {
                 $eligibility = 'Eligible';

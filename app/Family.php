@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Family extends Model
 {
 
+    // This has a | in the reason field because we want to carry the entity with it.
     const CREDIT_TYPES = [
         'FamilyIsPregnant' => ['reason' => 'family|pregnant', 'vouchers' => 3],
     ];
@@ -38,6 +39,16 @@ class Family extends Model
     ];
 
 
+    /**
+     * Fetches the
+     * Credits
+     * Notices
+     * Vouchers
+     *
+     * From children
+     * and appends it's own if criteria matches
+     * @return array
+     */
     public function getStatus()
     {
         $notices=[];
@@ -105,6 +116,12 @@ class Family extends Model
 
         return $credit_reasons;
     }
+
+    /**
+     * Creates an array that Blade can use to publish reasons for voucher notices
+     *
+     * @return array
+     */
 
     public function getNoticeReasons()
     {
