@@ -47,7 +47,7 @@ td {
 
 .header > img {
 	height: 55px;
-    margin: 2rem 3rem;
+	margin: 2rem 3rem;
 }
 
 .content {
@@ -83,5 +83,7 @@ td {
 
 /* Removes printout of automatic header and footer */
 @media print {
-  @page { margin: 0; }
+	@page { 
+		margin: 0; 
+	}
 }
