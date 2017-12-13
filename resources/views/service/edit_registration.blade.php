@@ -102,12 +102,15 @@
                 <div>
                     <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
                     <ul>
-                        <li><strong>1 voucher</strong> for children under 1 year old</li>
+                        @foreach( $family->getCreditReasons() as $credits)
+                            <li><strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong> as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="warning">
-                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Warning: Next month one child will
-                        have a birthday that changes voucher allocation.</p>
+                    @foreach( $family->getNoticeReasons() as $notices)
+                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
+                    @endforeach
                 </div>
                 <div class="attention">
                     <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reminder: Food Matters have not
