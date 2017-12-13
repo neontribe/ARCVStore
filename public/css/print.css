@@ -6,16 +6,18 @@ h1,
 h2,
 h3 {
 	font-weight: 300;
+	margin: 0.3rem;
 }
 
 h1 {
-	font-size: 3rem;
+	font-size: 2rem;
 	width: 100%;
-	margin-left: 5rem;
+	margin-left: 2rem;
 }
 
 p {
 	font-size: 1.2rem;
+	margin: 1rem;
 }
 
 ul {
@@ -23,10 +25,9 @@ ul {
 	font-size: 1.2rem;
 }
 
-}
 th {
 	font-weight: 300;
-	font-size: 1.5rem;
+	font-size: 1rem;
 	padding: 1rem;
 	border: 1px solid black;
 }
@@ -35,9 +36,8 @@ td {
 	text-align: center;
 	border: 1px solid black;
 	font-weight: 300;
-	padding: 2rem;
+	padding: 1.5rem;
 	font-size: 1.2rem;
-	border: 1px solid black;
 }
 
 .header {
@@ -46,7 +46,7 @@ td {
 }
 
 .header > img {
-	height: 65px;
+	height: 55px;
     margin: 2rem 3rem;
 }
 
@@ -57,32 +57,31 @@ td {
 	margin-left: 10%;
 }
 
-.content > div:not(.boxes) {
+.content > div:nth-child(-n+4) {
 	width: 50%;
 	margin: 1% 0;
 }
 
-.content > div:nth-child(-n+2) > p {
-	font-size: 2rem;
-}
-
 .content > table {
 	width: 100%;
-	margin: 5% 0;
+	margin-bottom: 4%;
 	border-collapse: collapse;
 	empty-cells: show;
 	border: 1px solid black;
 
 }
 
-.boxes {
-	width: 44%;
-	border: 1px solid black;
-	margin: 2.4%;
-	min-height: 13rem;
-	text-align: center;
+.notes {
+	width: 100%;
+	
 }
 
-.boxes p {
+.notes > p {
 	color: #d2232a;
+	font-size: 1rem;
+}
+
+/* Removes printout of automatic header and footer */
+@media print {
+  @page { margin: 0; }
 }
