@@ -1,6 +1,11 @@
+html {
+	height: 100%;
+}
+
 body {
 	margin: 0;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	height: 100%;
 }
 
 h1 {
@@ -226,8 +231,13 @@ strong {
 	border-radius: 0.5rem;
 	background-color: #a74e94;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
-	color: white;
 	cursor: pointer;
+	list-style-type: none;
+}
+
+.navigation a {
+	color: white;
+	text-decoration: none;
 }
 
 .subnav {
@@ -349,4 +359,14 @@ strong {
 .search .col {
 	width: 70%;
 	margin: 0 0 0 15%;
+}
+
+.check-navigation li {
+	min-height: 48px;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	text-align: center;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
 }
