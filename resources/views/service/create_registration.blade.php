@@ -7,7 +7,7 @@
     @include('service.partials.flash_notices')
 
     <div class="content">
-        <form action="{{ URL::route("service.create_registration") }}" method="post" >
+        <form action="{{ URL::route("service.registration.store") }}" method="post" >
             {!! csrf_field() !!}
             <div class="col">
                 <div>
