@@ -126,13 +126,16 @@ class RegistrationController extends Controller
             }
         ])->findOrFail($id);
 
+        // Grab carers copy for shift)ing without altering family->carers
+        $carers = $registration->family->carers->all();
+
         return view('service.edit_registration', array_merge(
             $data,
             [
                 'registration' => $registration,
                 'family' => $registration->family,
-                'pri_carer' => $registration->family->carers->shift(),
-                'sec_carers' => $registration->family->carers,
+                'pri_carer' => array_shift($carers),
+                'sec_carers' => $carers,
                 'children' => $registration->family->children,
             ]
         ));

@@ -79,7 +79,6 @@ class Family extends Model
 
     public function getCreditReasons()
     {
-
         $credit_reasons = [];
         $credits = $this->getStatus()["credits"];
 
@@ -122,7 +121,6 @@ class Family extends Model
      *
      * @return array
      */
-
     public function getNoticeReasons()
     {
         $notice_reasons = [];

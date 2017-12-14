@@ -4,7 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use Log;
+
 class Child extends Model
 {
 
@@ -105,7 +105,6 @@ class Child extends Model
 
     public function getStatus()
     {
-
         $today = Carbon::today();
 
         $notices = [];
@@ -142,8 +141,6 @@ class Child extends Model
                 ($today->diffInMonths($first_birthday) < 1)) ;
             $is_almost_school_age = ($first_schoolday->isFuture() &&
                 (($today->diffInMonths($first_schoolday) < 1) ? true : false));
-
-           // Log::info("!". (($today->diffInMonths($first_schoolday) <= ) ? true : false) ."!");
 
             // Populate notices and credits arrays.
             ($is_almost_one) ? $notices[] = self::NOTICE_TYPES["ChildIsAlmostOne"]: false;
