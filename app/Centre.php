@@ -12,6 +12,7 @@ class Centre extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
     ];
 
     /**

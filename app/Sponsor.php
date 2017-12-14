@@ -12,6 +12,8 @@ class Sponsor extends Model
      * @var array
      */
     protected $fillable = [
+        'name',
+        'shortcode',
     ];
 
     /**

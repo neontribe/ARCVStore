@@ -1,0 +1,89 @@
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1,
+h2,
+h3 {
+	font-weight: 300;
+	margin: 0.3rem;
+}
+
+h1 {
+	font-size: 2rem;
+	width: 100%;
+	margin-left: 2rem;
+}
+
+p {
+	font-size: 1.2rem;
+	margin: 1rem;
+}
+
+ul {
+	list-style-type: circle;
+	font-size: 1.2rem;
+}
+
+th {
+	font-weight: 300;
+	font-size: 1rem;
+	padding: 1rem;
+	border: 1px solid black;
+}
+
+td {
+	text-align: center;
+	border: 1px solid black;
+	font-weight: 300;
+	padding: 1.5rem;
+	font-size: 1.2rem;
+}
+
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.header > img {
+	height: 55px;
+	margin: 2rem 3rem;
+}
+
+.content {
+	display: flex;
+	flex-wrap: wrap;
+	width: 80%;
+	margin-left: 10%;
+}
+
+.content > div:nth-child(-n+4) {
+	width: 50%;
+	margin: 1% 0;
+}
+
+.content > table {
+	width: 100%;
+	margin-bottom: 4%;
+	border-collapse: collapse;
+	empty-cells: show;
+	border: 1px solid black;
+
+}
+
+.notes {
+	width: 100%;
+	
+}
+
+.notes > p {
+	color: #d2232a;
+	font-size: 1rem;
+}
+
+/* Removes printout of automatic header and footer */
+@media print {
+	@page { 
+		margin: 0; 
+	}
+}

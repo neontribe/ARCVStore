@@ -49,12 +49,15 @@ form {
 }
 
 input[type="text"],
-input[type="month"] {
+input[type="month"],
+input[type="search"] {
 	min-height: 48px;
 	font-size: 1.5em;
 	line-height: 20px;
 	padding: 0 10px;
 	width: 100%;
+	border: 2px solid #ededed;
+
 }
 
 input[type="text"]:disabled {
@@ -114,9 +117,18 @@ input[type="checkbox"]:checked+label:after {
 	border: 0;
 }
 
-input:focus {
+input:focus,
+button:focus,
+select:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;
+}
+
+select {
+	border: 1px solid black;
+	height: 48px;
+	font-size: 1.1rem;
+	background-color: white;
 }
 
 button {
@@ -152,6 +164,8 @@ thead {
 
 td {
 	border-top: 1px solid #ddd;
+	padding: 0.5rem;
+	text-align: center;
 }
 
 strong {
@@ -225,6 +239,31 @@ strong {
 .navigation a {
 	color: white;
 	text-decoration: none;
+}
+
+.subnav {
+	width: 100%;
+	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
+	position: relative;
+	height: 8%;
+	display: flex;
+}
+
+.subnav ul {
+	display: flex;
+	justify-content: space-between;
+	padding: 0;
+	width: 100%;
+}
+
+.subnav li {
+	min-height: 48px;
+	font-size: 1.5rem;
+	padding: 0.5rem;
+	text-align: center;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
 }
 
 .row {
@@ -309,23 +348,18 @@ strong {
 	margin-left: 5%;
 }
 
-.check {
+.check,
+.search {
 	height: 77%;
 }
 
-.check-navigation {
-	width: 100%;
-	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
-	position: relative;
-	height: 8%;
-	display: flex;
+.search {
+	padding-top: 5rem;
 }
 
-.check-navigation ul {
-	display: flex;
-	justify-content: space-between;
-	padding: 0;
-	width: 100%;
+.search .col {
+	width: 70%;
+	margin: 0 0 0 15%;
 }
 
 .check-navigation li {
