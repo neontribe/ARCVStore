@@ -4,9 +4,9 @@
 
 @section('content')
 
-    @include('service.partials.flash_notices')
-
     @include('service.partials.navbar')
+
+    @include('service.partials.flash_notices')
 
     <div class="content check">
         <div class="row">

@@ -16,6 +16,46 @@ use Log;
 class RegistrationController extends Controller
 {
     /**
+     * List all the Registrations (search-ably)
+     *
+     * This is a con. It only lists the registrations available to a User's CC's Sponsor
+     * This means a User can see the Registrations in his 'neighbor' CCs under a Sponsor
+     *
+     * Also, the view contains the search functionality.
+     */
+    public function index()
+    {
+        $user = Auth::user();
+        $data = [
+            "user_name" => $user->name,
+            "centre_name" => ($user->centre) ? $user->centre->name : null,
+        ];
+
+        // Slightly roundabout method...
+        $neighbor_centre_ids = $user
+            ->centre
+            ->sponsor
+            ->centres
+            ->pluck('id')
+            ->toArray();
+
+        $data = array_merge(
+            $data,
+            [
+                'registrations' => Registration::whereIn('centre_id', $neighbor_centre_ids)
+                    ->with([
+                            'family' => function ($q) {
+                                $q->with('children', 'carers');
+                            }
+                        ])
+                    ->get(),
+            ]
+        );
+
+        return view('service.index_registration', $data);
+    }
+
+    /**
      * Returns the registration page
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

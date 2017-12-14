@@ -11,7 +11,7 @@
             </a>
         </li>
         <li>
-            <a href="">
+            <a href="{{ URL::route('service.registration.index') }}">
                 <i class="fa fa-user" aria-hidden="true"></i> Check, update or print information for one family
             </a>
         </li>

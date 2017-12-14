@@ -16,12 +16,14 @@ Route::get('/dashboard', 'Service\DashboardController@index')->name('service.das
 
 Route::resource('registration', 'Service\RegistrationController', [
         'names' => [
+            'index' => 'service.registration.index',
             'create' => 'service.registration.create',
             'edit' => 'service.registration.edit',
             'store' => 'service.registration.store',
             'update' => 'service.registration.update',
         ],
         'only' => [
+            'index',
             'create',
             'edit',
             'store',
