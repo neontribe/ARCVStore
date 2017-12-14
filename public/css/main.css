@@ -111,9 +111,18 @@ input[type="checkbox"]:checked+label:after {
 	border: 0;
 }
 
-input:focus {
+input:focus,
+button:focus,
+select:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;
+}
+
+select {
+	border: 1px solid black;
+	height: 48px;
+	font-size: 1.1rem;
+	background-color: white;
 }
 
 button {
