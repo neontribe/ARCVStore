@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // https://laravel.com/docs/master/migrations#creating-indexes
+        // For MariaDB support
+        Schema::defaultStringLength(191);
     }
 
     /**
