@@ -31,6 +31,72 @@ class RegistrationController extends Controller
     }
 
     /**
+     * Show the Registration / Family edit form
+     *
+     * @param integer $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function edit($id)
+    {
+        // Get User and Centre;
+        // TODO: turn this into a masthead view composer on the app service provider.
+        $user = Auth::user();
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+        ];
+
+        // Get the registration, with deep eager-loaded Family (with Children and Carers)
+        $registration = Registration::with([
+            'family' => function ($q) {
+                $q->with('children', 'carers');
+            }
+        ])->findOrFail($id);
+
+        // Grab carers copy for shift)ing without altering family->carers
+        $carers = $registration->family->carers->all();
+
+        return view('service.edit_registration', array_merge(
+            $data,
+            [
+                'registration' => $registration,
+                'family' => $registration->family,
+                'pri_carer' => array_shift($carers),
+                'sec_carers' => $carers,
+                'children' => $registration->family->children,
+            ]
+        ));
+    }
+
+    /**
+     * Displays a printable version of the Registration.
+     *
+     * @param Integer $id
+     */
+    public function print(Registration $registration)
+    {
+        $user = Auth::user();
+
+        // Get the registration, with deep eager-loaded Family (with Children and Carers)
+        $family = $registration->family->with('children', 'carers')->first();
+        $carers = $family->carers;
+
+        return view('service.printables.family', [
+                'user_name' => $user->name,
+                'centre_name' => ($user->centre) ? $user->centre->name : null,
+                'sheet_title' => 'Printable Family Sheet',
+                'sheet_header' => 'Family Collection Sheet',
+                'family' => $family,
+                'pri_carer' => $carers->first(),
+                // Remove the primary carer from collection
+                'sec_carers' => $carers->forget(0),
+                'children' => $family->children,
+            ]
+        );
+
+    }
+
+    /**
      * Stores an incoming Registration.
      *
      * @param StoreNewRegistrationRequest $request
@@ -103,43 +169,5 @@ class RegistrationController extends Controller
     public function update($id)
     {
         //
-    }
-
-    /**
-     * Show the Registration / Family edit form
-     *
-     * @param integer $id
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function edit($id)
-    {
-        // Get User and Centre;
-        // TODO: turn this into a masthead view composer on the app service provider.
-        $user = Auth::user();
-        $data = [
-            'user_name' => $user->name,
-            'centre_name' => ($user->centre) ? $user->centre->name : null,
-        ];
-
-        // Get the registration, with deep eager-loaded Family (with Children and Carers)
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
-
-        // Grab carers copy for shift)ing without altering family->carers
-        $carers = $registration->family->carers->all();
-
-        return view('service.edit_registration', array_merge(
-            $data,
-            [
-                'registration' => $registration,
-                'family' => $registration->family,
-                'pri_carer' => array_shift($carers),
-                'sec_carers' => $carers,
-                'children' => $registration->family->children,
-            ]
-        ));
     }
 }

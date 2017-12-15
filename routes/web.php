@@ -29,6 +29,11 @@ Route::resource('registration', 'Service\RegistrationController', [
         ],
     ]);
 
+Route::get('/registration/{registration}/print', [
+    'as' => 'service.registration.print',
+    'uses' => 'Service\RegistrationController@print',
+]);
+
 // Default redirect to Service Dashboard
 Route::get('/', function () {
     return redirect()->route('service.dashboard');
