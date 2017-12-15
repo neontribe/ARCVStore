@@ -7,7 +7,7 @@
     <div class="navigation">
         <ul>
             <li>
-                <a href="{{ URL::route('service.registration') }}">
+                <a href="{{ URL::route('service.registration.create') }}">
                     <i class="fa fa-plus" aria-hidden="true"></i> Add a new family
                 </a>
             </li>
