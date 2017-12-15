@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Service;
 
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use App\Family;
@@ -23,13 +24,18 @@ class RegistrationController extends Controller
      *
      * Also, the view contains the search functionality.
      */
-    public function index()
+    public function index(Request $request)
     {
+        // Masthead bit
         $user = Auth::user();
         $data = [
             "user_name" => $user->name,
             "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
+
+
+        $family_name = $request->get('family_name');
+
 
         // Slightly roundabout method...
         $neighbor_centre_ids = $user
