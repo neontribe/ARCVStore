@@ -43,12 +43,17 @@
                             <td>{{ $registration->cc_reference }}</td>
                             <td>{{ $registration->family->entitlement }}</td>
                             <td>
-                                <button onclick="window.location.href={{ URL::route('service.registration.edit', ['id' => $registration->family->id ]) }}">select</button>
+                                <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">select</button>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+            </div>
+        </div>
+        <div class = "row">
+            <div class="col">
+                {{ $registrations->links() }}
             </div>
         </div>
     </div>

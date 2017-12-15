@@ -62,7 +62,7 @@ class RegistrationController extends Controller
             $q = $q->whereIn('family_id', $filtered_family_ids);
         }
 
-        $registrations = $q->get();
+        $registrations = $q->simplePaginate(15);
 
         $data = array_merge(
             $data,
