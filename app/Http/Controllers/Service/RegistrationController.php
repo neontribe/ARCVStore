@@ -71,7 +71,7 @@ class RegistrationController extends Controller
     /**
      * Displays a printable version of the Registration.
      *
-     * @param Integer $id
+     * @param App\Registration $registration
      */
     public function print(Registration $registration)
     {
