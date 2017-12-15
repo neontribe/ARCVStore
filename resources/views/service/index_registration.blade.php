@@ -10,7 +10,7 @@
     <div class="content search">
         <div class="row">
             <div class="col">
-                <form action="{{ URL::route('service.registration.index') }}" method="POST" id="searchform">
+                <form action="{{ URL::route('service.registration.index') }}" method="GET" id="searchform">
                     {!! csrf_field() !!}
                     <div>
                         <h2>Search for a family name</h2>
@@ -43,7 +43,7 @@
                             <td>{{ $registration->cc_reference }}</td>
                             <td>{{ $registration->family->entitlement }}</td>
                             <td>
-                                <button onclick="window.location.href=">select</button>
+                                <button onclick="window.location.href={{ URL::route('service.registration.edit', ['id' => $registration->family->id ]) }}">select</button>
                             </td>
                         </tr>
                     @endforeach

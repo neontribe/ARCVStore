@@ -33,10 +33,6 @@ class RegistrationController extends Controller
             "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
 
-
-        $family_name = $request->get('family_name');
-
-
         // Slightly roundabout method...
         $neighbor_centre_ids = $user
             ->centre
@@ -45,19 +41,35 @@ class RegistrationController extends Controller
             ->pluck('id')
             ->toArray();
 
+        $family_name = $request->get('family_name');
+
+        // Horrid: get array of families where first carer for family is like family name.
+        $q = collect(
+            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id 
+              FROM (SELECT min(id) as pri_carer_id from carers group by family_id) as t1
+              INNER JOIN carers as t2 ON t1.pri_carer_id = t2.id
+              WHERE name like :match"),
+            ["match" => '%'.$family_name.'%'])
+        );
+
+        $filtered_family_ids = $q->pluck('family_id');
+
+        $q = Registration::query();
+        if (!empty($neighbor_centre_ids)) {
+            $q = $q->whereIn('centre_id', $neighbor_centre_ids);
+        }
+        if (!empty($filtered_family_ids)) {
+            $q = $q->whereIn('family_id', $filtered_family_ids);
+        }
+
+        $registrations = $q->get();
+
         $data = array_merge(
             $data,
             [
-                'registrations' => Registration::whereIn('centre_id', $neighbor_centre_ids)
-                    ->with([
-                            'family' => function ($q) {
-                                $q->with('children', 'carers');
-                            }
-                        ])
-                    ->get(),
+                'registrations' => $registrations,
             ]
         );
-
         return view('service.index_registration', $data);
     }
 
