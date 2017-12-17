@@ -22,13 +22,11 @@
             </ul>
         </div>
         <div>
-            <h2>Eligible Children</h2>
+            <h2>Children</h2>
             <ul>
-                <!-- TODO I htink these should be counts and strings of Pregnancy, child under 1, child between 1 and school age.
-                 But not sure. Leaving as is for now. --!>
-                @foreach ($children as $child)
-                <li><strong>1</strong> {{$child->getStatusString() }}</li>
-                @endforeach
+            @foreach( $family->getCreditReasons() as $credits)
+                <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
+            @endforeach
             </ul>
         </div>
         <table>
@@ -64,9 +62,9 @@
             </tr>
         </table>
         <div class="notes">
-            <h2>Comments</h2>
-            @foreach ($family->notes as $note)
-            <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> $note</p>
+            <h2>Notices</h2>
+            @foreach( $family->getNoticeReasons() as $notices)
+                <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
             @endforeach
         </div>
     </div>
