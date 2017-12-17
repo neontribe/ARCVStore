@@ -83,15 +83,50 @@
                         </table>
                     </div>
                     <div>
-                        <h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i
-                                        class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
-                        <h3>Month + Year of birth (or due date for pregnancy)</h3>
-                        <div class="small-button-container">
-                            <input id="month" type="month" min="1998-01">
-                            <button name="add-collector">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                        <h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
+                        <h3>
+                            <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
+                        </h3>
+                        <select aria-labelledby="birth-date">
+                            <option value="january">January</option>
+                            <option value="february">February</option>
+                            <option value="march">March</option>
+                            <option value="april">April</option>
+                            <option value="may">May</option>
+                            <option value="june">June</option>
+                            <option value="july">July</option>
+                            <option value="august">August</option>
+                            <option value="september">September</option>
+                            <option value="october">October</option>
+                            <option value="november">November</option>
+                            <option value="december">December</option>
+                        </select>
+                        <select aria-labelledby="birth-date">
+                            <option value="1996">1996</option>
+                            <option value="1997">1997</option>
+                            <option value="1998">1998</option>
+                            <option value="1999">1999</option>
+                            <option value="2000">2000</option>
+                            <option value="2001">2001</option>
+                            <option value="2002">2002</option>
+                            <option value="2003">2003</option>
+                            <option value="2004">2004</option>
+                            <option value="2005">2005</option>
+                            <option value="2006">2006</option>
+                            <option value="2007">2007</option>
+                            <option value="2008">2008</option>
+                            <option value="2009">2009</option>
+                            <option value="2010">2010</option>
+                            <option value="2011">2011</option>
+                            <option value="2012">2012</option>
+                            <option value="2013">2013</option>
+                            <option value="2014">2014</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017</option>
+                            <option value="2018">2018</option>
+                            <option value="2019">2019</option>
+                        </select>
                     </div>
                     <button type="Submit">Submit</button>
                 </div>
