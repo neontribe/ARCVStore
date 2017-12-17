@@ -23,8 +23,9 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-// User with Centre
-$factory->state(App\User::class, 'withRandomCentre', function () {
+// A model with a random Centre
+// Should be Registration or User
+$factory->state(\Illuminate\Database\Eloquent\Model::class, 'withRandomCentre', function () {
 
     $centres  = App\Centre::get();
 
@@ -41,7 +42,7 @@ $factory->state(App\User::class, 'withRandomCentre', function () {
     ];
 });
 
-// Centre
+// Centre, with random sponsor
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Centre::class, function (Faker\Generator $faker) {
 
@@ -116,5 +117,31 @@ $factory->define(App\Sponsor::class, function (Faker\Generator $faker) {
     return [
         'name' => $counties[$index],
         'shortcode' => "RV" . str_pad($index, 3, "0", STR_PAD_LEFT),
+    ];
+});
+
+// registration
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(App\Registration::class, function (Faker\Generator $faker) {
+
+    return [
+        'cc_reference' => '',
+        'eligability' =>
+    ];
+});
+
+// Family
+/** @var \Illuminate\Database\Eloquent\Factory $factory */#
+$factory->define(App\Family::class, function (Faker\Generator $faker) {
+    return [
+        'rvid' => \App\Family::generateRVID(),
+    ];
+});
+
+// Carer
+$factory->define(App\Family::class, function (Faker\Generator $faker) {
+
+    return [
+        'name' => $faker->firstName ." ". $faker->lastName,
     ];
 });
