@@ -129,7 +129,8 @@ class RegistrationController extends Controller
     /**
      * Displays a printable version of the Registration.
      *
-     * @param App\Registration $registration
+     * @param Registration
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function print(Registration $registration)
     {
@@ -158,6 +159,7 @@ class RegistrationController extends Controller
      * Stores an incoming Registration.
      *
      * @param StoreNewRegistrationRequest $request
+     * @throws \Throwable $e
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(StoreNewRegistrationRequest $request)
