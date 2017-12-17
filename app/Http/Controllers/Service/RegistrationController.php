@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Service;
 
+use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
 use App\Family;
@@ -15,6 +16,63 @@ use Log;
 
 class RegistrationController extends Controller
 {
+    /**
+     * List all the Registrations (search-ably)
+     *
+     * This is a con. It only lists the registrations available to a User's CC's Sponsor
+     * This means a User can see the Registrations in his 'neighbor' CCs under a Sponsor
+     *
+     * Also, the view contains the search functionality.
+     */
+    public function index(Request $request)
+    {
+        // Masthead bit
+        $user = Auth::user();
+        $data = [
+            "user_name" => $user->name,
+            "centre_name" => ($user->centre) ? $user->centre->name : null,
+        ];
+
+        // Slightly roundabout method...
+        $neighbor_centre_ids = $user
+            ->centre
+            ->sponsor
+            ->centres
+            ->pluck('id')
+            ->toArray();
+
+        $family_name = $request->get('family_name');
+
+        // Horrid: get array of families where first carer for family is like family name.
+        $q = collect(
+            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id 
+              FROM (SELECT min(id) as pri_carer_id from carers group by family_id) as t1
+              INNER JOIN carers as t2 ON t1.pri_carer_id = t2.id
+              WHERE name like :match"),
+            ["match" => '%'.$family_name.'%'])
+        );
+
+        $filtered_family_ids = $q->pluck('family_id');
+
+        $q = Registration::query();
+        if (!empty($neighbor_centre_ids)) {
+            $q = $q->whereIn('centre_id', $neighbor_centre_ids);
+        }
+        if (!empty($filtered_family_ids)) {
+            $q = $q->whereIn('family_id', $filtered_family_ids);
+        }
+
+        $registrations = $q->simplePaginate(15);
+
+        $data = array_merge(
+            $data,
+            [
+                'registrations' => $registrations,
+            ]
+        );
+        return view('service.index_registration', $data);
+    }
+
     /**
      * Returns the registration page
      *

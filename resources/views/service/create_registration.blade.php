@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('service.partials.navbar')
+
     @include('service.partials.flash_notices')
 
     <div class="content">
