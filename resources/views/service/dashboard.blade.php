@@ -4,8 +4,6 @@
 
 @section('content')
 <div class="content">
-
-
     <div class="navigation">
         <ul>
             <li>
@@ -25,6 +23,5 @@
             </li>
         </ul>
     </div>
-
 </div>
 @endsection
