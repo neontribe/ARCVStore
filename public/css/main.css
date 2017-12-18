@@ -180,12 +180,19 @@ strong {
 
 }
 
-.warning p {
+.warning p,
+.error li {
 	color: #d2232a;
 }
 
 .attention p {
 	color: #e5710b;
+}
+
+.error li {
+	list-style-type: none;
+	margin: 5px;
+	text-align: center;
 }
 
 .header {
