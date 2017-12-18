@@ -43,7 +43,6 @@ $factory->state(\Illuminate\Database\Eloquent\Model::class, 'withRandomCentre', 
 });
 
 // Centre, with random sponsor
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Centre::class, function (Faker\Generator $faker) {
 
     $sponsors = App\Sponsor::get();
@@ -120,18 +119,17 @@ $factory->define(App\Sponsor::class, function (Faker\Generator $faker) {
     ];
 });
 
-// registration
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+// Registration
 $factory->define(App\Registration::class, function (Faker\Generator $faker) {
 
     return [
         'cc_reference' => '',
-        'eligability' =>
+        'eligibility' => array_rand(['healthy-start', 'other']),
+        'consented_on' => Carbon\Carbon::now(),
     ];
 });
 
 // Family
-/** @var \Illuminate\Database\Eloquent\Factory $factory */#
 $factory->define(App\Family::class, function (Faker\Generator $faker) {
     return [
         'rvid' => \App\Family::generateRVID(),
@@ -139,9 +137,19 @@ $factory->define(App\Family::class, function (Faker\Generator $faker) {
 });
 
 // Carer
-$factory->define(App\Family::class, function (Faker\Generator $faker) {
-
+$factory->define(App\Carer::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->firstName ." ". $faker->lastName,
+    ];
+});
+
+// Child
+$factory->define(App\Child::class, function (Faker\Generator $faker) {
+
+    $dob = new Carbon\Carbon($faker->dateTimeBetween('-6 years','+9 months'));
+    $dob = $dob->startOfMonth();
+    return [
+        'born' => $dob->isPast(),
+        'dob' => $dob->toDateTimeString(),
     ];
 });
