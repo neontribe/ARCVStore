@@ -129,30 +129,35 @@ class RegistrationController extends Controller
     /**
      * Displays a printable version of the Registration.
      *
-     * @param Registration
+     * @param integer $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function print(Registration $registration)
+    public function print($id)
     {
         $user = Auth::user();
 
-        // Get the registration, with deep eager-loaded Family (with Children and Carers)
-        $family = $registration->family->with('children', 'carers')->first();
-        $carers = $family->carers;
+        $registration = Registration::with([
+            'family' => function ($q) {
+                $q->with('children', 'carers');
+            }
+        ])->findOrFail($id);
 
-        return view('service.printables.family', [
+        $carers = $registration->family->carers->all();
+
+        return view(
+            'service.printables.family',
+            [
                 'user_name' => $user->name,
                 'centre_name' => ($user->centre) ? $user->centre->name : null,
                 'sheet_title' => 'Printable Family Sheet',
                 'sheet_header' => 'Family Collection Sheet',
-                'family' => $family,
-                'pri_carer' => $carers->first(),
+                'family' => $registration->family,
+                'pri_carer' => array_shift($carers),
                 // Remove the primary carer from collection
-                'sec_carers' => $carers->forget(0),
-                'children' => $family->children,
+                'sec_carers' => $carers,
+                'children' => $registration->family->children,
             ]
         );
-
     }
 
     /**

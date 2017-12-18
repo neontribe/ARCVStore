@@ -63,9 +63,13 @@
         </table>
         <div class="notes">
             <h2>Notices</h2>
-            @foreach( $family->getNoticeReasons() as $notices)
+            @forelse( $family->getNoticeReasons() as $notices)
                 <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
-            @endforeach
+            @empty
+                <ul>
+                    <li>Nothing of concern.</li>
+                </ul>
+            @endforelse
         </div>
     </div>
 @endsection

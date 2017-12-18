@@ -152,7 +152,7 @@
                         received the food diary and chart for this family yet.</p>
                 </div>
                 <div class="print-button">
-                    <button onclick="window.open( {{ URL::route( 'service.registration/{id}/print', ['id' => $registration->id]) }} ); return false">Print a voucher collection sheet for this family</button>
+                    <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">Print a voucher collection sheet for this family</button>
                 </div>
             </div>
         </div>
