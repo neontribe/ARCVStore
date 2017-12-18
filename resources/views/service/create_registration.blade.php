@@ -98,21 +98,6 @@
                             <td>Month/Year</td>
                             <td>Info</td>
                         </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Sep 09</td>
-                            <td>At School</td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Jan 14</td>
-                            <td>On Scheme</td>
-                        </tr>
-                        <tr>
-                            <td>P</td>
-                            <td>Jun 18</td>
-                            <td>Pregnancy</td>
-                        </tr>
                     </table>
                 </div>
                 <div class="reminder">
