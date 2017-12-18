@@ -195,6 +195,13 @@ strong {
 	text-align: center;
 }
 
+.message {
+	font-weight: 200;
+	font-size: 1.5rem;
+	text-align: center;
+	margin: 5px;
+}
+
 .header {
 	height: 15%;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
