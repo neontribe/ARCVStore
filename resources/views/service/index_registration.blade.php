@@ -12,7 +12,7 @@
             <div class="col">
                 <form action="{{ URL::route('service.registration.index') }}" method="GET" id="searchform">
                     {!! csrf_field() !!}
-                    <div>
+                    <div class="input">
                         <h2>Search for a family name</h2>
                         <div class="small-button-container">
                             <input type="search" name="family_name">

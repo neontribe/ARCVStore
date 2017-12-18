@@ -367,13 +367,15 @@ strong {
 }
 
 .search {
-	padding-top: 5rem;
+	padding-top: 2rem;
 }
 
+.search .input,
 .search .col {
-	width: 70%;
-	margin: 0 0 0 15%;
+	width: 80%;
+	margin: 0 0 0 10%;
 }
+
 
 .pagination {
 	list-style-type: none;
