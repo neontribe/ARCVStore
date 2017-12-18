@@ -51,7 +51,7 @@
                     <h3>
                         <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
                     </h3>
-                    <select aria-labelledby="birth-date">
+                    <select id="month_adder_input" aria-labelledby="birth-date">
                         <option value="01">January</option>
                         <option value="02">February</option>
                         <option value="03">March</option>
@@ -65,7 +65,7 @@
                         <option value="11">November</option>
                         <option value="12">December</option>
                     </select>
-                    <select aria-labelledby="birth-date">
+                    <select id="year_adder_input" aria-labelledby="birth-date">
                         <option value="1996">1996</option>
                         <option value="1997">1997</option>
                         <option value="1998">1998</option>
@@ -91,27 +91,13 @@
                         <option value="2018">2018</option>
                         <option value="2019">2019</option>
                     </select>
-                    <button id="add-collector">
+                    <button id="add-dob" class="addDateButton">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div>
                     <h2>Children signed up:</h2>
-                    <table>
-                        <thead>
-                        <tr>
-                            <td>Month</td>
-                            <td>Year</td>
-                            <td></td>
-                        </tr>
-                        </thead>
-                        <tbody id="#child_wrapper">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <ul id="child_wrapper"></ul>
                 </div>
                 <div class="reminder">
                     <p>Reminder: don't forget to complete food diary and chart.</p>
@@ -169,19 +155,20 @@
                     fields--;
                 })
             },
+
             function() {
                 var maxFields = 10;
                 var el = $("#child_wrapper");
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
-                var addButton = $(".addButton");
+                var addDateButton = $(".addDateButton");
                 var fields = 1;
-                $(addButton).click(function (e) {
+                $(addDateButton).click(function (e) {
                     e.preventDefault();
                     if (fields < maxFields) {
                         fields++;
                         dateString = yearEl.val() +'-'+ monthEl.val();
-                        $(el).append('<tr><td>'+ monthEl.val() +'</td><td>'+ yearEl.val() +'</td><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '<a href="#" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></a></td></tr>');
+                        $(el).append('<li><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '<a href="#" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></a></li>');
                     }
                 });
 
