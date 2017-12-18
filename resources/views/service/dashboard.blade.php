@@ -3,7 +3,15 @@
 @section('title', 'Dashboard')
 
 @section('content')
-<div class="content">
+    <script type="text/javascript">
+        function printCentreRegistrations()
+        {
+            window.open('{{ URL::route("service.centre.registrations.print", ["centre" => $centre_id]) }}');
+            return false;
+        }
+    </script>
+
+    <div class="content">
     <div class="navigation">
         <ul>
             <li>
@@ -17,7 +25,7 @@
                 </a>
             </li>
             <li>
-                <a href="">
+                <a href="#" onclick="return printCentreRegistrations()">
                     <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets for all families
                 </a>
             </li>

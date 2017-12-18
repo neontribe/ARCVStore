@@ -31,9 +31,16 @@ Route::resource('registration', 'Service\RegistrationController', [
         ],
     ]);
 
+// Printables TODO - these will one day be pdfs
 Route::get('/registration/{registration}/print', [
     'as' => 'service.registration.print',
     'uses' => 'Service\RegistrationController@print',
+]);
+
+// TODO Not sure I got this right...
+Route::get('/centre/{centre}/registrations/print', [
+    'as' => 'service.centre.registrations.print',
+    'uses' => 'Service\CentreController@printRegistrations',
 ]);
 
 // Default redirect to Service Dashboard
