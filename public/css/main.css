@@ -237,6 +237,8 @@ strong {
 	padding: 0;
 	font-size: 2rem;
 	font-weight: 200;
+	width: 70%;
+	margin-left: 15%;
 }
 
 .navigation li {
