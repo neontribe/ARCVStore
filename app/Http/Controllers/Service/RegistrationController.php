@@ -172,6 +172,7 @@ class RegistrationController extends Controller
         // Duplicate families are fine at this point.
         $family = new Family(['rvid' => Family::generateRVID()]);
 
+
         // Create Carers
         // TODO: Alter request to pre-join the array?
         $carers = array_map(
