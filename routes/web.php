@@ -31,7 +31,7 @@ Route::resource('registration', 'Service\RegistrationController', [
         ],
     ]);
 
-// Printables TODO - these will one day be pdfs :)
+// Printables TODO - these will one day be pdfs
 Route::get('/registration/{registration}/print', [
     'as' => 'service.registration.print',
     'uses' => 'Service\RegistrationController@print',
