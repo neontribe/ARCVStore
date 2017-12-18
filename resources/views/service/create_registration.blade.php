@@ -26,10 +26,12 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Other voucher collectors:
                         </label>
                     </h2>
-                    <input id="sec-carers" name="carers" type="text">
-                    <button id="add-collector">
-                        <i class="fa fa-plus" aria-hidden="true"></i>
-                    </button>
+                    <div class="small-button-container">
+                        <input id="sec-carers" name="carers" type="text">
+                        <button id="add-collector">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
                 </div>
                 <div class="collectors">
                     <p>These people may collect vouchers:</p>
