@@ -11,10 +11,12 @@ class RegistrationSeeder extends Seeder
      */
     public function run()
     {
-        // fetch first user
-        $user = Auth::loginUsingId(1);
+        Auth::loginUsingId(1);
+        // two with no cc_reference
+        factory(App\Registration::class, 2)->create();
 
-        factory(App\Registration::class, 6)->create();
+        // Ten with cc_references
+        factory(App\Registration::class, 10)->states(['withCCReference'])->create();
 
     }
 }

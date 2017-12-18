@@ -122,6 +122,8 @@ $factory->define(App\Sponsor::class, function (Faker\Generator $faker) {
 // Registration
 $factory->define(App\Registration::class, function () {
 
+    $eligibilities = ['healthy-start', 'other'];
+
     $family=factory(App\Family::class)->create();
     $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
     $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
@@ -132,8 +134,19 @@ $factory->define(App\Registration::class, function () {
         'centre_id' => $centre->id,
         'family_id' => $family->id,
         'cc_reference' => '',
-        'eligibility' => array_rand(['healthy-start', 'other']),
+        'eligibility' => $eligibilities[mt_rand(0, count($eligibilities) - 1)],
         'consented_on' => Carbon\Carbon::now(),
+    ];
+});
+
+// with RandomCCReference
+$factory->state(App\Registration::class, 'withCCReference', function (Faker\Generator $faker) {
+
+    $centre = Auth::user()->centre;
+    $shortcode = $centre->sponsor->shortcode;
+
+    return [
+        'cc_reference' => $shortcode . "-" . $faker->unique()->randomNumber(6),
     ];
 });
 
@@ -151,10 +164,12 @@ $factory->define(App\Carer::class, function (Faker\Generator $faker) {
     ];
 });
 
+
+
 // Random Age Child
 $factory->define(App\Child::class, function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-6 years','+9 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-6 years', '+9 months')->getTimestamp());
     $dob = $dob->startOfMonth();
     return [
         'born' => $dob->isPast(),
@@ -165,7 +180,7 @@ $factory->define(App\Child::class, function (Faker\Generator $faker) {
 // Child - unborn
 $factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('0 month','+9 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('0 month', '+9 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -177,7 +192,7 @@ $factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $
 // Child - under 1
 $factory->state(App\Child::class, 'withChildUnderOne', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-11 months','-1 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-11 months', '-1 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
