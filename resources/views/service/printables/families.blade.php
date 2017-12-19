@@ -9,6 +9,8 @@
     }
 </style>
 
+<link rel="stylesheet" type="text/css" href="{{ asset('css/families.css') }}">
+
 @section('title', $sheet_title)
 
 @section('content')

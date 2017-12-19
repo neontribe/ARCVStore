@@ -13,6 +13,7 @@ table {
 	width: 100%;
 	border-collapse: collapse;
 	border: 1px solid black;
+	page-break-inside: auto;
 }
 
 
@@ -22,6 +23,11 @@ th {
 	padding: 1.5rem;
 	height: 5rem;
 	border: 1px solid black;
+}
+
+tr {
+	page-break-inside: avoid;
+	page-break-after: auto;
 }
 
 td {
