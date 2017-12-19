@@ -26,6 +26,14 @@
                         </label>
                     </h2>
                     <table id="carer_wrapper">
+                        @if(is_array(old('carers')) || (!empty(old('carers'))))
+                            @foreach (old('carers') as $old_sec_carer )
+                                <tr>
+                                    <td><input name="carers[]" type="hidden" value="{{ $old_sec_carer }}">{{ $old_sec_carer }}</td>
+                                    <td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </table>
                     <div id="carer_adder" class="small-button-container">
                         <input id="carer_adder_input" name="carer_adder_input" type="text">
@@ -95,7 +103,14 @@
                     <h2>Children signed up:</h2>
                     <table>
                         <tbody id="child_wrapper">
-
+                            @if(is_array(old('children')) || (!empty(old('children'))))
+                                @foreach (old('children') as $old_child )
+                                <tr>
+                                    <td><input name="children[]" type="hidden" value="{{ $old_child }}" > {{ $old_child }}</td>
+                                    <td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
