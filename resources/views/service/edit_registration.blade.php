@@ -33,14 +33,18 @@
                                 <i class="fa fa-user" aria-hidden="true"></i> Other Collectors:
                             </label>
                         </h2>
-                            <table id="carer_wrapper">
+                        <table id="carer_wrapper">
                             @foreach ($sec_carers as $sec_carer)
                                 <tr>
-                                    <td><input name="carers[]" type="hidden" value="{{ $sec_carer->name }}" >{{ $sec_carer->name }}</td>
-                                    <td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                    <td><input name="carers[]" type="hidden"
+                                               value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
+                                    <td>
+                                        <button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
+                                    </td>
                                 </tr>
                             @endforeach
-                            </table>
+                        </table>
                         <div id="carer_adder" class="small-button-container">
                             <input id="carer_adder_input" name="carer_adder_input" type="text">
                             <button id="add_collector" class="addButton">
@@ -69,8 +73,10 @@
                                     <td>{{ $child->getDobAsString() }}</td>
                                     <td>{{ $child->getStatusString() }}</td>
                                     <td>
-                                        <input type="hidden" name="children[]" value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
-                                        <button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                        <input type="hidden" name="children[]"
+                                               value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
+                                        <button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -78,7 +84,8 @@
                         </table>
                     </div>
                     <div>
-                        <h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
+                        <h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i
+                                        class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
                         <h3>
                             <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
                         </h3>
@@ -141,13 +148,19 @@
                     <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
                     <ul>
                         @foreach( $family->getCreditReasons() as $credits)
-                            <li><strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong> as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
+                            <li>
+                                <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
+                                as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
+                                currently "{{ $credits['reason'] }}"
+                            </li>
                         @endforeach
                     </ul>
                 </div>
                 <div class="warning">
                     @foreach( $family->getNoticeReasons() as $notices)
-                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
+                        <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
+                            currently "{{ $notices['reason'] }}"</p>
                     @endforeach
                 </div>
                 <div class="attention">
@@ -155,14 +168,15 @@
                         received the food diary and chart for this family yet.</p>
                 </div>
                 <div class="print-button">
-                    <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">Print a voucher collection sheet for this family</button>
+                    <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
+                        Print a voucher collection sheet for this family
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-
         $(document).ready(
             function () {
                 var maxFields = 10;
@@ -178,6 +192,7 @@
                     if (fields < maxFields) {
                         fields++;
                         $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        carer_el.val('');
                     }
                 });
 
@@ -190,21 +205,19 @@
         );
 
         $(document).ready(
-            function() {
+            function () {
                 var el = $("#child_wrapper");
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
                 var addDateButton = $("#add_dob");
-
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
-                    var dateString = yearEl.val() +'-'+ monthEl.val();
-                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                    var dateString = yearEl.val() + '-' + monthEl.val();
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' + dateString + '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    console.log("clicked");
                     $(this).closest('tr').remove();
                     return false;
                 });
@@ -212,16 +225,15 @@
         );
 
         $(document).ready(
-            function() {
+            function () {
                 var el = $("#existing_wrapper");
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    console.log("clicked");
                     $(this).closest('tr').remove();
                     return false;
                 });
             }
         );
 
-        </script>
+    </script>
 @endsection

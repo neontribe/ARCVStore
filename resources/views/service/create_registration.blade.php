@@ -17,7 +17,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Main Carer's full name:
                         </label>
                     </h2>
-                    <input id="carer" name="carer" type="text">
+                    <input id="carer" name="carer" type="text" value="{{ old('carer') }}">
                 </div>
                 <div class="add">
                     <h2>
@@ -26,6 +26,14 @@
                         </label>
                     </h2>
                     <table id="carer_wrapper">
+                        @if(is_array(old('carers')) || (!empty(old('carers'))))
+                            @foreach (old('carers') as $old_sec_carer )
+                                <tr>
+                                    <td><input name="carers[]" type="hidden" value="{{ $old_sec_carer }}">{{ $old_sec_carer }}</td>
+                                    <td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                </tr>
+                            @endforeach
+                        @endif
                     </table>
                     <div id="carer_adder" class="small-button-container">
                         <input id="carer_adder_input" name="carer_adder_input" type="text">
@@ -95,7 +103,14 @@
                     <h2>Children signed up:</h2>
                     <table>
                         <tbody id="child_wrapper">
-
+                            @if(is_array(old('children')) || (!empty(old('children'))))
+                                @foreach (old('children') as $old_child )
+                                <tr>
+                                    <td><input name="children[]" type="hidden" value="{{ $old_child }}" > {{ $old_child }}</td>
+                                    <td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                </tr>
+                                @endforeach
+                            @endif
                         </tbody>
                     </table>
                 </div>
@@ -106,23 +121,27 @@
             <div class="col">
                 <div>
                     <label for="cc-id">CC Reference:</label>
-                    <input type="text" id="cc-id" name="cc_reference">
+                    <input type="text" id="cc-id" name="cc_reference" value="{{ old('cc_reference') }}">
                 </div>
                 <div>
                     <h2>Reason for receiving Rose Vouchers <span><i class="fa fa-info-circle"
                                                                     aria-hidden="true"></i></span></h2>
                     <div class="user-control">
                         <input type="radio" id="healthy-start" value="healthy-start" name="eligibility"
-                               checked="checked"/>
+                                @if(old('eligibility') == "healthy-start") checked="checked" @endif
+                                @if(empty(old('eligibility'))) checked="checked" @endif
+                        />
                         <label for="healthy-start">Healthy Start</label>
                     </div>
                     <div class="user-control">
-                        <input type="radio" id="other" value="other" name="eligibility"/>
+                        <input type="radio" id="other" value="other" name="eligibility"
+                               @if(old('eligibility') == "other") checked="checked" @endif
+                        />
                         <label for="other">Other Local Criteria</label>
                     </div>
                 </div>
                 <div class="user-control">
-                    <input type="checkbox" id="privacy-statement" name="consent"/>
+                    <input type="checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                     <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                 </div>
                 <button type="Submit">Save</button>
@@ -130,7 +149,6 @@
         </form>
     </div>
     <script>
-
         $(document).ready(
             function () {
                 var maxFields = 10;
@@ -146,6 +164,7 @@
                     if (fields < maxFields) {
                         fields++;
                         $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        carer_el.val('');
                     }
                 });
 
