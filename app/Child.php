@@ -58,7 +58,8 @@ class Child extends Model
      */
     public function getAgeString($format = '%y yr, %m mo')
     {
-        return $this->dob->diff(Carbon::now())->format($format);
+        $mod = ($this->dob->isFuture()) ? "- " : "";
+        return $mod . $this->dob->diff(Carbon::now(), false)->format($format);
     }
 
     /**
