@@ -10,7 +10,7 @@
 
     <div class="content check">
         <div class="row">
-            <form action="{{ URL::route("service.registration.edit",['id' => $registration->id]) }}" method="post">
+            <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
                 {{ method_field('PUT') }}
                 {!! csrf_field() !!}
                 <input type="hidden" name="registration" value="{{ $registration->id }}">
