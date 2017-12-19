@@ -33,7 +33,7 @@
                     <ul id="carer_wrapper"></ul>
                     <div id="carer_adder" class="small-button-container">
                         <input id="carer_adder_input" name="carer_adder_input" type="text">
-                        <button id="add-collector" class="addButton">
+                        <button id="add_collector" class="addButton">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
@@ -91,7 +91,7 @@
                         <option value="2018">2018</option>
                         <option value="2019">2019</option>
                     </select>
-                    <button id="add-dob" class="addDateButton">
+                    <button id="add_dob" class="addDateButton">
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -136,7 +136,7 @@
                 var maxFields = 10;
                 var el = $("#carer_wrapper");
                 var carer_el = $('#carer_adder_input');
-                var addButton = $(".addButton");
+                var addButton = $("#add_collector");
                 var fields = 1;
                 $(addButton).click(function (e) {
                     e.preventDefault();
@@ -154,32 +154,31 @@
                     $(this).parent('li').remove();
                     fields--;
                 })
-            },
-
+            }
+        );
+        $(document).ready(
             function() {
                 var maxFields = 10;
                 var el = $("#child_wrapper");
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
-                var addDateButton = $(".addDateButton");
+                var addDateButton = $("#add_dob");
                 var fields = 1;
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
                     if (fields < maxFields) {
                         fields++;
-                        dateString = yearEl.val() +'-'+ monthEl.val();
-                        $(el).append('<li><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '<a href="#" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></a></li>');
+                        var dateString = yearEl.val() +'-'+ monthEl.val();
+                        $(el).append('<li><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '<a href="#" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></a></li>');
                     }
                 });
 
-                $(el).on("click", ".remove_field", function (e) {
+                $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
                     $(this).parent('li').remove();
                     fields--;
                 })
             }
-
-
         );
     </script>
 
