@@ -28,10 +28,6 @@
                 <th></th>
                 <th></th>
                 <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
             </tr>
             @foreach ($registrations as $registration)
             <tr>
@@ -42,10 +38,6 @@
                     <span><i class="fa fa-ticket" aria-hidden="true"></i> {{ $registration->family->entitlement }}</span>
                 </td>
                 <td>{{ $registration->cc_reference }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
