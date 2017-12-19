@@ -32,7 +32,7 @@
                     <tr>
                         <td>Name</td>
                         <td>CC ID</td>
-                        <td>Amount of eligible children</td>
+                        <td>Voucher Entitlement</td>
                         <td></td>
                     </tr>
                     </thead>
