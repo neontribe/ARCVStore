@@ -7,11 +7,6 @@
     @include('service.partials.navbar')
 
     @include('service.partials.flash_notices')
-    <script>
-
-
-    </script>
-
     <div class="content">
         <form action="{{ URL::route("service.registration.store") }}" method="post">
             {!! csrf_field() !!}
