@@ -65,7 +65,7 @@
                                 <td>Edit</td>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="existing_wrapper">
                             @foreach ($children as $child)
                                 <tr>
                                     <td>{{ $child->getAgeString() }}</td>
@@ -73,7 +73,7 @@
                                     <td>{{ $child->getStatusString() }}</td>
                                     <td>
                                         <input type="hidden" name="children[]" value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
-                                        <button  class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button>
+                                        <button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button>
                                     </td>
                                 </tr>
                             @endforeach
@@ -194,26 +194,37 @@
 
         $(document).ready(
             function() {
-                var maxFields = 10;
                 var el = $("#child_wrapper");
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
                 var addDateButton = $("#add_dob");
-                var fields = 1;
+
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
-                    if (fields < maxFields) {
-                        fields++;
-                        var dateString = yearEl.val() +'-'+ monthEl.val();
-                        $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
-                    }
+                    var dateString = yearEl.val() +'-'+ monthEl.val();
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
+                    console.log("clicked");
                     $(this).closest('tr').remove();
-                    fields--;
-                })
+                    return false;
+                });
+            }
+
+
+        );
+
+        $(document).ready(
+            function() {
+                var el = $("#existing_wrapper");
+                $(el).on("click", ".remove_date_field", function (e) {
+                    e.preventDefault();
+                    console.log("clicked");
+                    $(this).closest('tr').remove();
+                    return false;
+                });
             }
         );
 
