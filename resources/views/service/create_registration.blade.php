@@ -25,7 +25,8 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Other voucher collectors:
                         </label>
                     </h2>
-                    <ul id="carer_wrapper"></ul>
+                    <table id="carer_wrapper">
+                    </table>
                     <div id="carer_adder" class="small-button-container">
                         <input id="carer_adder_input" name="carer_adder_input" type="text">
                         <button id="add_collector" class="addButton">
@@ -92,7 +93,11 @@
                 </div>
                 <div>
                     <h2>Children signed up:</h2>
-                    <ul id="child_wrapper"></ul>
+                    <table>
+                        <tbody id="child_wrapper">
+
+                        </tbody>
+                    </table>
                 </div>
                 <div class="reminder">
                     <p>Reminder: don't forget to complete food diary and chart.</p>
@@ -140,39 +145,37 @@
                     }
                     if (fields < maxFields) {
                         fields++;
-                        $(el).append('<li><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '<a href="#" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></a></li>');
+                        $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                     }
                 });
 
                 $(el).on("click", ".remove_field", function (e) {
                     e.preventDefault();
-                    $(this).parent('li').remove();
+                    $(this).closest('tr').remove();
                     fields--;
                 })
             }
         );
+
         $(document).ready(
             function() {
-                var maxFields = 10;
                 var el = $("#child_wrapper");
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
                 var addDateButton = $("#add_dob");
-                var fields = 1;
+
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
-                    if (fields < maxFields) {
-                        fields++;
-                        var dateString = yearEl.val() +'-'+ monthEl.val();
-                        $(el).append('<li><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '<a href="#" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></a></li>');
-                    }
+                    var dateString = yearEl.val() +'-'+ monthEl.val();
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    $(this).parent('li').remove();
-                    fields--;
-                })
+                    console.log("clicked");
+                    $(this).closest('tr').remove();
+                    return false;
+                });
             }
         );
     </script>

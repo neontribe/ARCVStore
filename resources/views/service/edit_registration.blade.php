@@ -53,9 +53,6 @@
                 <div class="col">
                     <div class="edit">
                         <h2>Children Signed Up:</h2>
-                        <button class="edit-button">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </button>
                         <table>
                             <thead>
                             <tr>
@@ -212,8 +209,6 @@
                     return false;
                 });
             }
-
-
         );
 
         $(document).ready(
