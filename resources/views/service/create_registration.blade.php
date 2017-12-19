@@ -141,7 +141,7 @@
                 $(addButton).click(function (e) {
                     e.preventDefault();
                     if (carer_el.val().length <= 1) {
-                        return
+                        return false;
                     }
                     if (fields < maxFields) {
                         fields++;
