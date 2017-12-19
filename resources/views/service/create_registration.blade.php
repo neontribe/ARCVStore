@@ -100,7 +100,7 @@
             </div>
             <div class="col">
                 <div>
-                    <label for="cc-id">CC ID number:</label>
+                    <label for="cc-id">CC Reference:</label>
                     <input type="text" id="cc-id" name="cc_reference">
                 </div>
                 <div>
@@ -120,7 +120,7 @@
                     <input type="checkbox" id="privacy-statement" name="consent"/>
                     <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                 </div>
-                <button type="Submit">Submit</button>
+                <button type="Submit">Save</button>
             </div>
         </form>
     </div>
