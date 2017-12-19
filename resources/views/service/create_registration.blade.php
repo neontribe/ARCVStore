@@ -146,6 +146,7 @@
                     if (fields < maxFields) {
                         fields++;
                         $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        carer_el.val('');
                     }
                 });
 

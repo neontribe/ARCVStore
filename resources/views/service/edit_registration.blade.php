@@ -178,6 +178,7 @@
                     if (fields < maxFields) {
                         fields++;
                         $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        carer_el.val('');
                     }
                 });
 
@@ -195,7 +196,6 @@
                 var monthEl = $('#month_adder_input');
                 var yearEl = $('#year_adder_input');
                 var addDateButton = $("#add_dob");
-
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
                     var dateString = yearEl.val() +'-'+ monthEl.val();
@@ -204,7 +204,6 @@
 
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    console.log("clicked");
                     $(this).closest('tr').remove();
                     return false;
                 });
@@ -216,7 +215,6 @@
                 var el = $("#existing_wrapper");
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    console.log("clicked");
                     $(this).closest('tr').remove();
                     return false;
                 });
