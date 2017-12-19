@@ -233,7 +233,9 @@ class RegistrationController extends Controller
 
     public function update(Request $request)
     {
-        // Alter Carers
+        // TODO: add validation on the request like store has.
+
+        // Create New Carers
         // TODO: Alter request to pre-join the array?
         $carers = array_map(
             function ($carer) {
@@ -245,7 +247,7 @@ class RegistrationController extends Controller
             )
         );
 
-        // Create Children
+        // Create New Children
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
@@ -269,11 +271,15 @@ class RegistrationController extends Controller
         // Try to transact, so we can roll it back
         try {
             DB::transaction(function () use ($registration, $family, $carers, $children) {
+                // delete the old carer's and children. messy.
                 $family->carers()->delete();
                 $family->children()->delete();
+                // save the new ones!
                 $family->carers()->saveMany($carers);
                 $family->children()->saveMany($children);
+                // save changes to registration.
                 $registration->save();
+                // no changes to centre, or family objects directly.
             });
         } catch (\Exception $e) {
             // Oops! Log that
@@ -284,7 +290,7 @@ class RegistrationController extends Controller
         }
         // Or return the success
         Log::info('Registration ' . $registration->id . ' updated by service user ' . Auth::id());
-        // and go to the edit page for the new registration
+        // and go back to edit page for the changed registration
         return redirect()
             ->route('service.registration.edit', ['id' => $registration->id])
             ->with('message', 'Registration updated.');
