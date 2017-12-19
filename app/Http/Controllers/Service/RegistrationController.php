@@ -231,8 +231,62 @@ class RegistrationController extends Controller
             ->with('message', 'Registration created.');
     }
 
-    public function update($id)
+    public function update(Request $request)
     {
-        //
+        // Alter Carers
+        // TODO: Alter request to pre-join the array?
+        $carers = array_map(
+            function ($carer) {
+                return new Carer(['name' => $carer]);
+            },
+            array_merge(
+                (array)$request->get('carer'),
+                (array)$request->get('carers')
+            )
+        );
+
+        // Create Children
+        $children = array_map(
+            function ($child) {
+                // Note: Carbon uses different time formats than laravel validation
+                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
+                return new Child([
+                    'dob' => Carbon::createFromFormat('Y-m', $child)
+                        ->startOfMonth()
+                        ->format('Y-m-d'),
+                ]);
+            },
+            (array)$request->get('children')
+        );
+
+        // Fetch Registration and Family
+        $registration = Registration::where('id', $request->get('registration'))->first();
+        $family = $registration->family;
+
+        // update registration
+        $registration->cc_reference = $request->get('cc_reference');
+
+        // Try to transact, so we can roll it back
+        try {
+            DB::transaction(function () use ($registration, $family, $carers, $children) {
+                $family->carers()->delete();
+                $family->children()->delete();
+                $family->carers()->saveMany($carers);
+                $family->children()->saveMany($children);
+                $registration->save();
+            });
+        } catch (\Exception $e) {
+            // Oops! Log that
+            Log::error('Bad transaction for ' . __CLASS__ . '@' . __METHOD__ . ' by service user ' . Auth::id());
+            Log::error($e->getTraceAsString());
+            // Throw it back to the user
+            return redirect()->route('service.registration.edit')->withErrors('Registration update failed.');
+        }
+        // Or return the success
+        Log::info('Registration ' . $registration->id . ' updated by service user ' . Auth::id());
+        // and go to the edit page for the new registration
+        return redirect()
+            ->route('service.registration.edit', ['id' => $registration->id])
+            ->with('message', 'Registration updated.');
     }
 }
