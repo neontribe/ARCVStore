@@ -190,10 +190,10 @@ class RegistrationController extends Controller
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
                 // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
+                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
                 return new Child([
-                        'dob' => Carbon::createFromFormat('Y-m', $child)
-                            ->startOfMonth()
-                            ->format('Y-m-d'),
+                        'born' => $month_of_birth->isPast(),
+                        'dob' => $month_of_birth->toDateTimeString(),
                     ]);
             },
             (array)$request->get('children')
@@ -253,11 +253,10 @@ class RegistrationController extends Controller
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
                 // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)
-                    ->startOfMonth();
+                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
                 return new Child([
-                    'dob' => $month_of_birth->format('Y-m-d'),
                     'born' => $month_of_birth->isPast(),
+                    'dob' => $month_of_birth->toDateTimeString(),
                 ]);
             },
             (array)$request->get('children')
