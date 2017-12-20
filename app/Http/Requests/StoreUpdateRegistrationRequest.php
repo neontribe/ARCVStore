@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreNewRegistrationRequest extends FormRequest
+class StoreUpdateRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -32,10 +32,6 @@ class StoreNewRegistrationRequest extends FormRequest
         $rules = [
             // MAY be present; MUST be not-null string; MUST be unique in db
             'cc_reference' => 'string|nullable|unique:registrations',
-            // MUST be present; MUST be in "yes, on, 1, or true"
-            'consent' => 'required|accepted',
-            // MUST be present; MUST be in listed states
-            'eligibility' => 'required|in:healthy-start,other',
             // MUST be present; MUST be a not-null string
             'carer' => 'required|string',
             // MAY be present; MUST be a distinct, non-null string
