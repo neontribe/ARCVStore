@@ -60,6 +60,8 @@ class Family extends Model
             $credits = array_merge($credits, $child_status['credits']);
         }
 
+
+
         if ($this->expecting) {
             $credits[] = self::CREDIT_TYPES['FamilyIsPregnant'];
         }
@@ -157,7 +159,15 @@ class Family extends Model
     public function getExpectingAttribute()
     {
         // return true if there is a child that has a false 'born' attribute
-        return $this->children->contains('born', 'false');
+
+        $expecting = false;
+        foreach ($this->children as $child) {
+            if ($child->born == false) {
+                $expecting = true;
+                break;
+            }
+        }
+        return $expecting;
     }
 
     /**

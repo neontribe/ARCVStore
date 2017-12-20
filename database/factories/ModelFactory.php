@@ -180,7 +180,7 @@ $factory->define(App\Child::class, function (Faker\Generator $faker) {
 // Child - unborn
 $factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('0 month', '+9 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('1 month', '+9 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
