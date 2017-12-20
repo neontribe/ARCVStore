@@ -10,6 +10,7 @@ use App\Carer;
 use App\Child;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreNewRegistrationRequest;
+use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
 use Log;
@@ -190,10 +191,10 @@ class RegistrationController extends Controller
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
                 // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
+                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
                 return new Child([
-                        'dob' => Carbon::createFromFormat('Y-m', $child)
-                            ->startOfMonth()
-                            ->format('Y-m-d'),
+                        'born' => $month_of_birth->isPast(),
+                        'dob' => $month_of_birth->toDateTimeString(),
                     ]);
             },
             (array)$request->get('children')
@@ -232,7 +233,7 @@ class RegistrationController extends Controller
             ->with('message', 'Registration created.');
     }
 
-    public function update(Request $request)
+    public function update(StoreUpdateRegistrationRequest $request)
     {
         // TODO: add validation on the request like store has.
 
@@ -253,10 +254,10 @@ class RegistrationController extends Controller
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
                 // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
+                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
                 return new Child([
-                    'dob' => Carbon::createFromFormat('Y-m', $child)
-                        ->startOfMonth()
-                        ->format('Y-m-d'),
+                    'born' => $month_of_birth->isPast(),
+                    'dob' => $month_of_birth->toDateTimeString(),
                 ]);
             },
             (array)$request->get('children')

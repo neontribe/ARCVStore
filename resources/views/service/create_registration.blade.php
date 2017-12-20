@@ -185,8 +185,9 @@
 
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
-                    var dateString = yearEl.val() +'-'+ monthEl.val();
-                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                    var dateString = yearEl.val() + '-' + monthEl.val();
+                    var humanDateString = new Date(dateString).toLocaleDateString('en-gb',{month:"short"}) +" "+ yearEl.val();
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + humanDateString + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {

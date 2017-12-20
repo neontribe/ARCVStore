@@ -28,7 +28,7 @@ class Child extends Model
      * @var array
      */
     protected $fillable = [
-        'dob',
+        'dob','born'
     ];
 
     /**
@@ -134,6 +134,7 @@ class Child extends Model
             $first_schoolday = $this->calcSchoolStart();
 
             // Calculate credits
+            $is_born = $today->greaterThanOrEqualTo($this->dob);
             $is_one = $today->greaterThanOrEqualTo($first_birthday);
             $is_school_age = $today->greaterThanOrEqualTo($first_schoolday);
 
@@ -146,8 +147,8 @@ class Child extends Model
             // Populate notices and credits arrays.
             ($is_almost_one) ? $notices[] = self::NOTICE_TYPES["ChildIsAlmostOne"]: false;
             ($is_almost_school_age) ? $notices[] = self::NOTICE_TYPES['ChildIsAlmostSchoolAge']: false;
-            (!$is_one) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderOne"]: false;
-            (!$is_school_age) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderSchoolAge"] : false;
+            (!$is_one && $is_born) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderOne"]: false;
+            (!$is_school_age && $is_born) ? $credits[] = self::CREDIT_TYPES["ChildIsUnderSchoolAge"] : false;
 
             if (!empty($credits)) {
                 $eligibility = 'Eligible';
