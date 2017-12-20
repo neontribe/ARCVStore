@@ -39,7 +39,7 @@ class StoreNewRegistrationRequest extends FormRequest
             // MUST be present; MUST be a not-null string
             'carer' => 'required|string',
             // MAY be present; MUST be a distinct, non-null string
-            'carers.*' => 'distinct|string',
+            'carers.*' => 'distinct|string|different:carer',
             // MAY be present; MUST be a date format of '2017-07' per http://php.net/manual/en/datetime.formats.date.php
             'kids.*' => 'date_format:YY-mm',
         ];
