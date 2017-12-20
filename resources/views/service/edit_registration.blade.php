@@ -39,7 +39,7 @@
                                     <td><input name="carers[]" type="hidden"
                                                value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
                                     <td>
-                                        <button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        <button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -191,7 +191,7 @@
                     }
                     if (fields < maxFields) {
                         fields++;
-                        $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                         carer_el.val('');
                     }
                 });
@@ -213,7 +213,7 @@
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
                     var dateString = yearEl.val() + '-' + monthEl.val();
-                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' + dateString + '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' + dateString + '" >' + dateString + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {

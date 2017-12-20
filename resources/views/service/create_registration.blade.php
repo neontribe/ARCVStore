@@ -30,7 +30,7 @@
                             @foreach (old('carers') as $old_sec_carer )
                                 <tr>
                                     <td><input name="carers[]" type="hidden" value="{{ $old_sec_carer }}">{{ $old_sec_carer }}</td>
-                                    <td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
+                                    <td><button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td>
                                 </tr>
                             @endforeach
                         @endif
@@ -163,7 +163,7 @@
                     }
                     if (fields < maxFields) {
                         fields++;
-                        $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                        $(el).append('<tr><td><input name="carers[]" type="hidden" value="' + carer_el.val() + '" >' + carer_el.val() + '</td><td><button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                         carer_el.val('');
                     }
                 });
@@ -186,12 +186,11 @@
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
                     var dateString = yearEl.val() +'-'+ monthEl.val();
-                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
+                    $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + dateString + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
                 });
 
                 $(el).on("click", ".remove_date_field", function (e) {
                     e.preventDefault();
-                    console.log("clicked");
                     $(this).closest('tr').remove();
                     return false;
                 });
