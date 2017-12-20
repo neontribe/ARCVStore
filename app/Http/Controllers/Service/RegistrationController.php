@@ -10,6 +10,7 @@ use App\Carer;
 use App\Child;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreNewRegistrationRequest;
+use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
 use Log;
@@ -232,7 +233,7 @@ class RegistrationController extends Controller
             ->with('message', 'Registration created.');
     }
 
-    public function update(Request $request)
+    public function update(StoreUpdateRegistrationRequest $request)
     {
         // TODO: add validation on the request like store has.
 
