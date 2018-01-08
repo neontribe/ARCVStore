@@ -46,12 +46,27 @@ class RegistrationController extends Controller
 
         // Horrid: get array of families where first carer for family is like family name.
         $q = collect(
-            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id 
-              FROM (SELECT min(id) as pri_carer_id from carers group by family_id) as t1
-              INNER JOIN carers as t2 ON t1.pri_carer_id = t2.id
+            DB::select(
+                DB::raw("
+              SELECT t1.pri_carer_id, t2.name, t2.family_id 
+              FROM (
+                SELECT 
+                  min(id) 
+                  AS pri_carer_id 
+                  FROM carers 
+                  GROUP BY family_id
+                ) 
+                AS t1
+              INNER JOIN 
+                carers 
+                AS t2 
+                ON t1.pri_carer_id = t2.id
               WHERE name like :match"),
-            ["match" => '%'.$family_name.'%'])
+                ["match" => '%'.$family_name.'%']
+            )
         );
+
+        Searchy::search('carers')->fields('name')->query($family_name)->getQuery();
 
         $filtered_family_ids = $q->pluck('family_id');
 
