@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         // Extras
         Barryvdh\Debugbar\ServiceProvider::class,
+        TomLingham\Searchy\SearchyServiceProvider::class,
 
     ],
 
@@ -229,7 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // Extras
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-
+        'Searchy' => TomLingham\Searchy\Facades\Searchy::class
     ],
 
 ];
