@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Service;
 
+use Searchy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
