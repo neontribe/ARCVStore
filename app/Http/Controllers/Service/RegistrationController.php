@@ -45,7 +45,7 @@ class RegistrationController extends Controller
         $family_name = $request->get('family_name');
 
         // Horrid: get array of families where first carer for family is like family name.
-        $q = collect(
+        /* $q = collect(
             DB::select(
                 DB::raw("
               SELECT t1.pri_carer_id, t2.name, t2.family_id 
@@ -65,10 +65,23 @@ class RegistrationController extends Controller
                 ["match" => '%'.$family_name.'%']
             )
         );
+        */
 
-        Searchy::search('carers')->fields('name')->query($family_name)->getQuery();
+        // fetch the list of primary carers, the first carer in the family.
+        $pri_carers = Carer::select([DB::raw('MIN(id) as min_id')])
+            ->groupBy('family_id')
+            ->pluck('min_id')
+            ->toArray();
 
-        $filtered_family_ids = $q->pluck('family_id');
+        // Searchy\Searchy defaults to "fuzzy" search.
+        // results are a collection of basic objects, but we can still "pluck()"
+        $filtered_family_ids = Searchy::search('carers')
+            ->fields('name')
+            ->query($family_name)
+            ->getQuery()
+            ->whereIn('id', $pri_carers)
+            ->pluck('family_id')
+            ->toArray();
 
         $q = Registration::query();
         if (!empty($neighbor_centre_ids)) {
