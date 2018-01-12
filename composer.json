@@ -1,8 +1,9 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
-    "license": "MIT",
+    "name": "neontribe/arcvstore",
+    "description": "ARCVStore Service",
+    "version" : "v0.2.0",
+    "keywords": [],
+    "license": "",
     "type": "project",
     "require": {
         "barryvdh/laravel-debugbar": "~2.4",
