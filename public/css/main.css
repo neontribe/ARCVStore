@@ -116,7 +116,6 @@ input[type="checkbox"]:checked+label:after {
 }
 
 input:focus,
-button:focus,
 select:focus {
 	border: 2px solid #dcb9d2;
 	outline: none;
