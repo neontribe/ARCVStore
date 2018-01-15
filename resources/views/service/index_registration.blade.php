@@ -31,7 +31,7 @@
                     <thead>
                     <tr>
                         <td>Name</td>
-                        <td>CC ID</td>
+                        <td>Reference</td>
                         <td>Voucher Entitlement</td>
                         <td></td>
                     </tr>
@@ -40,7 +40,7 @@
                     @foreach ($registrations as $registration)
                         <tr>
                             <td>{{ $registration->family->carers->first()->name }}</td>
-                            <td>{{ $registration->cc_reference }}</td>
+                            <td>{{ $registration->family->rvid }}</td>
                             <td>{{ $registration->family->entitlement }}</td>
                             <td>
                                 <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">select</button>
