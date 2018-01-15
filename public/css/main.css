@@ -105,13 +105,9 @@ input[type="radio"]:checked+label:after {
 	border-radius: 50%;
 }
 
-input[type="checkbox"]+label:before {
-	top: 10px;
-}
-
 input[type="checkbox"]:checked+label:after {
 	content: "✔";
-	top: 15px;
+	top: 4px;
 	border: 0;
 }
 
