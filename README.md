@@ -38,7 +38,7 @@ Under contract for
 
 Alexandra Rose Charity (registered in England and Wales #00279157) 
 
-As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; 2018 Alexandra Rose Charity, all rights reserved.
+As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; 2018 Alexandra Rose Charity, All Rights Reserved.
 
 If you wish to discuss copyright or licensing issues, please contact:
 
