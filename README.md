@@ -9,7 +9,7 @@ ARCV Store is the a service that permits Children's Centres to perform registrat
 1. Clone the repo
 2. Create a database and user (homestead, sqlite or mysql)
 3. If not using [Homestead](https://https://laravel.com/docs/5.4/homestead) or Valet - you will need to configure permissions on `storage` and `bootstrap/cache`. See [Laravel 5.4 Installation](https://laravel.com/docs/5.4#installation) for more info.
-4. Copy `.env.example` to `.env` and edit to local settings
+4. Copy `.env.example` to `.env` and edit to local settings. We would recommend a `.test` sub-domain to avoid browsers making assumptions or uplifting to HSTS like, for example, Chrome now does. 
 5. `composer install`
 6. `php artisan key:generate`
 7. `php artisan migrate --seed`
