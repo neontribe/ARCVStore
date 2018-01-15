@@ -88,6 +88,11 @@ input[type="checkbox"]+label:before {
 	cursor: pointer;
 }
 
+input[type="radio"]:focus+label:before,
+input[type="checkbox"]:focus+label:before {
+	box-shadow: 0 0 0 3px #dcb9d2;
+}
+
 input[type="radio"]:checked+label:after,
 input[type="checkbox"]:checked+label:after {
 	content: "";
