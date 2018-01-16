@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="added">
-                    <p>You have added:</p>
+                    <h2>You have added:</h2>
                 </div>
             </div>
             <div class="col">
