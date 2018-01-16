@@ -30,7 +30,7 @@
                     <div class="other-carers-update edit">
                         <h2>
                             <label for="carer_adder_input">
-                                <i class="fa fa-user" aria-hidden="true"></i> Other Collectors:
+                                Other voucher collectors signed up:
                             </label>
                         </h2>
                         <table id="carer_wrapper">
@@ -45,6 +45,7 @@
                                 </tr>
                             @endforeach
                         </table>
+                        <h2>Adding new collectors:</h2>
                         <div id="carer_adder" class="small-button-container">
                             <input id="carer_adder_input" name="carer_adder_input" type="text">
                             <button id="add_collector" class="addButton">
@@ -56,14 +57,14 @@
 
                 <div class="col">
                     <div class="edit">
-                        <h2>Children Signed Up:</h2>
+                        <h2>Children or pregnancy signed up:</h2>
                         <table>
                             <thead>
                             <tr>
                                 <td>Age</td>
                                 <td>Month/Year</td>
                                 <td>Info</td>
-                                <td>Edit</td>
+                                <td></td>
                             </tr>
                             </thead>
                             <tbody id="existing_wrapper">
@@ -84,8 +85,7 @@
                         </table>
                     </div>
                     <div>
-                        <h2><i class="fa fa-user-plus" aria-hidden="true"></i> Add Children <span><i
-                                        class="fa fa-info-circle" aria-hidden="true"></i></span></h2>
+                        <h2>Adding children or pregnancy:</h2>
                         <h3>
                             <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
                         </h3>
@@ -164,12 +164,11 @@
                     @endforeach
                 </div>
                 <div class="attention">
-                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reminder: Food Matters have not
-                        received the food diary and chart for this family yet.</p>
+                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reminder: Have you sent the food diary and pie chart yet?</p>
                 </div>
                 <div class="print-button">
                     <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
-                        Print a voucher collection sheet for this family
+                        Print a 4 week collection sheet for this family
                     </button>
                 </div>
             </div>
