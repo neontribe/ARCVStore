@@ -21,12 +21,12 @@
                 </a>
                 <a href="{{ URL::route('service.registration.index') }}">
                     <li>
-                        <i class="fa fa-user" aria-hidden="true"></i> Check, update or print information for one family
+                        <i class="fa fa-search" aria-hidden="true"></i> Search for a family
                     </li>
                 </a>
                 <a href="#" onclick="return printCentreRegistrations()">
                     <li>
-                        <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets for all families
+                        <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets
                     </li>
                 </a>
             </ul>
