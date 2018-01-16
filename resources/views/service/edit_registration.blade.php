@@ -16,12 +16,6 @@
                 <input type="hidden" name="registration" value="{{ $registration->id }}">
                 <div class="col">
                     <div>
-                        <h2>CC Reference:</h2>
-                        <div class="small-button-container">
-                            <input type="text" name="cc_reference" value="{{ $registration->cc_reference }}">
-                        </div>
-                    </div>
-                    <div>
                         <h2>Main Carer:</h2>
                         <div>
                             <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
