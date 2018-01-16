@@ -27,12 +27,14 @@
                             <input type="text" name="carer" value="{{ $pri_carer->name }}">
                         </div>
                     </div>
-                    <div class="other-carers-update edit">
-                        <h2>
-                            <label for="carer_adder_input">
-                                Other voucher collectors signed up:
-                            </label>
-                        </h2>
+                    <div class="other-carers-update">
+                        <div class="added">
+                            <h2>
+                                <label for="carer_adder_input">
+                                    Other voucher collectors signed up:
+                                </label>
+                            </h2>
+                        </div>
                         <table id="carer_wrapper">
                             @foreach ($sec_carers as $sec_carer)
                                 <tr>
@@ -56,7 +58,7 @@
                 </div>
 
                 <div class="col">
-                    <div class="edit">
+                    <div class="added">
                         <h2>Children or pregnancy signed up:</h2>
                         <table>
                             <thead>
@@ -86,9 +88,6 @@
                     </div>
                     <div>
                         <h2>Adding children or pregnancy:</h2>
-                        <h3>
-                            <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
-                        </h3>
                         <table>
                             <tbody id="child_wrapper">
 

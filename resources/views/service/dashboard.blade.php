@@ -26,7 +26,7 @@
             </a>
             <a href="#" onclick="return printCentreRegistrations()">
                 <li>
-                    <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets for all families
+                    <i class="fa fa-users" aria-hidden="true"></i> Print collection sheets
                 </li>
             </a>
         </ul>

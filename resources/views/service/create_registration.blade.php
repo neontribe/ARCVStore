@@ -42,7 +42,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="collectors">
+                <div class="added">
                     <p>You have added:</p>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div>
+                <div class="added">
                     <h2>You have added:</h2>
                     <table>
                         <tbody id="child_wrapper">
@@ -113,9 +113,6 @@
                             @endif
                         </tbody>
                     </table>
-                </div>
-                <div class="reminder">
-                    <p>Reminder: don't forget to complete food diary and chart.</p>
                 </div>
             </div>
             <div class="col">
@@ -147,7 +144,10 @@
                         <label for="privacy-statement">Yes</label>
                     </div>
                 </div>
-                <button type="Submit">Save</button>
+                <div class="reminder">
+                    <p>Reminder: don't forget to complete food diary and chart.</p>
+                </div>
+                <button type="Submit">Save Family</button>
             </div>
         </form>
     </div>
