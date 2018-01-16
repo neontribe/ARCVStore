@@ -237,9 +237,10 @@ class SearchPageTest extends TestCase
             ->see("<td>" . $registration->family->entitlement . "</td>");
     }
 
-    /** test */
+    /** @test */
     public function itPaginatesWhenRequired()
     {
+        // Use the above examples to make 20 registrations or so, then check for pagination links.
     }
 
 }
