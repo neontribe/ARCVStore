@@ -17,7 +17,7 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Main Carer's full name:
                         </label>
                     </h2>
-                    <input id="carer" name="carer" type="text" value="{{ old('carer') }}">
+                    <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div class="add">
                     <h2>
@@ -36,7 +36,7 @@
                         @endif
                     </table>
                     <div id="carer_adder" class="small-button-container">
-                        <input id="carer_adder_input" name="carer_adder_input" type="text">
+                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
                         <button id="add_collector" class="addButton">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
@@ -200,6 +200,16 @@
                 });
             }
         );
+
+        // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
+        $('#carer').on('keyup keypress', function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                document.activeElement.blur();
+                $("input").blur();
+                return false;
+            }
+        });
     </script>
 
 @endsection

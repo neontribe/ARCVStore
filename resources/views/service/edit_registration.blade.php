@@ -23,8 +23,8 @@
                     </div>
                     <div>
                         <h2>Main Carer:</h2>
-                        <div class="small-button-container">
-                            <input type="text" name="carer" value="{{ $pri_carer->name }}">
+                        <div>
+                            <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
                         </div>
                     </div>
                     <div class="other-carers-update">
@@ -49,7 +49,7 @@
                         </table>
                         <h2>Adding new collectors:</h2>
                         <div id="carer_adder" class="small-button-container">
-                            <input id="carer_adder_input" name="carer_adder_input" type="text">
+                            <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button id="add_collector" class="addButton">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
@@ -233,6 +233,16 @@
                 });
             }
         );
+
+        // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
+        $('#carer').on('keyup keypress', function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                document.activeElement.blur();
+                $("input").blur();
+                return false;
+            }
+        });
 
     </script>
 @endsection
