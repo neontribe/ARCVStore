@@ -15,7 +15,7 @@
                     <div class="input">
                         <h2>Search for a family name</h2>
                         <div class="small-button-container">
-                            <input type="search" name="family_name">
+                            <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button>
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
