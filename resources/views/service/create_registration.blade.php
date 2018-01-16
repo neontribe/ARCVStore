@@ -199,7 +199,7 @@
         );
 
         // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
-        $(document).on('keyup keypress', function(e) {
+        $('#carer').on('keyup keypress', function(e) {
             if(e.which == 13) {
                 e.preventDefault();
                 document.activeElement.blur();

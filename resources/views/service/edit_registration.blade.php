@@ -23,8 +23,8 @@
                     </div>
                     <div>
                         <h2>Main Carer:</h2>
-                        <div class="small-button-container">
-                            <input type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <div>
+                            <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
                         </div>
                     </div>
                     <div class="other-carers-update">
@@ -235,7 +235,7 @@
         );
 
         // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
-        $(document).on('keyup keypress', function(e) {
+        $('#carer').on('keyup keypress', function(e) {
             if(e.which == 13) {
                 e.preventDefault();
                 document.activeElement.blur();
