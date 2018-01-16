@@ -212,7 +212,7 @@ class SearchPageTest extends TestCase
             ->see($registration->family->rvid);
     }
 
-    /** test */
+    /** @test */
     public function itShowsTheVoucherEntitlement()
     {
         // Create a Centre
@@ -234,7 +234,7 @@ class SearchPageTest extends TestCase
         // Spot the Registration family's RVID
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
-            ->see($registration->family->rvid);
+            ->see("<td>" . $registration->family->entitlement . "</td>");
     }
 
     /** test */
