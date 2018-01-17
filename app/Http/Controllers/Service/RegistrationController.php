@@ -46,7 +46,7 @@ class RegistrationController extends Controller
 
         // Horrid: get array of families where first carer for family is like family name.
         $q = collect(
-            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id 
+            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id
               FROM (SELECT min(id) as pri_carer_id from carers group by family_id) as t1
               INNER JOIN carers as t2 ON t1.pri_carer_id = t2.id
               WHERE name like :match"),
@@ -202,7 +202,6 @@ class RegistrationController extends Controller
 
         // Create Registration
         $registration = new Registration([
-            'cc_reference' => $request->get('cc_reference'),
             'consented_on' => Carbon::now(),
             'eligibility' => $request->get('eligibility'),
             // diary and chart are not saved right now.
@@ -266,9 +265,6 @@ class RegistrationController extends Controller
         // Fetch Registration and Family
         $registration = Registration::where('id', $request->get('registration'))->first();
         $family = $registration->family;
-
-        // update registration
-        $registration->cc_reference = $request->get('cc_reference');
 
         // Try to transact, so we can roll it back
         try {
