@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Service;
 
+use Searchy;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DB;
@@ -44,16 +45,34 @@ class RegistrationController extends Controller
 
         $family_name = $request->get('family_name');
 
-        // Horrid: get array of families where first carer for family is like family name.
-        $q = collect(
-            DB::select(DB::raw("SELECT t1.pri_carer_id, t2.name, t2.family_id 
-              FROM (SELECT min(id) as pri_carer_id from carers group by family_id) as t1
-              INNER JOIN carers as t2 ON t1.pri_carer_id = t2.id
-              WHERE name like :match"),
-            ["match" => '%'.$family_name.'%'])
-        );
+        // fetch the list of primary carers, the first carer in the family.
+        $pri_carers = Carer::select([DB::raw('MIN(id) as min_id')])
+            ->groupBy('family_id')
+            ->pluck('min_id')
+            ->toArray();
 
-        $filtered_family_ids = $q->pluck('family_id');
+        // get the current database driver
+        $connection = config('database.default');
+        $driver = config("database.connections.{$connection}.driver");
+
+        if ($driver == 'mysql') {
+            // We can use Searchy for mysql; defaults to "fuzzy" search.
+            // results are a collection of basic objects, but we can still "pluck()"
+
+            $filtered_family_ids = Searchy::search('carers')
+                ->fields('name')
+                ->query($family_name)
+                ->getQuery()
+                ->whereIn('id', $pri_carers)
+                ->pluck('family_id')
+                ->toArray();
+        } else {
+            // We may not be able to use Searchy, so we default to unfuzzy.
+            $filtered_family_ids = Carer::whereIn('id', $pri_carers)
+                ->where('name', 'like', '%' . $family_name . '%')
+                ->pluck('family_id')
+                ->toArray();
+        }
 
         $q = Registration::query();
         if (!empty($neighbor_centre_ids)) {
@@ -283,7 +302,7 @@ class RegistrationController extends Controller
                 $registration->save();
                 // no changes to centre, or family objects directly.
             });
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             // Oops! Log that
             Log::error('Bad transaction for ' . __CLASS__ . '@' . __METHOD__ . ' by service user ' . Auth::id());
             Log::error($e->getTraceAsString());

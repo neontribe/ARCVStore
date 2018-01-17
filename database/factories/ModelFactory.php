@@ -128,7 +128,10 @@ $factory->define(App\Registration::class, function () {
     $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
     $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
 
-    $centre = Auth::user()->centre;
+    $centre = App\Centre::inRandomOrder()->first();
+    if (is_null($centre)) {
+        $centre = factory(App\Centre::class)->create();
+    }
 
     return [
         'centre_id' => $centre->id,
