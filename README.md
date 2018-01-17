@@ -9,7 +9,7 @@ ARCV Store is the a service that permits Children's Centres to perform registrat
 1. Clone the repo
 2. Create a database and user (homestead, sqlite or mysql)
 3. If not using [Homestead](https://https://laravel.com/docs/5.4/homestead) or Valet - you will need to configure permissions on `storage` and `bootstrap/cache`. See [Laravel 5.4 Installation](https://laravel.com/docs/5.4#installation) for more info.
-4. Copy `.env.example` to `.env` and edit to local settings
+4. Copy `.env.example` to `.env` and edit to local settings. We would recommend a `.test` sub-domain to avoid browsers making assumptions or uplifting to HSTS like, for example, Chrome now does. 
 5. `composer install`
 6. `php artisan key:generate`
 7. `php artisan migrate --seed`
@@ -38,7 +38,7 @@ Under contract for
 
 Alexandra Rose Charity (registered in England and Wales #00279157) 
 
-As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; (2017), Alexandra Rose Charity. All rights reserved.
+As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; 2018 Alexandra Rose Charity, All Rights Reserved.
 
 If you wish to discuss copyright or licensing issues, please contact:
 

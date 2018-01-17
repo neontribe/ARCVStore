@@ -17,12 +17,12 @@
                             <i class="fa fa-user" aria-hidden="true"></i> Main Carer's full name:
                         </label>
                     </h2>
-                    <input id="carer" name="carer" type="text" value="{{ old('carer') }}">
+                    <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div class="add">
                     <h2>
                         <label for="carer_adder_input">
-                            <i class="fa fa-user" aria-hidden="true"></i> Other voucher collectors:
+                            <i class="fa fa-user" aria-hidden="true"></i> Other people who can collect:
                         </label>
                     </h2>
                     <table id="carer_wrapper">
@@ -36,24 +36,24 @@
                         @endif
                     </table>
                     <div id="carer_adder" class="small-button-container">
-                        <input id="carer_adder_input" name="carer_adder_input" type="text">
+                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
                         <button id="add_collector" class="addButton">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
                 </div>
-                <div class="collectors">
-                    <p>These people may collect vouchers:</p>
+                <div class="added">
+                    <h2>You have added:</h2>
                 </div>
             </div>
             <div class="col">
                 <div class="add">
                     <h2>
                         <i class="fa fa-user-plus" aria-hidden="true"></i>
-                        Add Children <span><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                        Adding children or pregnancy:
                     </h2>
                     <h3>
-                        <label for="birth-date">Month + Year of birth (or due date for pregnancy)</label>
+                        <label for="birth-date">To add a child, complete the boxes below with their month and year of birth in numbers, e.g. '06 2017' for June 2017.</label>
                     </h3>
                     <select id="month_adder_input" aria-labelledby="birth-date">
                         <option value="01">January</option>
@@ -99,8 +99,8 @@
                         <i class="fa fa-plus" aria-hidden="true"></i>
                     </button>
                 </div>
-                <div>
-                    <h2>Children signed up:</h2>
+                <div class="added">
+                    <h2>You have added:</h2>
                     <table>
                         <tbody id="child_wrapper">
                             @if(is_array(old('children')) || (!empty(old('children'))))
@@ -113,9 +113,6 @@
                             @endif
                         </tbody>
                     </table>
-                </div>
-                <div class="reminder">
-                    <p>Reminder: don't forget to complete food diary and chart.</p>
                 </div>
             </div>
             <div class="col">
@@ -131,7 +128,7 @@
                                 @if(old('eligibility') == "healthy-start") checked="checked" @endif
                                 @if(empty(old('eligibility'))) checked="checked" @endif
                         />
-                        <label for="healthy-start">Healthy Start</label>
+                        <label for="healthy-start">Entitled to Healthy Start</label>
                     </div>
                     <div class="user-control">
                         <input type="radio" id="other" value="other" name="eligibility"
@@ -140,11 +137,17 @@
                         <label for="other">Other Local Criteria</label>
                     </div>
                 </div>
-                <div class="user-control">
-                    <input type="checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
-                    <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
+                <div>
+                    <h2>Have you got the signed privacy statement for the family?</h2>
+                    <div class="user-control">
+                        <input type="checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
+                        <label for="privacy-statement">Yes</label>
+                    </div>
                 </div>
-                <button type="Submit">Save</button>
+                <div class="reminder">
+                    <p>Reminder: don't forget to complete food diary and chart.</p>
+                </div>
+                <button type="Submit">Save Family</button>
             </div>
         </form>
     </div>
@@ -197,6 +200,16 @@
                 });
             }
         );
+
+        // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
+        $('#carer').on('keyup keypress', function(e) {
+            if(e.which == 13) {
+                e.preventDefault();
+                document.activeElement.blur();
+                $("input").blur();
+                return false;
+            }
+        });
     </script>
 
 @endsection
