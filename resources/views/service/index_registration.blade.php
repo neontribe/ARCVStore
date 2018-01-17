@@ -15,7 +15,7 @@
                     <div class="input">
                         <h2>Search for a family name</h2>
                         <div class="small-button-container">
-                            <input type="search" name="family_name">
+                            <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false">
                             <button>
                                 <i class="fa fa-search" aria-hidden="true"></i>
                             </button>
@@ -26,13 +26,12 @@
         </div>
         <div class="row">
             <div class="col">
-                <h2>Results:</h2>
                 <table>
                     <thead>
                     <tr>
                         <td>Name</td>
-                        <td>Reference</td>
                         <td>Voucher Entitlement</td>
+                        <td>RV-ID</td>
                         <td></td>
                     </tr>
                     </thead>
@@ -40,8 +39,8 @@
                     @foreach ($registrations as $registration)
                         <tr>
                             <td>{{ $registration->family->carers->first()->name }}</td>
-                            <td>{{ $registration->family->rvid }}</td>
                             <td>{{ $registration->family->entitlement }}</td>
+                            <td>{{ $registration->family->rvid }}</td>
                             <td>
                                 <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">select</button>
                             </td>
