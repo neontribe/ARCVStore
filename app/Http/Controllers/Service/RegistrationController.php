@@ -221,7 +221,6 @@ class RegistrationController extends Controller
 
         // Create Registration
         $registration = new Registration([
-            'cc_reference' => $request->get('cc_reference'),
             'consented_on' => Carbon::now(),
             'eligibility' => $request->get('eligibility'),
             // diary and chart are not saved right now.
@@ -285,9 +284,6 @@ class RegistrationController extends Controller
         // Fetch Registration and Family
         $registration = Registration::where('id', $request->get('registration'))->first();
         $family = $registration->family;
-
-        // update registration
-        $registration->cc_reference = $request->get('cc_reference');
 
         // Try to transact, so we can roll it back
         try {

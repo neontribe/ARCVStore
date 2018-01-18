@@ -12,7 +12,6 @@ class Registration extends Model
      * @var array
      */
     protected $fillable = [
-        'cc_reference',
         'eligibility',
         'consented_on',
     ];
