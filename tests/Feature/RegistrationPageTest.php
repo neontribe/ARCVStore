@@ -54,7 +54,8 @@ class RegistrationPageTest extends TestCase
             ->seePageIs(URL::route('service.registration.create'));
     }
 
-    public function inputsClearAfterSubmit()
+    /** @test */
+    public function inputClearsAfterSubmit()
     {
         // Create some centres
         factory(App\Centre::class, 4)->create();
@@ -67,8 +68,11 @@ class RegistrationPageTest extends TestCase
             "centre_id" => 1,
         ]);
 
+        // Check input field is cleared after name is submitted
         $this->actingAs($user)
             ->visit(URL::route('service.registration.create'))
             ->type('Secondary Collector', '#carer_adder_input')
             ->press('#add_collector')
+            ->assertFalse('#carer_adder_input');
+    }
 }
