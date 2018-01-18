@@ -47,39 +47,91 @@ class LoginPageTest extends TestCase
         ;
     }
 
-
     /** @test */
     public function itShowsAForgotPasswordLink()
     {
         $this->seedForTests();
 
         $this->visit(URL::route('service.login'))
-
+            ->see('href="'. route('password.request') .'"')
         ;
     }
 
     /** @test */
     public function itShowsARememberMeInput()
     {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->seeElement('input[type=checkbox][name=remember]')
+        ;
     }
 
     /** @test */
     public function itShowsAUsernameInputBox()
     {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->seeElement('input[id=email]')
+        ;
     }
 
     /** @test */
     public function itShowsAPasswordInputBox()
     {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->seeElement('input[id=password]')
+        ;
     }
 
     /** @test */
-    public function itDoesNotShowTheAuthUserMasthead()
+    public function itDoesNotShowTheAuthUserMastheadWithLogoutLink()
     {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->dontSee('href="'. route('service.login') .'"')
+        ;
     }
 
     /** @test */
-    public function itLogsOutAuthedUsersWhoRouteHere()
+    public function itAllowsAValidUserToLogin()
     {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->type('testuser@example.com', 'email')
+            ->type('test_user_pass', 'password')
+            ->press('Login')
+            ->seePageIs(URL::route('service.dashboard'));
+    }
+
+    /** @test */
+    public function itRequiresAPasswordToLogin()
+    {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->type('testuser@example.com', 'email')
+            ->press('Login')
+            ->seePageIs(URL::route('service.login'))
+            ->see(trans('validation.required', ['attribute' => "password"]));
+        ;
+    }
+
+    /** @test */
+    public function itRequiresAnEmailToLogin()
+    {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->type('test_user_pass', 'password')
+            ->press('Login')
+            ->seePageIs(URL::route('service.login'))
+            ->see(trans('validation.required', ['attribute' => "email"]));
+        ;
     }
 }

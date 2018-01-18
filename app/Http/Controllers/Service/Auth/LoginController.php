@@ -47,9 +47,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        if (!Auth::check()) {
-            Auth::logout();
-        };
         return view('service.auth.login');
     }
 
@@ -96,8 +93,7 @@ class LoginController extends Controller
     {
         // Logout current user
         Auth::logout();
-
         // Boot to login page
-        return redirect()->route('service.login');
+        return redirect()->route('service.login')->with("messages");
     }
 }
