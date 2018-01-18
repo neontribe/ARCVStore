@@ -30,8 +30,6 @@ class StoreUpdateRegistrationRequest extends FormRequest
          * It is NOT responsible for the context validation of that data.
          */
         $rules = [
-            // MAY be present; MUST be not-null string; MUST be unique in db
-            'cc_reference' => 'string|nullable|unique:registrations',
             // MUST be present; MUST be a not-null string
             'carer' => 'required|string',
             // MAY be present; MUST be a distinct, non-null string

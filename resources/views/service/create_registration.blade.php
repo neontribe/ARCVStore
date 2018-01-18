@@ -117,10 +117,6 @@
             </div>
             <div class="col">
                 <div>
-                    <label for="cc-id">CC Reference:</label>
-                    <input type="text" id="cc-id" name="cc_reference" value="{{ old('cc_reference') }}">
-                </div>
-                <div>
                     <h2>Reason for receiving Rose Vouchers <span><i class="fa fa-info-circle"
                                                                     aria-hidden="true"></i></span></h2>
                     <div class="user-control">
