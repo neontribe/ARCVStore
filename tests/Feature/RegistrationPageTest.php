@@ -53,4 +53,22 @@ class RegistrationPageTest extends TestCase
             ->click('logo')
             ->seePageIs(URL::route('service.registration.create'));
     }
+
+    public function inputsClearAfterSubmit()
+    {
+        // Create some centres
+        factory(App\Centre::class, 4)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => 1,
+        ]);
+
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.create'))
+            ->type('Secondary Collector', '#carer_adder_input')
+            ->press('#add_collector')
 }
