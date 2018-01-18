@@ -110,6 +110,19 @@ class LoginPageTest extends TestCase
     }
 
     /** @test */
+    public function itForbidsAnInvalidUserToLogin()
+    {
+        $this->seedForTests();
+
+        $this->visit(URL::route('service.login'))
+            ->type('notauser@example.com', 'email')
+            ->type('bad_user_pass', 'password')
+            ->press('Login')
+            ->seePageIs(URL::route('service.login'))
+            ->see(trans('auth.failed'));
+    }
+
+    /** @test */
     public function itRequiresAPasswordToLogin()
     {
         $this->seedForTests();
