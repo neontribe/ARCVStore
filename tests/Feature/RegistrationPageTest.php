@@ -45,8 +45,11 @@ class RegistrationPageTest extends TestCase
             "centre_id" => 1,
         ]);
 
+        //Test that clicking on a (non)link throws an Error
+        //and remains on the search page.
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
+            ->expectException(Error::class)
             ->click('logo')
             ->seePageIs(URL::route('service.registration.index'));
     }
