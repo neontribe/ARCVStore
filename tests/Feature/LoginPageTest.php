@@ -119,7 +119,7 @@ class LoginPageTest extends TestCase
             ->type('bad_user_pass', 'password')
             ->press('Login')
             ->seePageIs(URL::route('service.login'))
-            ->see(trans('auth.failed'));
+            ->see(trans('auth.failed')
     }
 
     /** @test */
