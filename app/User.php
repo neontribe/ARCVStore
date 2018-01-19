@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role'
     ];
 
     /**
@@ -45,5 +45,41 @@ class User extends Authenticatable
     public function centre()
     {
         return $this->belongsTo('App\Centre');
+    }
+
+    /**
+     * Get the relevant centres for this User, accounting for it's role
+     *
+     * @return \Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+     */
+    public function relevantCentres()
+    {
+        // default to empty collection
+        $centres = collect();
+        switch ($this->role) {
+            case "FM User":
+                // Just get all centres
+                $centres = Centre::all();
+                break;
+            case "CC User":
+                // If we have one, get our centre's neighbors
+                if (!is_null($this->centre)) {
+                    $centres = $this->centre->neighbors;
+                }
+                break;
+        }
+        return $centres;
+    }
+
+    // ToDo : Principle of Responsibility - Does this live here or on the Centre model?
+    /**
+     * Is a given centre relevant to this User?
+     *
+     * @param Centre $centre
+     * @return bool
+     */
+    public function isRelevantCentre(Centre $centre)
+    {
+        return $this->relevantCentres()->contains('id', $centre);
     }
 }

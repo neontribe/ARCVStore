@@ -43,8 +43,23 @@ class Centre extends Model
         return $this->hasMany('App\User');
     }
 
+    /**
+     * Get the Sponsor for this Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function sponsor()
     {
         return $this->belongsTo('App\Sponsor');
+    }
+
+    /**
+     * Get the group of Centres belonging to this Centre's Sponsor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function neighbors()
+    {
+        return $this->hasManyThrough('App\Centre', 'App\Sponsor');
     }
 }

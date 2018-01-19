@@ -35,28 +35,26 @@ class RegistrationController extends Controller
             "centre_name" => ($user->centre) ? $user->centre->name : null,
         ];
 
-        // Slightly roundabout method...
+        // Slightly roundabout method of getting the permitted centres to poll
         $neighbor_centre_ids = $user
-            ->centre
-            ->sponsor
-            ->centres
+            ->relevantCentres()
             ->pluck('id')
             ->toArray();
 
         $family_name = $request->get('family_name');
 
-        // fetch the list of primary carers, the first carer in the family.
+        // Fetch the list of primary carers, the first carer in the family.
         $pri_carers = Carer::select([DB::raw('MIN(id) as min_id')])
             ->groupBy('family_id')
             ->pluck('min_id')
             ->toArray();
 
-        // get the current database driver
+        // Get the current database driver
         $connection = config('database.default');
         $driver = config("database.connections.{$connection}.driver");
 
         if ($driver == 'mysql') {
-            // We can use Searchy for mysql; defaults to "fuzzy" search.
+            // We can use Searchy for mysql; defaults to "fuzzy" search;
             // results are a collection of basic objects, but we can still "pluck()"
 
             $filtered_family_ids = Searchy::search('carers')
