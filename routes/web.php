@@ -11,10 +11,41 @@
 |
 */
 
-// Service Dashboard route
-Route::get('/dashboard', 'Service\DashboardController@index')->name('service.dashboard');
+// Admin (Service) Authentication Routes...
+Route::get('login', [
+    'as' => 'service.login',
+    'uses' => 'Service\Auth\LoginController@showLoginForm',
+]);
 
-Route::resource('registration', 'Service\RegistrationController', [
+Route::post('login', 'Service\Auth\LoginController@login');
+
+Route::post('logout', [
+    'as' => 'service.logout',
+    'uses' => 'Service\Auth\LoginController@logout',
+]);
+
+// Admin (Service) Password Reset Routes...
+Route::get('password/reset', 'Service\Auth\ForgotPasswordController@showLinkRequestForm')
+    ->name('password.request')
+;
+Route::post('password/email', 'Service\Auth\ForgotPasswordController@sendResetLinkEmail')
+    ->name('password.email')
+;
+Route::get('password/reset/{token}', 'Service\Auth\ResetPasswordController@showResetForm')
+    ->name('password.reset')
+;
+Route::post('password/reset', 'Service\Auth\ResetPasswordController@reset');
+
+// Service Dashboard route
+// Default redirect to Service Dashboard
+Route::get('/', function () {
+    return redirect()->route('service.dashboard');
+})->name('service.base');
+
+Route::group(['middleware' => 'auth:web'], function () {
+    Route::get('/dashboard', 'Service\DashboardController@index')->name('service.dashboard');
+
+    Route::resource('registration', 'Service\RegistrationController', [
         'names' => [
             'index' => 'service.registration.index',
             'create' => 'service.registration.create',
@@ -31,19 +62,16 @@ Route::resource('registration', 'Service\RegistrationController', [
         ],
     ]);
 
-// Printables TODO - these will one day be pdfs
-Route::get('/registration/{registration}/print', [
-    'as' => 'service.registration.print',
-    'uses' => 'Service\RegistrationController@print',
-]);
+    // Printables
+    // TODO - these will one day be pdfs
+    Route::get('/registration/{registration}/print', [
+        'as' => 'service.registration.print',
+        'uses' => 'Service\RegistrationController@print',
+    ]);
 
-// TODO Not sure I got this right...
-Route::get('/centre/{centre}/registrations/print', [
-    'as' => 'service.centre.registrations.print',
-    'uses' => 'Service\CentreController@printRegistrations',
-]);
-
-// Default redirect to Service Dashboard
-Route::get('/', function () {
-    return redirect()->route('service.dashboard');
-})->name('service.base');
+    // TODO Not sure I got this right...
+    Route::get('/centre/{centre}/registrations/print', [
+        'as' => 'service.centre.registrations.print',
+        'uses' => 'Service\CentreController@printRegistrations',
+    ]);
+});
