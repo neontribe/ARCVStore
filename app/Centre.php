@@ -58,8 +58,8 @@ class Centre extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
-    public function neighbors()
+    public function scopeNeighbors()
     {
-        return $this->hasManyThrough('App\Centre', 'App\Sponsor');
+        return $this->sponsor->centres;
     }
 }
