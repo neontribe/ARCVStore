@@ -51,15 +51,18 @@ class Child extends Model
     ];
 
     /**
-     * Calculates and returns the age in Years and Months
+     * Calculates and returns the age in Years and Months (or P for pregnancy)
      *
      * @param string $format
      * @return string
      */
     public function getAgeString($format = '%y yr, %m mo')
     {
-        $mod = ($this->dob->isFuture()) ? "- " : "";
-        return $mod . $this->dob->diff(Carbon::now(), false)->format($format);
+        if($this->dob->isFuture()) {
+            return "P";
+        } else {
+            return $this->dob->diff(Carbon::now(), false)->format($format);
+        }
     }
 
     /**
