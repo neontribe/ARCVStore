@@ -13,10 +13,19 @@ class UserSeeder extends Seeder
     {
         // 1 specific user in the first centre
         factory(App\User::class)->create([
-            "name"  => "ARC store user",
-            "email" => "arc+store@neontribe.co.uk",
+            "name"  => "ARC CC User",
+            "email" => "arc+ccuser@neontribe.co.uk",
             "password" => bcrypt('store_pass'),
             "centre_id" => 1,
+            "role" => "CC_User",
+        ]);
+
+        factory(App\User::class)->create([
+            "name"  => "ARC FM User",
+            "email" => "arc+fmuser@neontribe.co.uk",
+            "password" => bcrypt('store_pass'),
+            "centre_id" => 1,
+            "role" => "FM_User",
         ]);
 
         // 1 faked user not associated with a random Centre

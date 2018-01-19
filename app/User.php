@@ -57,11 +57,11 @@ class User extends Authenticatable
         // default to empty collection
         $centres = collect();
         switch ($this->role) {
-            case "FM User":
+            case "FM_User":
                 // Just get all centres
                 $centres = Centre::all();
                 break;
-            case "CC User":
+            case "CC_User":
                 // If we have one, get our centre's neighbors
                 if (!is_null($this->centre)) {
                     $centres = $this->centre->neighbors;

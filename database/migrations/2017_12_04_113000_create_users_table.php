@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('role')->default('CC_User');
             $table->rememberToken();
             $table->integer('centre_id')->unsigned()->nullable();// Not all Users may have a CC e.g. Admins
             $table->timestamps();
