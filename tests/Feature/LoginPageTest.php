@@ -11,8 +11,10 @@ class LoginPageTest extends TestCase
     private $user = null;
     private $centre = null;
 
-    public function seedForTests()
+    public function setUp()
     {
+        parent::setUp();
+
         $this->centre = factory(App\Centre::class)->create();
 
         // Create a User
@@ -27,8 +29,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itShowsALoginPageWhenRouted()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->assertResponseStatus(200)
             ->assertResponseOK()
@@ -39,8 +39,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itDoesNotShowTheLoggedInUserDetails()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->dontSee($this->user->name)
             ->dontSee($this->user->centre->name)
@@ -50,8 +48,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itShowsAForgotPasswordLink()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->see('href="'. route('password.request') .'"')
         ;
@@ -60,8 +56,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itShowsARememberMeInput()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->seeElement('input[type=checkbox][name=remember]')
         ;
@@ -70,8 +64,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itShowsAUsernameInputBox()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->seeElement('input[id=email]')
         ;
@@ -80,8 +72,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itShowsAPasswordInputBox()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->seeElement('input[id=password]')
         ;
@@ -90,8 +80,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itDoesNotShowTheAuthUserMastheadWithLogoutLink()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->dontSee('href="'. route('service.login') .'"')
         ;
@@ -100,8 +88,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itAllowsAValidUserToLogin()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->type('testuser@example.com', 'email')
             ->type('test_user_pass', 'password')
@@ -112,8 +98,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itForbidsAnInvalidUserToLogin()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->type('notauser@example.com', 'email')
             ->type('bad_user_pass', 'password')
@@ -125,8 +109,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itRequiresAPasswordToLogin()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->type('testuser@example.com', 'email')
             ->press('Login')
@@ -138,8 +120,6 @@ class LoginPageTest extends TestCase
     /** @test */
     public function itRequiresAnEmailToLogin()
     {
-        $this->seedForTests();
-
         $this->visit(URL::route('service.login'))
             ->type('test_user_pass', 'password')
             ->press('Login')
