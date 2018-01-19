@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Registration;
 use App\User;
-use Illuminate\Support\Facades\Gate;
+use Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -45,6 +45,5 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('print-registration', function (User $user, Registration $registration) {
             return $user->isRelevantCentre($registration->centre);
         });
-
     }
 }
