@@ -8,7 +8,10 @@ class RegistrationPageTest extends TestCase
     use DatabaseMigrations;
 
 
-    /** @test */
+    /**
+     * @expectedException InvalidArgumentException
+     * @test
+     */
     public function logoDoesntRedirectMeToDashboard()
     {
         // Create some centres
@@ -26,7 +29,6 @@ class RegistrationPageTest extends TestCase
         //and remains on the registration page.
         $this->actingAs($user)
             ->visit(URL::route('service.registration.create'))
-            ->expectException(Error::class)
             ->click('logo')
             ->seePageIs(URL::route('service.registration.create'));
     }
