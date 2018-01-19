@@ -136,12 +136,15 @@
         $(document).ready(
             function() {
                 var el = $("#child_wrapper");
-                var monthEl = $('#month_adder_input');
-                var yearEl = $('#year_adder_input');
-                var addDateButton = $("#add_dob");
+                var monthEl = $('#dob-month');
+                var yearEl = $('#dob-year');
+                var addDateButton = $("#add-dob");
 
                 $(addDateButton).click(function (e) {
                     e.preventDefault();
+                    if (monthEl.val().length <= 1 || yearEl.val().length <= 1) {
+                        return false;
+                    }
                     var dateString = yearEl.val() + '-' + monthEl.val();
                     var humanDateString = new Date(dateString).toLocaleDateString('en-gb',{month:"short"}) +" "+ yearEl.val();
                     $(el).append('<tr><td><input name="children[]" type="hidden" value="' +dateString+ '" >' + humanDateString + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
