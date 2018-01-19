@@ -324,7 +324,7 @@ strong {
 	margin: 2rem 1rem;
 }
 
-.col div {
+.col > div {
 	margin: 1rem 0;
 }
 
@@ -358,6 +358,26 @@ strong {
 	position: relative;
 	padding-left: 55px;
 	margin-bottom: 1rem;
+}
+
+.form-group {
+	float: left;
+	margin-right: 20px;
+	width: 60px;
+}
+
+.form-group > label {
+	display: block;
+}
+
+.form-group > input {
+	font-size: 1.5rem;
+}
+
+.add-dob {
+	min-height: 34px;
+	min-width: 34px;
+	margin-top: 28px;
 }
 
 .edit-button {

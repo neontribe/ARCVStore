@@ -3,8 +3,8 @@
     <h1>Rose Vouchers</h1>
     @if (!Auth::guest())
     <ul>
-        <li>User: {{ Auth::user()->name }}</li>
-        <li>Centre: {{ Auth::user()->centre->name }}</li>
+        <li>User: {{ Auth::user()->name }} </li>
+        <li>Centre: @isset( Auth::user()->centre ) {{ Auth::user()->centre->name }} @endisset</li>
         <a href="{{ route('service.logout') }}"
            onclick="event.preventDefault();
            document.getElementById('logout-form').submit();">

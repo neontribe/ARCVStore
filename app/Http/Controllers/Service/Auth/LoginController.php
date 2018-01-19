@@ -28,7 +28,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -83,7 +83,7 @@ class LoginController extends Controller
         // If unsuccessful, then redirect back to the login with the form data
         // along with a message indicating the problem.
         return redirect()
-            ->back()
+            ->route('service.login')
             ->withInput($request->only('email', 'remember'))
             ->withErrors(['error_message' => trans('auth.failed')])
             ;
