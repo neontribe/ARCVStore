@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="login">
-    <h2>Login</h2>
+    <h2>Log In</h2>
     @if ($errors->has('error_message'))
         <div class="alert alert-danger">
             <strong>{{ $errors->first('error_message') }}</strong>
@@ -14,7 +14,7 @@
         {{ csrf_field() }}
         <div>
             <label for="email">Email Address</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus>
+            <input id="email" type="email" class="login-input" name="email" value="{{ old('email') }}" required autofocus>
             @if ($errors->has('email'))
                 <span class="help-block">
                     <strong>{{ $errors->first('email') }}</strong>
@@ -23,18 +23,18 @@
         </div>
         <div>
             <label for="password">Password</label>
-                <input id="password" type="password" name="password" required>
+                <input id="password" class="login-input" type="password" name="password" required>
                 @if ($errors->has('password'))
                     <span class="help-block">
                         <strong>{{ $errors->first('password') }}</strong>
                     </span>
                 @endif
         </div>
-        <div class="user-control">
+        <div class="remember">
             <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
             <label>Remember Me</label>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Log In</button>
         <a href="{{ route('password.request') }}">Forgot Your Password?</a>
     </form>
 </div>

@@ -65,19 +65,19 @@ input[type="text"]:disabled {
 }
 
 input[type="radio"],
-input[type="checkbox"] {
+.styled-checkbox {
 	cursor: pointer;
 	opacity: 0;
 }
 
 input[type=radio]+label,
-input[type=checkbox]+label {
+.styled-checkbox+label {
 	cursor: pointer;
 	margin-left: -20px;
 }
 
 input[type="radio"]+label:before,
-input[type="checkbox"]+label:before {
+.styled-checkbox+label:before {
 	content: "";
 	border: 2px solid;
 	background: #fff;
@@ -89,12 +89,12 @@ input[type="checkbox"]+label:before {
 }
 
 input[type="radio"]:focus+label:before,
-input[type="checkbox"]:focus+label:before {
+.styled-checkbox:focus+label:before {
 	box-shadow: 0 0 0 3px #dcb9d2;
 }
 
 input[type="radio"]:checked+label:after,
-input[type="checkbox"]:checked+label:after {
+.styled-checkbox:checked+label:after {
 	content: "";
 	border: 10px solid;
 	position: absolute;
@@ -110,7 +110,7 @@ input[type="radio"]:checked+label:after {
 	border-radius: 50%;
 }
 
-input[type="checkbox"]:checked+label:after {
+.styled-checkbox:checked+label:after {
 	content: "✔";
 	top: 4px;
 	border: 0;
@@ -462,10 +462,23 @@ strong {
 
 .login > form > div {
 	height: 3rem;
+	margin: 1rem;
 }
 
-.login > form > div > input {
-	float: right;
-	margin: 0 1rem;
-	font-size: 1.5rem;
+.login-input {
+	width: 100%;
+	font-size: 2rem;
+}
+
+.login button {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.login label {
+	font-size: 1rem;
+}
+
+.login a {
+	color: #757475;
 }
