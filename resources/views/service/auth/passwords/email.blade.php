@@ -13,15 +13,15 @@
 
     <form role="form" method="POST" action="{{ route('password.email') }}">
         {{ csrf_field() }}
-        <label for="email">E-Mail Address</label>
-        <input id="email" type="email" name="email" value="{{ old('email') }}" required>
+        <label for="email">Email Address</label>
+        <input id="email" class="login-input" type="email" name="email" value="{{ old('email') }}" required>
 
         @if ($errors->has('email'))
             <span class="help-block">
                 <strong>{{ $errors->first('email') }}</strong>
             </span>
         @endif
-        <button type="submit">
+        <button type="submit" class="reset-button">
             Send Password Reset Link
         </button>
     </form>

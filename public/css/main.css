@@ -482,3 +482,7 @@ strong {
 .login a {
 	color: #757475;
 }
+
+.login .reset-button {
+	margin: 3rem 0 0 0;
+}
