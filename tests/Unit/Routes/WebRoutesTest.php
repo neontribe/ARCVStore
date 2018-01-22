@@ -31,7 +31,6 @@ class WebRoutesTest extends TestCase
      * @return void
      * @test
      */
-
     public function testLoginGuestRoute()
     {
         Auth::logout();
