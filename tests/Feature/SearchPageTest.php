@@ -240,8 +240,32 @@ class SearchPageTest extends TestCase
     /** @test */
     public function itPaginatesWhenRequired()
     {
-        // Use the above examples to make 20 registrations or so, then check for pagination links.
+        // create a single Sponsor
+        $sponsor = factory(App\Sponsor::class)->create();
+
+        // create centre
+        $centre = factory(App\Centre::class)->create([
+            "sponsor_id" => $sponsor->id,
+        ]);
+
+        // Create a User in Centre
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // make centre some registrations
+        $registrations = factory(App\Registration::class, 20)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        // Visit search page, make sure next page link is present and works
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'))
+            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">Next »</a>')
+            ->click('Next »')
+            ->seePageIs(URL::route('service.base') . '/registration?page=2');
     }
-
 }
-
