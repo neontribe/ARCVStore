@@ -54,12 +54,13 @@ class Centre extends Model
     }
 
     /**
-     * Get the group of Centres belonging to this Centre's Sponsor.
+     * Gets all the siblings under the same parent (including this one).
+     * Self join; possible a better way to do this.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function scopeNeighbors()
+    public function neighbors()
     {
-        return $this->sponsor->centres;
+        return $this->hasMany('App\Centre', 'sponsor_id', 'sponsor_id');
     }
 }
