@@ -470,6 +470,10 @@ strong {
 	font-size: 2rem;
 }
 
+.login-input.email {
+	margin-bottom: 1.5rem;
+}
+
 .login button {
 	width: 100%;
 	margin-bottom: 1rem;

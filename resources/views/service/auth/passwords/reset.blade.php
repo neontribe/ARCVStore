@@ -15,30 +15,30 @@
         {{ csrf_field() }}
         <input type="hidden" name="token" value="{{ $token }}">
         <label for="email">Email Address</label>
-        <input id="email" type="email" name="email" class="login-input" value="{{ $email or old('email') }}" required autofocus>
+        <input id="email" type="email" name="email" class="login-input email" value="{{ $email or old('email') }}" required autofocus>
         @if ($errors->has('email'))
-            <span class="help-block">
+            <span>
                 <strong>{{ $errors->first('email') }}</strong>
             </span>
         @endif
 
-        <label for="password">Password</label>
+        <label for="password">New Password</label>
         <input id="password" type="password" name="password" class="login-input" required>
         @if ($errors->has('password'))
-            <span class="help-block">
+            <span>
                 <strong>{{ $errors->first('password') }}</strong>
             </span>
         @endif
 
-        <label for="password-confirm">Confirm Password</label>
+        <label for="password-confirm">Confirm New Password</label>
         <input id="password-confirm" type="password" name="password_confirmation" class="login-input" required>
         @if ($errors->has('password_confirmation'))
-            <span class="help-block">
+            <span>
                 <strong>{{ $errors->first('password_confirmation') }}</strong>
             </span>
         @endif
 
-        <button type="submit">
+        <button type="submit" class="reset-button">
             Reset Password
         </button>
     </form>
