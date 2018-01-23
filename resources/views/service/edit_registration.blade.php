@@ -16,6 +16,13 @@
                 <input type="hidden" name="registration" value="{{ $registration->id }}">
                 <div class="col">
                     <div>
+                        @can('updateChart', App\Registration::class))
+                            Yup1
+                        @endcan
+
+                        @can('updateDiary', $registration)
+                            Yup2
+                            @endcan
                         <h2>Main Carer:</h2>
                         <div>
                             <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
