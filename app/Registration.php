@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
-    const NOTICE_TYPES = [
-        'CheckFoodDiaryUnchecked' => ['reason' => 'Food Diary|has been received'],
-        'CheckFoodDiary' => ['reason' => 'Food Diary|Acknowledged'],
+    const REMINDER_TYPES = [
+        'FoodDiaryNeeded' => ['reason' => 'Food Diary|not been received'],
+        'FoodChartNeeded' => ['reason' => 'Food Chart|not been received'],
     ];
 
     /**
@@ -49,9 +49,25 @@ class Registration extends Model
         return $this->belongsTo('App\Centre');
     }
 
-    public function getReminderReasons() {
+    public function getStatus()
+    {
+        $reminders = [];
+
+        if (!$this->fm_chart_on) {
+            $reminders[] = self::REMINDER_TYPES['FoodChartNeeded'];
+        }
+        if (!$this->fm_diary_on) {
+            $reminders[] = self::REMINDER_TYPES['FoodDiaryNeeded'];
+        }
+
+        return $reminders;
+    }
+
+    public function getReminderReasons()
+    {
         $reminder_reasons = [];
-        $reminders = $this->getStatus()["reminders"];
+
+        $reminders = $this->getStatus();
 
         // get distinct reasons and frequency.
         $reason_count = array_count_values(array_column($reminders, 'reason'));
@@ -60,7 +76,7 @@ class Registration extends Model
             /*
              * Each element used by Blade in the format
              */
-            $notice_reasons[] = [
+            $reminder_reasons[] = [
                 "entity" => explode('|', $reason)[0],
                 "reason" => explode('|', $reason)[1],
                 "count" => $count,
@@ -68,5 +84,4 @@ class Registration extends Model
         }
         return $reminder_reasons;
     }
-
 }

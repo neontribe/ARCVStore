@@ -98,7 +98,7 @@
                 <div>
                     <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
                     <ul>
-                        @foreach( $family->getCreditReasons() as $credits)
+                        @foreach( $family->getCreditReasons() as $credits )
                             <li>
                                 <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
                                 as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
@@ -108,20 +108,26 @@
                     </ul>
                 </div>
                 <div class="warning">
-                    @foreach( $family->getNoticeReasons() as $notices)
+                    @foreach( $family->getNoticeReasons() as $notices )
                         <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                             Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
                             currently "{{ $notices['reason'] }}"</p>
                     @endforeach
-                </div>
-                <div class="attention">
-                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reminder: Have you sent the food diary and pie chart yet?</p>
                 </div>
                 <div class="print-button">
                     <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
                         Print a 4 week collection sheet for this family
                     </button>
                 </div>
+                @if ( count($registration->getReminderReasons()) > 0 )
+                <div class="attention">
+                    <h2>Reminders:</h2>
+                    @foreach ( $registration->getReminderReasons() as $reminder )
+                        <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                            {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                    @endforeach
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -167,7 +173,7 @@
 
         // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
         $('#carer').on('keyup keypress', function(e) {
-            if(e.which == 13) {
+            if(e.which === 13) {
                 e.preventDefault();
                 document.activeElement.blur();
                 $("input").blur();
