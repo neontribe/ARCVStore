@@ -4,9 +4,14 @@ html {
 
 body {
 	margin: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	height: 100%;
 }
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Roboto Slab', serif;
+}
+
 
 h1 {
 	flex-grow: 1;
@@ -197,6 +202,16 @@ strong {
 	font-weight: 400;
 }
 
+
+.logo {
+	margin : 0 auto;
+}
+
+.logo img {
+	width: 50%;
+	margin: 0 auto;
+}
+
 .reminder {
 	font-weight: 200;
 	background: #ECECEC;
@@ -238,7 +253,6 @@ strong {
 }
 
 .header img {
-	height: 50px;
 	margin: 0 3rem;
 }
 
