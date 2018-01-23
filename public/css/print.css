@@ -85,5 +85,6 @@ td {
 @media print {
 	@page { 
 		margin: 0; 
+		size: landscape;
 	}
 }
