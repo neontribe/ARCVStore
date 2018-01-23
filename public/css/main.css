@@ -4,9 +4,14 @@ html {
 
 body {
 	margin: 0;
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	height: 100%;
 }
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: 'Roboto Slab', serif;
+}
+
 
 h1 {
 	flex-grow: 1;
@@ -65,19 +70,19 @@ input[type="text"]:disabled {
 }
 
 input[type="radio"],
-input[type="checkbox"] {
+.styled-checkbox {
 	cursor: pointer;
 	opacity: 0;
 }
 
 input[type=radio]+label,
-input[type=checkbox]+label {
+.styled-checkbox+label {
 	cursor: pointer;
 	margin-left: -20px;
 }
 
 input[type="radio"]+label:before,
-input[type="checkbox"]+label:before {
+.styled-checkbox+label:before {
 	content: "";
 	border: 2px solid;
 	background: #fff;
@@ -89,12 +94,12 @@ input[type="checkbox"]+label:before {
 }
 
 input[type="radio"]:focus+label:before,
-input[type="checkbox"]:focus+label:before {
+.styled-checkbox:focus+label:before {
 	box-shadow: 0 0 0 3px #dcb9d2;
 }
 
 input[type="radio"]:checked+label:after,
-input[type="checkbox"]:checked+label:after {
+.styled-checkbox:checked+label:after {
 	content: "";
 	border: 10px solid;
 	position: absolute;
@@ -110,7 +115,7 @@ input[type="radio"]:checked+label:after {
 	border-radius: 50%;
 }
 
-input[type="checkbox"]:checked+label:after {
+.styled-checkbox:checked+label:after {
 	content: "✔";
 	top: 4px;
 	border: 0;
@@ -197,6 +202,16 @@ strong {
 	font-weight: 400;
 }
 
+
+.logo {
+	margin : 0 auto;
+}
+
+.logo img {
+	width: 50%;
+	margin: 0 auto;
+}
+
 .reminder {
 	font-weight: 200;
 	background: #ECECEC;
@@ -238,7 +253,6 @@ strong {
 }
 
 .header img {
-	height: 50px;
 	margin: 0 3rem;
 }
 
@@ -435,4 +449,56 @@ strong {
 
 .pagination a {
 	color: black;
+}
+
+/*
+*
+* LOGIN STYLING
+*
+*/
+
+.login {
+	width: 50%;
+	margin: 2rem auto;
+}
+
+.login > h2 {
+	text-align: center;
+	font-size: 2rem;
+	padding-bottom: 1rem;
+}
+
+.login > form {
+	display: block;
+}
+
+.login > form > div {
+	height: 3rem;
+	margin: 1rem;
+}
+
+.login-input {
+	width: 100%;
+	font-size: 2rem;
+}
+
+.login-input.email {
+	margin-bottom: 1.5rem;
+}
+
+.login button {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.login label {
+	font-size: 1rem;
+}
+
+.login a {
+	color: #757475;
+}
+
+.login .reset-button {
+	margin: 3rem 0 0 0;
 }
