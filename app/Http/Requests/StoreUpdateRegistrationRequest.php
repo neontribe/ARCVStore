@@ -36,6 +36,10 @@ class StoreUpdateRegistrationRequest extends FormRequest
             'carers.*' => 'distinct|string|different:carer',
             // MAY be present; MUST be a date format of '2017-07'
             'children.*' => 'date_format:Y-m',
+            // MAY be null (if not present) or boolean
+            'fm_chart' => 'nullable|boolean',
+            // MAY be null (if not present) or boolean
+            'fm_diary' => 'nullable|boolean',
         ];
 
         return $rules;
