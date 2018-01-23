@@ -19,6 +19,8 @@ class Registration extends Model
     protected $fillable = [
         'eligibility',
         'consented_on',
+        'fm_chart_on',
+        'fm_diary_on',
     ];
 
     /**

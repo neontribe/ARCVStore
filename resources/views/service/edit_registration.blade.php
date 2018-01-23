@@ -16,16 +16,10 @@
                 <input type="hidden" name="registration" value="{{ $registration->id }}">
                 <div class="col">
                     <div>
-                        @can('updateChart', App\Registration::class))
-                            Yup1
-                        @endcan
-
-                        @can('updateDiary', $registration)
-                            Yup2
-                            @endcan
                         <h2>Main Carer:</h2>
                         <div>
-                            <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
+                            <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off"
+                                   autocorrect="off" spellcheck="false">
                         </div>
                     </div>
                     <div class="other-carers-update">
@@ -42,7 +36,8 @@
                                     <td><input name="carers[]" type="hidden"
                                                value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
                                     <td>
-                                        <button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        <button type="button" class="remove_field"><i class="fa fa-minus"
+                                                                                      aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -50,7 +45,8 @@
                         </table>
                         <h2>Adding new collectors:</h2>
                         <div id="carer_adder" class="small-button-container">
-                            <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
+                            <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off"
+                                   autocorrect="off" spellcheck="false">
                             <button id="add_collector" class="addButton">
                                 <i class="fa fa-plus" aria-hidden="true"></i>
                             </button>
@@ -127,13 +123,34 @@
                     </button>
                 </div>
                 @if ( count($registration->getReminderReasons()) > 0 )
-                <div class="attention">
-                    <h2>Reminders:</h2>
-                    @foreach ( $registration->getReminderReasons() as $reminder )
-                        <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
-                    @endforeach
-                </div>
+                    <div class="attention">
+                        <h2>Reminders:</h2>
+                        @foreach ( $registration->getReminderReasons() as $reminder )
+                            <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                        @endforeach
+                        @if (Auth::user()->can('updateChart', App\Registration::class) || Auth::user('updateDiary', App\Registration::class))
+                            <div>
+                                <h2>Documents Received:</h2>
+                                @can('updateChart', App\Registration::class)
+                                    <div class="user-control">
+                                        <input type="hidden" name="update-chart" value="0">
+                                        <input type="checkbox" id="update-chart" name="fm_chart" value="1"
+                                               @if( old('fm_chart') || isset($registration->fm_chart_on)) checked @endif/>
+                                        <label for="update-chart">Chart</label>
+                                    </div>
+                                @endcan
+                                @can('updateDiary', $registration)
+                                    <div class="user-control">
+                                        <input type="hidden" name="update-diary" value="0">
+                                        <input type="checkbox" id="update-diary" name="fm_diary" value="1"
+                                               @if( old('fm_diary') || isset($registration->fm_diary_on)) checked @endif/>
+                                        <label for="update-diary">Diary</label>
+                                    </div>
+                                @endcan
+                            </div>
+                        @endif
+                    </div>
                 @endif
             </div>
         </div>
@@ -179,8 +196,8 @@
         );
 
         // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
-        $('#carer').on('keyup keypress', function(e) {
-            if(e.which === 13) {
+        $('#carer').on('keyup keypress', function (e) {
+            if (e.which === 13) {
                 e.preventDefault();
                 document.activeElement.blur();
                 $("input").blur();

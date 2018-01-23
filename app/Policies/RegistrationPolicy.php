@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Registration;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -10,13 +9,14 @@ class RegistrationPolicy
 {
     use HandlesAuthorization;
 
-    public function updateDiary(User $user, Registration $registration)
+    // These are permissions that we need to check a user for.
+    public function updateDiary(User $user)
     {
-        return ($user->role == "FoodMattersUser");
+        return ($user->role == "foodmatters_user");
     }
 
-    public function updateChart(User $user, Registration $registration)
+    public function updateChart(User $user)
     {
-        return ($user->role == "FoodMattersUser");
+        return ($user->role == "foodmatters_user");
     }
 }

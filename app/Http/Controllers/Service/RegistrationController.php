@@ -26,6 +26,7 @@ class RegistrationController extends Controller
      *
      * Also, the view contains the search functionality.
      */
+
     public function index(Request $request)
     {
         // Masthead bit
@@ -251,8 +252,6 @@ class RegistrationController extends Controller
 
     public function update(StoreUpdateRegistrationRequest $request)
     {
-        // TODO: add validation on the request like store has.
-
         // Create New Carers
         // TODO: Alter request to pre-join the array?
         $carers = array_map(
@@ -280,7 +279,30 @@ class RegistrationController extends Controller
         );
 
         // Fetch Registration and Family
-        $registration = Registration::where('id', $request->get('registration'))->first();
+        $registration = Registration::findOrFail($request->get('registration'));
+
+
+        //TODO fix: argh!
+        $fm = $request->only('fm_chart', 'fm_diary');
+        $now = Carbon::now();
+        foreach ($fm as $f => $v) {
+            switch ($v) {
+                case '1' :
+                    $fm[$f] = $now;
+                    break;
+                case '0':
+                    $fm[$f] = null;
+                    break;
+                default:
+                    unset($fm[$f]);
+                    break;
+            }
+        }
+
+        $delta = array_merge([], $fm);
+
+        $registration->fill($delta);
+
         $family = $registration->family;
 
         // Try to transact, so we can roll it back
