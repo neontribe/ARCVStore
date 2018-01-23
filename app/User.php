@@ -71,7 +71,6 @@ class User extends Authenticatable
         return $centres;
     }
 
-    // ToDo : Principle of Responsibility - Does this live here or on the Centre model?
     /**
      * Is a given centre relevant to this User?
      *
