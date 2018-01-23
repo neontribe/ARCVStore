@@ -1,23 +1,17 @@
 body {
-	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 h1,
 h2,
 h3 {
-	font-weight: 300;
-	margin: 0.3rem;
+	margin: 0;
+	font-family: 'Roboto Slab', serif;
 }
 
 h1 {
-	font-size: 2rem;
 	width: 100%;
-	margin-left: 2rem;
-}
-
-p {
-	font-size: 1.2rem;
-	margin: 1rem;
+	text-align: center;
 }
 
 ul {
@@ -46,20 +40,13 @@ td {
 }
 
 .header > img {
-	height: 55px;
+	height: 70px;
 	margin: 2rem 3rem;
 }
 
 .content {
-	display: flex;
-	flex-wrap: wrap;
 	width: 80%;
 	margin-left: 10%;
-}
-
-.content > div:nth-child(-n+4) {
-	width: 50%;
-	margin: 1% 0;
 }
 
 .content > table {
@@ -71,17 +58,14 @@ td {
 
 }
 
-.notes {
-	width: 100%;
-	
+.print-notes {
+	text-align: right;
+	font-size: 0.7rem;
+	position: fixed;
+	right: 1rem
 }
 
-.notes > p {
-	color: #d2232a;
-	font-size: 1rem;
-}
-
-/* Removes printout of automatic header and footer */
+/* Removes printout of automatic header and footer & prints in landscape */
 @media print {
 	@page { 
 		margin: 0; 
