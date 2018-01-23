@@ -458,10 +458,8 @@ strong {
 */
 
 .login {
-	width: 55%;
+	width: 50%;
 	margin: 2rem auto;
-	background-color: #F9F9F9;
-	padding: 2rem;
 }
 
 .login > h2 {
