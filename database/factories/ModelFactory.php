@@ -15,7 +15,7 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     static $password;
 
-    $roles = ['CC_User', 'FM_User'];
+    $roles = ['centre_user', 'foodmatters_user'];
 
     return [
         'name' => $faker->name,
