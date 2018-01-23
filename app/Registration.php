@@ -6,6 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registration extends Model
 {
+    const NOTICE_TYPES = [
+        'CheckFoodDiaryUnchecked' => ['reason' => 'Food Diary|has been received'],
+        'CheckFoodDiary' => ['reason' => 'Food Diary|Acknowledged'],
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -43,4 +48,25 @@ class Registration extends Model
     {
         return $this->belongsTo('App\Centre');
     }
+
+    public function getReminderReasons() {
+        $reminder_reasons = [];
+        $reminders = $this->getStatus()["reminders"];
+
+        // get distinct reasons and frequency.
+        $reason_count = array_count_values(array_column($reminders, 'reason'));
+
+        foreach ($reason_count as $reason => $count) {
+            /*
+             * Each element used by Blade in the format
+             */
+            $notice_reasons[] = [
+                "entity" => explode('|', $reason)[0],
+                "reason" => explode('|', $reason)[1],
+                "count" => $count,
+            ];
+        }
+        return $reminder_reasons;
+    }
+
 }
