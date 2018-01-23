@@ -87,15 +87,15 @@
         <div class="notices">
             <div>
                 <h3>Hints &amp; Tips</h3>
+                <p>Have you completed the food diary and pie chart for this family?</p>
+                <p>When dud you last chat to them about how they're finding shopping at the market?</p>
             </div>
             <div>
                 <h3>Reminder</h3>
                 @forelse( $family->getNoticeReasons() as $notices)
                     <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>{{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
                 @empty
-                    <ul>
-                        <li>No reminders for this family.</li>
-                    </ul>
+                    <p>No reminders for this family.</p>
                 @endforelse
             </div>
         </div>
