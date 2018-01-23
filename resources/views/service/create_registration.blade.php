@@ -94,7 +94,7 @@
                 <div>
                     <h2>Have you got the signed privacy statement for the family?</h2>
                     <div class="user-control">
-                        <input type="checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
+                        <input type="checkbox" class="styled-checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Yes</label>
                     </div>
                 </div>
