@@ -92,7 +92,7 @@
                         </table>
                         @include('service.partials.add_child_form')
                     </div>
-                    <button type="Submit">Save Changes</button>
+                    <button type="submit">Save Changes</button>
                 </div>
             </form>
 
@@ -129,12 +129,12 @@
                             <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                                 {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
                         @endforeach
-                        @if (Auth::user()->can('updateChart', App\Registration::class) || Auth::user('updateDiary', App\Registration::class))
+                        @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
                             <div>
                                 <h2>Documents Received:</h2>
                                 @can('updateChart', App\Registration::class)
                                     <div class="user-control">
-                                        <input type="hidden" name="update-chart" value="0">
+                                        <input type="hidden" name="fm_chart" value="0">
                                         <input type="checkbox" id="update-chart" name="fm_chart" value="1"
                                                @if( old('fm_chart') || isset($registration->fm_chart_on)) checked @endif/>
                                         <label for="update-chart">Chart</label>
@@ -142,7 +142,7 @@
                                 @endcan
                                 @can('updateDiary', $registration)
                                     <div class="user-control">
-                                        <input type="hidden" name="update-diary" value="0">
+                                        <input type="hidden" name="fm_diary" value="0">
                                         <input type="checkbox" id="update-diary" name="fm_diary" value="1"
                                                @if( old('fm_diary') || isset($registration->fm_diary_on)) checked @endif/>
                                         <label for="update-diary">Diary</label>
