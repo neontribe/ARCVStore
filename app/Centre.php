@@ -43,8 +43,24 @@ class Centre extends Model
         return $this->hasMany('App\User');
     }
 
+    /**
+     * Get the Sponsor for this Centre
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function sponsor()
     {
         return $this->belongsTo('App\Sponsor');
+    }
+
+    /**
+     * Gets all the siblings under the same parent (including this one).
+     * Self join; possible a better way to do this.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function neighbors()
+    {
+        return $this->hasMany('App\Centre', 'sponsor_id', 'sponsor_id');
     }
 }
