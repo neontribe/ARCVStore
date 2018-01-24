@@ -18,7 +18,7 @@ h1 {
 }
 
 h2 {
-	font-size: 1.2rem;
+	font-size: 1.25rem;
 	font-weight: 400;
 }
 
@@ -36,9 +36,15 @@ th {
 	text-align: left;
 }
 
+th > p {
+	margin: 0 2rem;
+	font-size: 1.5rem;
+	text-align: right;
+
+}
+
 th > * {
 	display: inline-block;
-	margin-right: 10rem;
 }
 
 th,
@@ -47,6 +53,10 @@ td {
 	font-weight: 400;
 	padding: 1.2rem;
 	font-size: 0.8rem;
+}
+
+.colspan {
+	vertical-align: top;
 }
 
 .header {
@@ -66,7 +76,6 @@ td {
 
 .content > table {
 	width: 100%;
-	margin-bottom: 2%;
 	border-collapse: collapse;
 	empty-cells: show;
 	border: 1px solid #a74e94;
@@ -86,7 +95,7 @@ td {
 
 .notices,
 .allocation {
-	width: 49%;
+	width: 49.9%;
 	display: inline-table;
 }
 

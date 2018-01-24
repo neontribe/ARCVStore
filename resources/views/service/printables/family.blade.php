@@ -11,42 +11,20 @@
 
     <div class="content">
         <h1>Family Voucher Collection Sheet</h1>
-        <!-- <div>
-            <h2>Main Carer</h2>
-            <p>{{ $pri_carer->name }}</p>
-        </div>
-        <div>
-            <h2>Voucher Allocations</h2>
-            <p>{{ $family->entitlement }}</p>
-        </div>
-        <div>
-            <h2>Other Collectors</h2>
-            <ul>
-                @foreach ($sec_carers as $carer)
-                <li>{{ $carer->name }}</li>
-                @endforeach
-            </ul>
-        </div>
-        <div>
-            <h2>Children</h2>
-            <ul>
-            @foreach( $family->getCreditReasons() as $credits)
-                <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
-            @endforeach
-            </ul>
-        </div> -->
         <table>
             <tr>
                 <th colspan="5">
-                    <h2>Main Carer's Name</h2>
+                    <h2>Main Carer's Name:</h2>
                     <p>{{ $pri_carer->name }}</p>
                 </th>
-                <td rowspan="2">Date Printed:</td>
+                <td rowspan="2" class="colspan">
+                    <p>Date Printed:<p>
+                    <p> {{ \Carbon\Carbon::now()->toFormattedDateString() }} </p>
+                </td>
             </tr>
             <tr>
-                <th colspan="5">
-                    <h3>Children's Centre Name</h3>
-                    <!-- FAO CHARLIE :D-->
+                <th colspan="5" >
+                    <h3>Children's Centre Name:</h3>
                     <p>{{ $centre->name }}</p>
                 </th>
             </tr>
@@ -59,8 +37,8 @@
                 <td>Signature</td>
             </tr>
             <tr>
-                <td rowspan="4">ARC00123</td>
-                <td rowspan="4">(ICON) {{ $family->entitlement }}</td>
+                <td rowspan="4" class="colspan">{{ $family->rvid }}</td>
+                <td rowspan="4" class="colspan">(ICON) {{ $family->entitlement }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -92,7 +70,7 @@
                 <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
             @endforeach
           </ul>
-          <p>Their RV-ID is: <strong>ARC00123</strong></p>
+          <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
         </div>
         <div class="notices">
             <div>
