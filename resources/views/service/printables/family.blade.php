@@ -83,12 +83,18 @@
             </tr>
         </table>
         <div class="allocation">
+          <p>This family should collect <strong>X</strong> vouchers per week:</p>
+          <ul>
+            <li><strong>X</strong> vouchers as 1 child currently under school age</li>
+            <li><strong>X</strong> vouchers as 1 family currently pregnant</li>
+          </ul>
+          <p>Their RV-ID is: <strong>ARC00123</strong></p>
         </div>
         <div class="notices">
             <div>
                 <h3>Hints &amp; Tips</h3>
                 <p>Have you completed the food diary and pie chart for this family?</p>
-                <p>When dud you last chat to them about how they're finding shopping at the market?</p>
+                <p>When did you last chat to them about how they're finding shopping at the market?</p>
             </div>
             <div>
                 <h3>Reminder</h3>

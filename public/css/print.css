@@ -28,9 +28,8 @@ h3 {
 
 }
 
-ul {
-	list-style-type: circle;
-	font-size: 1.2rem;
+li {
+	font-size: 0.7rem;
 }
 
 th {
@@ -76,8 +75,14 @@ td {
 	right: 1rem
 }
 
-.notices {
-	width: 50%;
+.allocation {
+	font-size: 0.9rem;
+}
+
+.notices,
+.allocation {
+	width: 49%;
+	display: inline-table;
 }
 
 .notices > div {
