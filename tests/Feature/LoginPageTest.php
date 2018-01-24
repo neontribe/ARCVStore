@@ -91,7 +91,7 @@ class LoginPageTest extends TestCase
         $this->visit(URL::route('service.login'))
             ->type('testuser@example.com', 'email')
             ->type('test_user_pass', 'password')
-            ->press('Login')
+            ->press('Log In')
             ->seePageIs(URL::route('service.dashboard'))
         ;
     }
