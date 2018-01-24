@@ -1,6 +1,14 @@
 body {
 	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 10px;
+	height: 210mm;
+	width: 296mm;
+	margin-top: 11rem;
+	margin-left: -10rem;
+	-webkit-transform: rotate(-90deg);
+	-moz-transform:rotate(-90deg);
+	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+	position: absolute;
 }
 
 h1,
@@ -104,7 +112,7 @@ td {
 
 .notices,
 .allocation {
-	width: 49.9%;
+	width: 49.5%;
 	display: inline-table;
 }
 
@@ -120,10 +128,22 @@ td {
 	color: #a74e94;
 }
 
-/* Removes printout of automatic header and footer & prints in landscape */
+/* Table cell spacing */
+
+.sml-cell {
+	width: 1%;
+}
+
+.med-cell {
+	width: 15%;
+}
+
+.lrg-cell {
+	width: 25%;
+}
+/* Removes printout of automatic header and footer */
 @media print {
 	@page {
 		margin: 0;
-		size: A4 landscape;
 	}
 }

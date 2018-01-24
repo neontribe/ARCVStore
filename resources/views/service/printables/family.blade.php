@@ -29,12 +29,12 @@
                 </th>
             </tr>
             <tr>
-                <td>RV-ID</td>
-                <td>Voucher allocation</td>
-                <td>Vouchers given out</td>
+                <td class="med-cell">RV-ID</td>
+                <td class="sml-cell">Voucher allocation</td>
+                <td class="sml-cell">Vouchers given out</td>
                 <td>Voucher numbers</td>
                 <td>Date collected</td>
-                <td>Signature</td>
+                <td class="lrg-cell">Signature</td>
             </tr>
             <tr>
                 <td rowspan="4" class="colspan">{{ $family->rvid }}</td>
