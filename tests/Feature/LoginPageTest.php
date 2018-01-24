@@ -91,7 +91,7 @@ class LoginPageTest extends TestCase
         $this->visit(URL::route('service.login'))
             ->type('testuser@example.com', 'email')
             ->type('test_user_pass', 'password')
-            ->press('Login')
+            ->press('Log In')
             ->seePageIs(URL::route('service.dashboard'))
         ;
     }
@@ -102,7 +102,7 @@ class LoginPageTest extends TestCase
         $this->visit(URL::route('service.login'))
             ->type('notauser@example.com', 'email')
             ->type('bad_user_pass', 'password')
-            ->press('Login')
+            ->press('Log In')
             ->seePageIs(URL::route('service.login'))
             ->see(trans('auth.failed'))
         ;
@@ -113,7 +113,7 @@ class LoginPageTest extends TestCase
     {
         $this->visit(URL::route('service.login'))
             ->type('testuser@example.com', 'email')
-            ->press('Login')
+            ->press('Log In')
             ->seePageIs(URL::route('service.login'))
             ->see(trans('validation.required', ['attribute' => "password"]));
         ;
@@ -124,7 +124,7 @@ class LoginPageTest extends TestCase
     {
         $this->visit(URL::route('service.login'))
             ->type('test_user_pass', 'password')
-            ->press('Login')
+            ->press('Log In')
             ->seePageIs(URL::route('service.login'))
             ->see(trans('validation.required', ['attribute' => "email"]));
         ;
