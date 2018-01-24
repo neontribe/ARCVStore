@@ -47,7 +47,7 @@
                 <th colspan="5">
                     <h3>Children's Centre Name</h3>
                     <!-- FAO CHARLIE :D-->
-                    <p>{{ $registration }}</p>
+                    <p>{{ $centre->name }}</p>
                 </th>
             </tr>
             <tr>
