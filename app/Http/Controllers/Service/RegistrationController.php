@@ -293,7 +293,7 @@ class RegistrationController extends Controller
             }
         );
 
-        // Grab the date and set up an empty changes array
+        // Grab the date
         $now = Carbon::now();
 
         // Check permissions
