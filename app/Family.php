@@ -60,8 +60,6 @@ class Family extends Model
             $credits = array_merge($credits, $child_status['credits']);
         }
 
-
-
         if ($this->expecting) {
             $credits[] = self::CREDIT_TYPES['FamilyIsPregnant'];
         }

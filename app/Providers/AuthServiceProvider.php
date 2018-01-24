@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Policies\RegistrationPolicy;
 use App\Registration;
 use App\User;
 use Gate;
@@ -16,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
+        'App\Registration' => RegistrationPolicy::class
     ];
 
     /**
