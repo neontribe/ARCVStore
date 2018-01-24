@@ -93,8 +93,8 @@ td {
 
 /* Removes printout of automatic header and footer & prints in landscape */
 @media print {
-	@page { 
-		margin: 0; 
-		size: landscape;
+	@page {
+		margin: 0;
+		size: A4 landscape;
 	}
 }
