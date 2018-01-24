@@ -36,6 +36,11 @@ th {
 	text-align: left;
 }
 
+th > * {
+	display: inline-block;
+	margin-right: 10rem;
+}
+
 th,
 td {
 	border: 1px solid #a74e94;

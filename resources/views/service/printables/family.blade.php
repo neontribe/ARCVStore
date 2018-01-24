@@ -39,12 +39,15 @@
             <tr>
                 <th colspan="5">
                     <h2>Main Carer's Name</h2>
+                    <p>{{ $pri_carer->name }}</p>
                 </th>
                 <td rowspan="2">Date Printed:</td>
             </tr>
             <tr>
                 <th colspan="5">
                     <h3>Children's Centre Name</h3>
+                    <!-- FAO CHARLIE :D-->
+                    <p>{{ $registration }}</p>
                 </th>
             </tr>
             <tr>
@@ -57,7 +60,7 @@
             </tr>
             <tr>
                 <td rowspan="4">ARC00123</td>
-                <td rowspan="4">(ICON) 6</td>
+                <td rowspan="4">(ICON) {{ $family->entitlement }}</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -83,10 +86,11 @@
             </tr>
         </table>
         <div class="allocation">
-          <p>This family should collect <strong>X</strong> vouchers per week:</p>
+          <p>This family should collect <strong>{{ $family->entitlement }}</strong> vouchers per week:</p>
           <ul>
-            <li><strong>X</strong> vouchers as 1 child currently under school age</li>
-            <li><strong>X</strong> vouchers as 1 family currently pregnant</li>
+            @foreach( $family->getCreditReasons() as $credits)
+                <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
+            @endforeach
           </ul>
           <p>Their RV-ID is: <strong>ARC00123</strong></p>
         </div>
