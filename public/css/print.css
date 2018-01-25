@@ -16,7 +16,6 @@ h1 {
 	margin-bottom: 1rem;
 	font-weight: 400;
 	font-size: 1.5rem;
-	page-break-before: always;
 }
 
 h2 {
@@ -92,11 +91,15 @@ td {
 
 }
 
+.families_table th,
+.families_table td {
+	padding: 0.5rem;
+}
+
 .print-notes {
 	text-align: right;
 	font-size: 0.7rem;
-	position: fixed;
-	right: 1rem
+	margin-left: 10rem;
 }
 
 .notices,
@@ -115,10 +118,6 @@ td {
 
 .allocation {
 	font-size: 0.9rem;
-}
-
-.attention {
-	page-break-after: always;
 }
 
 .notices h3,
@@ -145,14 +144,8 @@ td {
 	@page {
 		margin: 0;
 	}
-	body {
-		height: 210mm;
-		width: 296mm;
-		margin-top: 11rem;
-		margin-left: -10rem;
-		-webkit-transform: rotate(-90deg);
-		-moz-transform:rotate(-90deg);
-		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-		position: absolute;
+
+	.content {
+		page-break-after: always;
 	}
 }
