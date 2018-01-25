@@ -16,7 +16,7 @@
     </head>
     <body>
 
-    @include('service.printables.partials.masthead')
+    
 
     @yield('content')
 
