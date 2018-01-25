@@ -30,12 +30,12 @@
                             </h2>
                         </div>
                         <table id="carer_wrapper">
-                            @foreach ($sec_carers as $sec_carer)
+                            @foreach ( $sec_carers as $sec_carer )
                                 <tr>
-                                    <td><input name="carers[]" type="hidden"
-                                               value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
+                                    <td><input name="carers[]" type="hidden" value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
                                     <td>
-                                        <button type="button" class="remove_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        <button type="button" class="remove_field">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -64,15 +64,15 @@
                             </tr>
                             </thead>
                             <tbody id="existing_wrapper">
-                            @foreach ($children as $child)
+                            @foreach ( $children as $child )
                                 <tr>
                                     <td>{{ $child->getAgeString() }}</td>
                                     <td>{{ $child->getDobAsString() }}</td>
                                     <td>{{ $child->getStatusString() }}</td>
                                     <td>
-                                        <input type="hidden" name="children[]"
-                                               value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
-                                        <button class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i>
+                                        <input type="hidden" name="children[]" value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
+                                        <button class="remove_date_field">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -89,7 +89,7 @@
                         </table>
                         @include('service.partials.add_child_form')
                     </div>
-                    <button type="Submit">Save Changes</button>
+                    <button type="submit">Save Changes</button>
                 </div>
             </form>
 
@@ -98,7 +98,7 @@
                 <div>
                     <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
                     <ul>
-                        @foreach( $family->getCreditReasons() as $credits)
+                        @foreach( $family->getCreditReasons() as $credits )
                             <li>
                                 <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
                                 as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
@@ -108,20 +108,47 @@
                     </ul>
                 </div>
                 <div class="warning">
-                    @foreach( $family->getNoticeReasons() as $notices)
+                    @foreach( $family->getNoticeReasons() as $notices )
                         <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
                             Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
                             currently "{{ $notices['reason'] }}"</p>
                     @endforeach
-                </div>
-                <div class="attention">
-                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Reminder: Have you sent the food diary and pie chart yet?</p>
                 </div>
                 <div class="print-button">
                     <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
                         Print a 4 week collection sheet for this family
                     </button>
                 </div>
+                @if ( count($registration->getReminderReasons()) > 0 )
+                    <div class="attention">
+                        <h2>Reminders:</h2>
+                        @foreach ( $registration->getReminderReasons() as $reminder )
+                            <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                                {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                        @endforeach
+                        @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
+                            <div>
+                                <h2>Documents Received:</h2>
+                                @can( 'updateChart', App\Registration::class )
+                                    <div class="user-control">
+                                        <input type="hidden" name="fm_chart" value="0">
+                                        <input type="checkbox" id="update-chart" name="fm_chart" value="1"
+                                               @if( old('fm_chart') || isset($registration->fm_chart_on) ) checked @endif/>
+                                        <label for="update-chart">Chart</label>
+                                    </div>
+                                @endcan
+                                @can( 'updateDiary', App\Registration::class )
+                                    <div class="user-control">
+                                        <input type="hidden" name="fm_diary" value="0">
+                                        <input type="checkbox" id="update-diary" name="fm_diary" value="1"
+                                               @if( old('fm_diary') || isset($registration->fm_diary_on) ) checked @endif/>
+                                        <label for="update-diary">Diary</label>
+                                    </div>
+                                @endcan
+                            </div>
+                        @endif
+                    </div>
+                @endif
             </div>
         </div>
     </div>
@@ -166,8 +193,8 @@
         );
 
         // If enter is pressed, keyboard is hidden on iPad and form submit is disabled
-        $('#carer').on('keyup keypress', function(e) {
-            if(e.which == 13) {
+        $('#carer').on('keyup keypress', function (e) {
+            if (e.which === 13) {
                 e.preventDefault();
                 document.activeElement.blur();
                 $("input").blur();
