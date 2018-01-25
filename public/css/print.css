@@ -1,14 +1,6 @@
 body {
 	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 10px;
-	height: 210mm;
-	width: 296mm;
-	margin-top: 11rem;
-	margin-left: -10rem;
-	-webkit-transform: rotate(-90deg);
-	-moz-transform:rotate(-90deg);
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	position: absolute;
 }
 
 h1,
@@ -24,6 +16,7 @@ h1 {
 	margin-bottom: 1rem;
 	font-weight: 400;
 	font-size: 1.5rem;
+	page-break-before: always;
 }
 
 h2 {
@@ -106,12 +99,9 @@ td {
 	right: 1rem
 }
 
-.allocation {
-	font-size: 0.9rem;
-}
-
 .notices,
-.allocation {
+.allocation,
+.attention {
 	width: 49.5%;
 	display: inline-table;
 }
@@ -123,7 +113,16 @@ td {
 	margin: 0.5rem 0;
 }
 
+.allocation {
+	font-size: 0.9rem;
+}
+
+.attention {
+	page-break-after: always;
+}
+
 .notices h3,
+.attention h3,
 .colspan i {
 	color: #a74e94;
 }
@@ -145,5 +144,15 @@ td {
 @media print {
 	@page {
 		margin: 0;
+	}
+	body {
+		height: 210mm;
+		width: 296mm;
+		margin-top: 11rem;
+		margin-left: -10rem;
+		-webkit-transform: rotate(-90deg);
+		-moz-transform:rotate(-90deg);
+		filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+		position: absolute;
 	}
 }
