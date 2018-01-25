@@ -23,7 +23,7 @@ class CentreController extends Controller
     {
         $registrations = $centre->registrations;
 
-        $reg_chunks = $registrations->chunk(12);
+        $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now. Could optimise DB hits with eager load of stuff we need.
         return view(
             'service.printables.families',
