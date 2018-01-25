@@ -1,10 +1,5 @@
 @extends('layouts.printable_master')
 
-<link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
-
-<link rel="stylesheet" type="text/css" href="{{ asset('css/print.css') }}">
-
 @section('title', $sheet_title)
 
 @section('content')
