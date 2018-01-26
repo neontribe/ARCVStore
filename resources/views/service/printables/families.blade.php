@@ -12,9 +12,12 @@
 
     <div class="content">
       <h1>Weekly Voucher Collection Sheet</h1>
-      <div>
-        <h2>Children's Centre name: {{ $centre->name }}</h2>
-        <p>Week commencing</p>
+      <div class="subhead">
+        <h2>Children's Centre: {{ $centre->name }}</h2>
+        <div>
+          <p>Week commencing</p>
+          <img src="{{ asset('assets/date-field.svg') }}">
+        </div>
       </div>
       <table class="families_table">
         <tr>
@@ -48,8 +51,7 @@
         <p>When this icon is displayed for a family, next month the number of vouchers the family can collect will change because of a child's birthday. Please help them to get ready for this. You can find more information about the change if you search for the family in the Rose Voucher app.</p>
       </div>
     </div>
-    
+
   @endforeach
 
 @endsection
-
