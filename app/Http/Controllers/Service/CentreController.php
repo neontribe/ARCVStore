@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Service;
 
 use App\Centre;
-use App\Family;
 use App\Http\Controllers\Controller;
 use App\Registration;
 use Auth;
 use Carbon\Carbon;
-use DB;
 use Illuminate\View\View;
 use Excel;
+
 
 class CentreController extends Controller
 {
@@ -18,7 +17,7 @@ class CentreController extends Controller
      * Displays a printable version of the families registered with the center.
      *
      * @param Centre $centre
-     *
+     * @return \Illuminate\Contracts\View\Factory|View
      */
     public function printRegistrations(Centre $centre)
     {
