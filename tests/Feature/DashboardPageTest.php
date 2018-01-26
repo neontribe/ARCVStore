@@ -13,6 +13,11 @@ class DashboardPageTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * @var Centre $centre
+     * @var User $user
+     * @var Registration $registration
+     */
     private $centre;
     private $user;
     private $registration;
