@@ -60,13 +60,15 @@ class DashboardPageTest extends TestCase
 
         $this->actingAs($ccuser)
             ->visit(URL::route('service.dashboard'))
-            ->dontSee(URL::route('service.centres.registrations.summary'));
+            ->dontSee(URL::route('service.centres.registrations.summary'))
+        ;
 
         Auth::logout();
 
         $this->actingAs($fmuser)
             ->visit(URL::route('service.dashboard'))
-            ->see(URL::route('service.centres.registrations.summary'));
+            ->see(URL::route('service.centres.registrations.summary'))
+        ;
     }
 
     /** @test */
