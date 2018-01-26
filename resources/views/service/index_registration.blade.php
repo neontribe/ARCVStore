@@ -6,7 +6,7 @@
 
     @include('service.partials.flash_notices')
 
-    @include('service.partials.navbar')
+    @include('service.partials.navbar', ['headerTitle' => 'Search for a family'])
     <div class="content search">
         <div class="row">
             <div class="col">

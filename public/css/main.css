@@ -14,9 +14,8 @@ h1, h2, h3, h4, h5, h6 {
 
 
 h1 {
-	flex-grow: 1;
-	font-weight: 200;
-	font-size: 2.5rem;
+	font-size: 2rem;
+	text-align: center;
 }
 
 h2 {
@@ -313,18 +312,21 @@ strong {
 .subnav ul {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 0;
 	width: 100%;
 }
 
 .subnav li {
-	min-height: 48px;
-	font-size: 1.5rem;
-	padding: 0.5rem;
-	text-align: center;
+	font-size: 1rem;
 	list-style-type: none;
 	display: flex;
 	align-items: center;
+}
+
+.subnav .left,
+.subnav .right {
+	flex: 1;
 }
 
 .row {
@@ -447,8 +449,10 @@ strong {
     justify-content: space-around;
 }
 
-.pagination a {
+.pagination a,
+.subnav a {
 	color: black;
+	padding-right: 1rem;
 }
 
 /*
