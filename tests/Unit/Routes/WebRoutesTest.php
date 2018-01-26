@@ -1,26 +1,32 @@
 <?php
 
-use Tests\TestCase;
+namespace Tests;
+
+use Auth;
+use App\Centre;
+use App\User;
+use App\Registration;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use URL;
 
 class WebRoutesTest extends TestCase
 {
     use DatabaseMigrations;
 
-    /** @var App\User $user */
+    /** @var User $user */
     private $user;
 
-    /** @var App\Centre $centre */
+    /** @var Centre $centre */
     private $centre;
 
     public function setUp()
     {
         parent::setUp();
 
-        $this->centre = factory(App\Centre::class)->create();
+        $this->centre = factory(Centre::class)->create();
 
         // Create a User
-        $this->user =  factory(App\User::class)->create([
+        $this->user =  factory(User::class)->create([
             "name"  => "test user",
             "email" => "testuser@example.com",
             "password" => bcrypt('test_user_pass'),
@@ -102,7 +108,7 @@ class WebRoutesTest extends TestCase
     {
 
         // Create a random registration with our centre.
-        $registration = factory(App\Registration::class)->create([
+        $registration = factory(Registration::class)->create([
             "centre_id" => $this->centre->id,
         ]);
 
@@ -126,7 +132,7 @@ class WebRoutesTest extends TestCase
     public function testUpdateRouteGate()
     {
         // Create a random registration with our centre.
-        $registration = factory(App\Registration::class)->create([
+        $registration = factory(Registration::class)->create([
             "centre_id" => $this->centre->id,
         ]);
 
@@ -158,7 +164,7 @@ class WebRoutesTest extends TestCase
     public function testCentreRegistrationsSummaryGate()
     {
         // Create an FM User
-        $fmuser =  factory(App\User::class)->create([
+        $fmuser =  factory(User::class)->create([
             "name"  => "FM test user",
             "email" => "testfmuser@example.com",
             "password" => bcrypt('test_fmuser_pass'),
@@ -167,7 +173,7 @@ class WebRoutesTest extends TestCase
         ]);
 
         // Create a CC user
-        $ccuser =  factory(App\User::class)->create([
+        $ccuser =  factory(User::class)->create([
             "name"  => "CC test user",
             "email" => "testccuser@example.com",
             "password" => bcrypt('test_ccuser_pass'),
@@ -176,7 +182,7 @@ class WebRoutesTest extends TestCase
         ]);
 
         // Make some registrations
-        factory(App\Registration::class, 5)->create([
+        factory(Registration::class, 5)->create([
             "centre_id" => $this->centre->id,
         ]);
 
