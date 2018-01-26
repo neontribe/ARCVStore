@@ -7,8 +7,11 @@ class WebRoutesTest extends TestCase
 {
     use DatabaseMigrations;
 
-    private $user = null;
-    private $centre = null;
+    /** @var App\User $user */
+    private $user;
+
+    /** @var App\Centre $centre */
+    private $centre;
 
     public function setUp()
     {
@@ -152,7 +155,8 @@ class WebRoutesTest extends TestCase
     }
 
     /** test */
-    public function testCentreRegistrationsSummaryGate() {
+    public function testCentreRegistrationsSummaryGate()
+    {
         // Create an FM User
         $fmuser =  factory(App\User::class)->create([
             "name"  => "FM test user",
