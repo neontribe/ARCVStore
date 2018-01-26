@@ -12,7 +12,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto Slab', serif;
 }
 
-
 h1 {
 	font-size: 2rem;
 	text-align: center;
@@ -436,12 +435,24 @@ strong {
 	padding-top: 2rem;
 }
 
-.search .input,
 .search .col {
 	width: 80%;
 	margin: 0 0 0 10%;
 }
 
+.search-actions {
+	width: 100%;
+	display: flex;
+}
+
+.search-actions input {
+	padding: 1rem;
+	font-family: 'Roboto Slab', serif;
+}
+
+.search-actions button {
+	width: 75px;
+}
 
 .pagination {
 	list-style-type: none;

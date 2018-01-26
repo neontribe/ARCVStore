@@ -12,14 +12,11 @@
             <div class="col">
                 <form action="{{ URL::route('service.registration.index') }}" method="GET" id="searchform">
                     {!! csrf_field() !!}
-                    <div class="input">
-                        <h2>Search for a family name</h2>
-                        <div class="small-button-container">
-                            <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false">
-                            <button>
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
+                    <div class="search-actions">
+                        <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Enter family name">
+                        <button>
+                            asset('assets/search-light.svg')
+                        </button>
                     </div>
                 </form>
             </div>
