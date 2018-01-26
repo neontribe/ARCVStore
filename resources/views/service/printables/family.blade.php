@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('service.printables.partials.masthead')
+    
     <div class="content">
         <h1>Family Voucher Collection Sheet</h1>
         <table>
