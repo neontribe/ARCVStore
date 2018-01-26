@@ -203,13 +203,14 @@ strong {
 }
 
 
-.logo {
-	margin : 0 auto;
+.logout-button {
+	width: 125px;
+	min-height: 35px;
+	margin: 0 0 3rem 1rem;
 }
 
 .logo img {
-	width: 50%;
-	margin: 0 auto;
+	width: 200px;
 }
 
 .reminder {
@@ -244,21 +245,20 @@ strong {
 }
 
 .header {
-	height: 15%;
+	height: 12%;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
 	display: flex;
 	align-items: center;
 	text-align: center;
 	position: relative;
-}
-
-.header img {
-	margin: 0 3rem;
+	justify-content: space-between;
 }
 
 .header ul {
 	padding: 0;
-	margin: 2rem;
+	margin: 1rem 1rem 3rem 1rem;
+	text-align: right;
+	font-size: 1rem;
 }
 
 .header li {
@@ -267,7 +267,7 @@ strong {
 }
 
 .content {
-	height: 85%;
+	height: 88%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
