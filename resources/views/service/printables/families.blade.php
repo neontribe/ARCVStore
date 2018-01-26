@@ -1,5 +1,3 @@
-
-
 @extends('layouts.printable_master')
 
 @section('title', $sheet_title)
@@ -9,6 +7,10 @@
   @foreach ($reg_chunks as $chunk)
 
   @include('service.printables.partials.masthead')
+
+  @section('note')
+    @include('service.printables.partials.families_print_notes')
+  @endsection
 
     <div class="content">
       <h1>Weekly Voucher Collection Sheet</h1>
