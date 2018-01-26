@@ -168,6 +168,7 @@ class RegistrationController extends Controller
             [
                 'user_name' => $user->name,
                 'centre_name' => ($user->centre) ? $user->centre->name : null,
+                'centre' => $registration->centre,
                 'sheet_title' => 'Printable Family Sheet',
                 'sheet_header' => 'Family Collection Sheet',
                 'family' => $registration->family,
