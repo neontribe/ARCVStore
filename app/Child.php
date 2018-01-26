@@ -40,6 +40,12 @@ class Child extends Model
     ];
 
 
+    /**
+     * These are turned into Date objects on get
+     *
+     * @var array
+     */
+
     protected $dates = [
         'created_at',
         'updated_at',
