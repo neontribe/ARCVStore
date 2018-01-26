@@ -139,7 +139,7 @@ class CentreController extends Controller
          * - children with changes in near future showing red.
          */
 
-        Excel::create(
+        $excel_doc = Excel::create(
             'RegSummary_' . $now->format('YmdHis'),
             function ($excel) use ($user, $rows, $headers) {
                 $excel->setTitle('Registration Summary');
@@ -166,7 +166,21 @@ class CentreController extends Controller
                     }
                 );
             }
-        )->download('csv');
+        );
+
+        // This appears to help with a PHPUnit/Laravel-excel file download issue.
+        $excel_ident = app('excel.identifier');
+        $format = $excel_ident->getFormatByExtension('csv');
+        $contentType = $excel_ident->getContentTypeByFormat($format);
+
+        return response($excel_doc->string('csv'), 200, [
+            'Content-Type' => $contentType,
+            'Content-Disposition' => 'attachment; filename="' . $excel_doc->getFileName() . '.csv"',
+            'Expires' => Carbon::createFromTimestamp(0)->format('D, d M Y H:i:s'),
+            'Last-Modified' => Carbon::now()->format('D, d M Y H:i:s'),
+            'Cache-Control' => 'cache, must-revalidate',
+            'Pragma' => 'public',
+        ]);
 
         // avoid xls till we have all the formatting.
         //)->download('xls');

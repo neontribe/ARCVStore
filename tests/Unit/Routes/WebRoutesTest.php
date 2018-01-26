@@ -150,4 +150,54 @@ class WebRoutesTest extends TestCase
             ->assertResponseStatus(200)
         ;
     }
+
+    /** test */
+    public function testCentreRegistrationsSummaryGate() {
+        // Create an FM User
+        $fmuser =  factory(App\User::class)->create([
+            "name"  => "FM test user",
+            "email" => "testfmuser@example.com",
+            "password" => bcrypt('test_fmuser_pass'),
+            "centre_id" => $this->centre->id,
+            "role" => "foodmatters_user",
+        ]);
+
+        // Create a CC user
+        $ccuser =  factory(App\User::class)->create([
+            "name"  => "CC test user",
+            "email" => "testccuser@example.com",
+            "password" => bcrypt('test_ccuser_pass'),
+            "centre_id" => $this->centre->id,
+            "role" => "centre_user",
+        ]);
+
+        // Make some registrations
+        factory(App\Registration::class, 5)->create([
+            "centre_id" => $this->centre->id,
+        ]);
+
+        $route = URL::route('service.centres.registrations.summary');
+
+        Auth::logout();
+
+        // Bounce unauth'd to login
+        $this->visit($route)
+            ->seePageIs(URL::route('service.login'))
+            ->assertResponseStatus(200)
+        ;
+
+        // Throw a 403 for auth'd but forbidden
+        $this->actingAs($ccuser)
+            // need to get, because visit() bombs out with exceptions before you can check them.
+            ->get($route)
+            ->assertResponseStatus(403)
+        ;
+        Auth::logout();
+
+        // See page do interesting things
+        $this->actingAs($fmuser)
+            ->visit($route)
+            ->assertResponseOK()
+        ;
+    }
 }
