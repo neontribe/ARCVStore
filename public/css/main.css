@@ -173,9 +173,9 @@ table {
 	border-collapse: collapse;
 	background-color: white;
 	margin: 1rem 0;
+	width: 100%;
 }
 
-table,
 label {
 	width: 100%;
 	font-weight: 200;
@@ -185,7 +185,7 @@ label {
 thead {
 	border: solid 2px transparent;
 	border-bottom-color: #BEBEBE;
-	font-weight: 400;
+	font-weight: 600;
 	padding: 5px;
 	margin: 5px;
 }
@@ -193,13 +193,16 @@ thead {
 td {
 	border-top: 1px solid #ddd;
 	padding: 0.5rem;
-	text-align: center;
+	font-size: 1.2rem;
 }
 
 strong {
 	font-weight: 400;
 }
 
+.center {
+	text-align: center;
+}
 
 .logout-button {
 	width: 125px;
