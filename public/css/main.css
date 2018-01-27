@@ -184,14 +184,14 @@ label {
 
 thead {
 	border: solid 2px transparent;
-	border-bottom-color: #BEBEBE;
+	border-bottom-color: #a74e94;
 	font-weight: 600;
 	padding: 5px;
 	margin: 5px;
 }
 
 td {
-	border-top: 1px solid #ddd;
+	border-top: 1px solid #a74e94;
 	padding: 0.5rem;
 	font-size: 1.2rem;
 }
@@ -436,11 +436,16 @@ strong {
 
 .search {
 	padding-top: 2rem;
+	background-color: #FFF
 }
 
 .search .col {
 	width: 80%;
 	margin: 0 0 0 10%;
+}
+
+.search table button {
+	width: 75px;
 }
 
 .search-actions {

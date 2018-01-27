@@ -39,7 +39,7 @@
                             <td class="center">{{ $registration->family->entitlement }}</td>
                             <td class="center">{{ $registration->family->rvid }}</td>
                             <td>
-                                <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">select</button>
+                                <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">Select</button>
                             </td>
                         </tr>
                     @endforeach
