@@ -466,8 +466,9 @@ strong {
 
 .pagination {
 	list-style-type: none;
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
+	margin-bottom: 2rem;
 }
 
 .pagination a,
