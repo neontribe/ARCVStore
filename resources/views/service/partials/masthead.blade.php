@@ -3,7 +3,7 @@
         <div class="logout">
             <form>
                 <button type="submit" value="logout" class="logout-button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                    Logout
+                    Log out
                 </button>
             </form>
             <form id="logout-form" action="{{ route('service.logout') }}" method="POST" style="display: none;">
