@@ -6,11 +6,7 @@
 
   @foreach ($reg_chunks as $chunk)
 
-  @include('service.printables.partials.masthead')
-
-  @section('note')
-    @include('service.printables.partials.families_print_notes')
-  @endsection
+  @include('service.printables.partials.masthead', ['specificPrintNote' => 'Ideally you should print this form every week to keep voucher allocations as up to date as possible.'])
 
     <div class="content">
       <h1>Weekly Voucher Collection Sheet</h1>
