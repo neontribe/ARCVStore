@@ -452,6 +452,8 @@ strong {
 
 .search-actions button {
 	width: 75px;
+	padding: 0.5rem;
+	margin-left: 0.5rem;
 }
 
 .pagination {

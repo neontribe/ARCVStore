@@ -15,7 +15,7 @@
                     <div class="search-actions">
                         <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Enter family name">
                         <button>
-                            asset('assets/search-light.svg')
+                            <img src="{{ asset('assets/search-light.svg') }}" name="search">
                         </button>
                     </div>
                 </form>
