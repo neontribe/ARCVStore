@@ -3,6 +3,9 @@
 @section('title', 'Dashboard')
 
 @section('content')
+
+  @include('service.partials.navbar', ['headerTitle' => 'Main menu'])
+
     <script type="text/javascript">
         function printCentreRegistrations()
         {
