@@ -1,13 +1,5 @@
 @extends('layouts.printable_master')
 
-<style type="text/css" media="print">
-    .page
-    {
-        -webkit-transform: rotate(-90deg);
-        -moz-transform:rotate(-90deg);
-        filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-    }
-</style>
 
 <link rel="stylesheet" type="text/css" href="{{ asset('css/families.css') }}">
 
