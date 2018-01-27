@@ -277,11 +277,13 @@ strong {
 	display: inline-flex;
 	padding: 0;
 	width: 100%;
-	font-size: 1rem;
+	font-size: 1.2rem;
 }
 
 .navigation li {
-	padding: 2rem;
+	padding: 1rem;
+	min-height: 120px;
+	display: grid;
 	margin: 1rem 0.5rem;
 	font-family: 'Roboto Slab', serif;
 	border-radius: 0.5rem;
@@ -291,6 +293,12 @@ strong {
 	list-style-type: none;
 	transform: translate3d(0, 0, 0);
 	overflow: hidden;
+	text-align: center;
+}
+
+.navigation img {
+	width: 70px;
+	margin: 0 auto;
 }
 
 .navigation a {
