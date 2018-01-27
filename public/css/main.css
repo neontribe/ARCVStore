@@ -276,11 +276,14 @@ strong {
 .navigation ul {
 	display: inline-flex;
 	padding: 0;
+	width: 100%;
+	font-size: 1rem;
 }
 
 .navigation li {
 	padding: 2rem;
 	margin: 1rem 0.5rem;
+	font-family: 'Roboto Slab', serif;
 	border-radius: 0.5rem;
 	background-color: #a74e94;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
@@ -293,6 +296,7 @@ strong {
 .navigation a {
 	color: white;
 	text-decoration: none;
+	width: 50%;
 }
 
 .navigation a:hover {
