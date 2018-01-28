@@ -234,7 +234,7 @@ class SearchPageTest extends TestCase
         // Spot the Registration family's RVID
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
-            ->see("<td>" . $registration->family->entitlement . "</td>");
+            ->see('<td class="center">' . $registration->family->entitlement . "</td>");
     }
 
     /** @test */

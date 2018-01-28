@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('service.partials.navbar')
+    @include('service.partials.navbar', ['headerTitle' => 'Check, update or print'])
 
     @include('service.partials.flash_notices')
 

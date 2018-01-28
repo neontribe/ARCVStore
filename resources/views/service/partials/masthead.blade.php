@@ -1,15 +1,11 @@
 <div class="header">
     @if (!Auth::guest())
         <div class="logout">
-            <ul>
-                <li>
-                    <a href="{{ route('service.logout') }}"
-                       onclick="event.preventDefault();
-           document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
-                </li>
-            </ul>
+            <form>
+                <button type="submit" value="logout" class="logout-button" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    Log out
+                </button>
+            </form>
             <form id="logout-form" action="{{ route('service.logout') }}" method="POST" style="display: none;">
                 {{ csrf_field() }}
             </form>
