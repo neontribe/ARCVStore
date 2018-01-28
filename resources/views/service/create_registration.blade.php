@@ -13,19 +13,20 @@
             {!! csrf_field() !!}
             <div class="col">
                 <div>
-                    <h2>
-                        <label for="carer">
-                            <i class="fa fa-user" aria-hidden="true"></i> Main Carer's full name:
-                        </label>
-                    </h2>
+                    <h2>Adding voucher collectors</h2>
+                </div>
+                <div>
+                    <label for="carer">Main carer's full name</label>
                     <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
-                <div class="add">
-                    <h2>
-                        <label for="carer_adder_input">
-                            <i class="fa fa-user" aria-hidden="true"></i> Other people who can collect:
-                        </label>
-                    </h2>
+                <div>
+                    <label for="carer_adder_input">Other people who can collect: <span>(optional)</span></label>
+                    <div id="carer_adder" class="small-button-container">
+                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <button id="add_collector" class="addButton">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                    </div>
                     <table id="carer_wrapper">
                         @if(is_array(old('carers')) || (!empty(old('carers'))))
                             @foreach (old('carers') as $old_sec_carer )
@@ -36,25 +37,18 @@
                             @endforeach
                         @endif
                     </table>
-                    <div id="carer_adder" class="small-button-container">
-                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
-                        <button id="add_collector" class="addButton">
-                            <i class="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                    </div>
                 </div>
                 <div class="added">
                     <h2>You have added:</h2>
                 </div>
             </div>
             <div class="col">
-                <div class="add">
-                    <h2>
-                        <i class="fa fa-user-plus" aria-hidden="true"></i>
-                        Adding children or pregnancy:
-                    </h2>
-                    <h3>To add a child, complete the boxes below with their month and year of birth in numbers, e.g. '06 2017' for June 2017.</h3>
-                    </h3>
+                <div>
+                    <h2>Adding children or pregnancies</h2>
+                </div>
+                <div>
+                    <p>To add a child, complete the boxes below with their month and year of birth in numbers, e.g. '06 2017' for June 2017.</h3>
+                    </p>
                     @include('service.partials.add_child_form')
                 </div>
                 <div class="added">
@@ -75,9 +69,14 @@
             </div>
             <div class="col">
                 <div>
-                    <h2>Reason for receiving Rose Vouchers <span><i class="fa fa-info-circle"
-                                                                    aria-hidden="true"></i></span></h2>
-                    <div class="user-control">
+                    <h2>Other information</h2>
+                </div>
+                <div>
+                    <label for="eligibility-reason">
+                        Reason for receiving Rose Vouchers
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    </label>
+                    <div class="user-control" id="eligibility-reason">
                         <input type="radio" id="healthy-start" value="healthy-start" name="eligibility"
                                 @if(old('eligibility') == "healthy-start") checked="checked" @endif
                                 @if(empty(old('eligibility'))) checked="checked" @endif
@@ -92,10 +91,9 @@
                     </div>
                 </div>
                 <div>
-                    <h2>Have you got the signed privacy statement for the family?</h2>
                     <div class="user-control">
                         <input type="checkbox" class="styled-checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
-                        <label for="privacy-statement">Yes</label>
+                        <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                     </div>
                 </div>
                 <div class="reminder">
