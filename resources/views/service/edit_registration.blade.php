@@ -79,13 +79,13 @@
                     </table>
                 </div>
                 <div>
-                    <label for="add-child-form">Add more children or a pregnancy</label>
+                    <label for="add-child-form">Add more children or a pregnancy:</label>
+                    @include('service.partials.add_child_form')
                     <table>
                         <tbody id="child_wrapper">
 
                         </tbody>
                     </table>
-                    @include('service.partials.add_child_form')
                 </div>
                 <button class="long-button" type="submit">Save Changes</button>
             </div>
@@ -123,7 +123,7 @@
             </div>
             @if ( count($registration->getReminderReasons()) > 0 )
                 <div class="attention">
-                    <p>Reminders:</p>
+                    <h3>Reminders:</h3>
                     @foreach ( $registration->getReminderReasons() as $reminder )
                         <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                             {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
