@@ -405,29 +405,32 @@ strong {
 }
 
 .collect {
-	background-color: #ECECEC;
+	background-color: #dff2ce;
 	padding: 0.5rem 1rem;
-	flex-shrink: 2;
+	width: 30%;
+	height: 73vh;
 }
 
 .collect p {
 	margin: 0 0.5rem;
-	font-weight: 400;
+}
 
+.collect ul {
+	font-size: 1rem;
 }
 
 .print-button button {
-	min-height: 6rem;
-	font-size: 1.5rem;
 	padding: 1rem;
-	font-weight: 200;
-	width: 90%;
-	margin-left: 5%;
+	font-family: 'Roboto Slab', serif;
+	width: 100%;
 }
 
-.check,
-.search {
-	height: 77%;
+.check {
+	display: flex;
+}
+
+.check > form {
+	width: 70%;
 }
 
 .search {

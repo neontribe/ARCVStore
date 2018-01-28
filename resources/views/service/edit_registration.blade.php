@@ -23,7 +23,7 @@
                     <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
-                    <label for="carer_adder_input">Voucher collectore</label>
+                    <label for="carer_adder_input">Voucher collectors</label>
                     <table id="carer_wrapper">
                         @foreach ( $sec_carers as $sec_carer )
                             <tr>
@@ -87,7 +87,7 @@
                     </table>
                     @include('service.partials.add_child_form')
                 </div>
-                <button type="submit">Save Changes</button>
+                <button class="long-button" type="submit">Save Changes</button>
             </div>
         </form>
 
@@ -97,7 +97,7 @@
                 <h2>This family</h2>
             </div>
             <div>
-                <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
+                <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
                 <ul>
                     @foreach( $family->getCreditReasons() as $credits )
                         <li>
@@ -108,7 +108,7 @@
                     @endforeach
                 </ul>
             </div>
-            <p>ARC ID: {{ $family->rvid }}</p>
+            <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
             <div class="warning">
                 @foreach( $family->getNoticeReasons() as $notices )
                     <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
@@ -123,7 +123,7 @@
             </div>
             @if ( count($registration->getReminderReasons()) > 0 )
                 <div class="attention">
-                    <h2>Reminders:</h2>
+                    <p>Reminders:</p>
                     @foreach ( $registration->getReminderReasons() as $reminder )
                         <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
                             {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
