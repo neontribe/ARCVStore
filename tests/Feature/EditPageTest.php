@@ -1,12 +1,26 @@
 <?php
 
-use Tests\TestCase;
+namespace Tests;
+
+use App\Carer;
+use App\Centre;
+use App\Child;
+use App\User;
+use App\Registration;
+use Auth;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use URL;
 
 class EditPageTest extends TestCase
 {
     use DatabaseMigrations;
 
+    /**
+     * @var Centre $centre
+     * @var User $user
+     * @var Registration $registration
+     */
     private $centre;
     private $user;
     private $registration;
@@ -15,10 +29,10 @@ class EditPageTest extends TestCase
     {
         parent::setUp();
 
-        $this->centre = factory(App\Centre::class)->create();
+        $this->centre = factory(Centre::class)->create();
 
         // Create a User
-        $this->user =  factory(App\User::class)->create([
+        $this->user =  factory(User::class)->create([
             "name"  => "test user",
             "email" => "testuser@example.com",
             "password" => bcrypt('test_user_pass'),
@@ -26,7 +40,7 @@ class EditPageTest extends TestCase
         ]);
 
         // make centre some registrations
-        $this->registration = factory(App\Registration::class)->create([
+        $this->registration = factory(Registration::class)->create([
             "centre_id" => $this->centre->id,
         ]);
     }
@@ -57,7 +71,7 @@ class EditPageTest extends TestCase
         // Clear the carers
         $this->registration->family->carers()->delete();
         // Make 4 more
-        $new_carers = factory(App\Carer::class, 4)->make();
+        $new_carers = factory(Carer::class, 4)->make();
         // Add to Family
         $this->registration->family->carers()->saveMany($new_carers);
 
@@ -100,7 +114,7 @@ class EditPageTest extends TestCase
         // Clear the children
         $this->registration->family->children()->delete();
         // Make 4 more
-        $new_children = factory(App\Child::class, 4)->make();
+        $new_children = factory(Child::class, 4)->make();
         // Add to Family
         $this->registration->family->children()->saveMany($new_children);
 
@@ -137,7 +151,7 @@ class EditPageTest extends TestCase
     public function itOnlyShowsAFoodMattersInputsToFoodMattersUsers()
     {
         // Create a FM User
-        $users[] = factory(App\User::class)->create([
+        $users[] = factory(User::class)->create([
             "name"  => "test FM user",
             "email" => "testufmser@example.com",
             "password" => bcrypt('test_fm_user_pass'),
@@ -145,7 +159,7 @@ class EditPageTest extends TestCase
             "role" => 'foodmatters_user',
         ]);
 
-        $users[] = factory(App\User::class)->create([
+        $users[] = factory(User::class)->create([
             "name"  => "test cc user",
             "email" => "testccuser@example.com",
             "password" => bcrypt('test_cc_user_pass'),
@@ -156,8 +170,8 @@ class EditPageTest extends TestCase
         foreach ($users as $user) {
             $this->actingAs($user)
                 ->visit(URL::route('service.registration.edit', [ 'id' => $this->registration ]));
-            if ($user->can('updateDiary', App\Registration::class) ||
-                $user->can('updateChart', App\Registration::class)
+            if ($user->can('updateDiary', Registration::class) ||
+                $user->can('updateChart', Registration::class)
             ) {
                 $this->see('Documents Received:');
                 if ($user->can('updateChart')) {
@@ -174,6 +188,184 @@ class EditPageTest extends TestCase
                 $this->dontSeeElement('input[type="checkbox"][name="fm_chart"]');
                 $this->dontSeeElement('input[type="hidden"][name="fm_diary"]');
                 $this->dontSeeElement('input[type="checkbox"][name="fm_diary"]');
+            }
+        }
+    }
+
+    /** @test */
+    public function itShowsDiaryAndChartCheckedCorrectlyAsStoredInDatabase()
+    {
+        // Create a User
+        $fmuser = factory(User::class)->create([
+            'name' => 'test fm user',
+            'email' => 'testfmuser@example.com',
+            'password' => bcrypt('test_fmuser_pass'),
+            'centre_id' => $this->centre->id,
+            'role' => 'foodmatters_user',
+        ]);
+
+        $now = Carbon::now();
+
+        // make no docs registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => null,
+            'fm_chart_on' => null,
+        ]);
+
+        // make chart only registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => $now,
+            'fm_chart_on' => null,
+        ]);
+
+        // make diary only registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => null,
+            'fm_chart_on' => $now,
+        ]);
+
+        // make both docs registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => $now,
+            'fm_chart_on' => $now,
+        ]);
+
+        foreach ($regs as $reg) {
+            $route = URL::route('service.registration.edit', ['id' => $reg->id]);
+            Auth::logout();
+            $this->actingAs($fmuser)
+                ->visit($route)
+            ;
+
+            // Test Chart
+            if ($reg->fm_chart_on !== null) {
+                $this->seeInDatabase(
+                    'registrations',
+                    ['id' => $reg->id, 'fm_chart_on' => $now]
+                );
+                $this->seeElement('input[name="fm_chart"][checked]');
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_chart_on' => null ]
+                );
+                $this->seeElement('input[name="fm_chart"]:not(:checked)');
+                $this->dontSeeElement('input[name="fm_chart"][checked]');
+            }
+
+            // Test Diary;
+            if ($reg->fm_diary_on !== null) {
+                $this->seeInDatabase(
+                    'registrations',
+                    ['id' => $reg->id, 'fm_diary_on' => $now]
+                );
+                $this->seeElement('input[name="fm_diary"][checked]');
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' =>  $reg->id, 'fm_diary_on' => null ]
+                );
+                $this->seeElement('input[name="fm_diary"]:not(:checked)');
+                $this->dontSeeElement('input[name="fm_diary"][checked]');
+            }
+        }
+
+    }
+
+    /** @test */
+    public function itLetsAnAuthedUserUpdateDiaryOrChartState()
+    {
+        // Create a User
+        $fmuser = factory(User::class)->create([
+            'name' => 'test fm user',
+            'email' => 'testfmuser@example.com',
+            'password' => bcrypt('test_fmuser_pass'),
+            'centre_id' => $this->centre->id,
+            'role' => 'foodmatters_user',
+        ]);
+
+        $now = Carbon::now();
+
+        // make no docs registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => null,
+            'fm_chart_on' => null,
+        ]);
+
+        // make chart only registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => $now,
+            'fm_chart_on' => null,
+        ]);
+
+        // make diary only registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => null,
+            'fm_chart_on' => $now,
+        ]);
+
+        // make both docs registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_diary_on' => $now,
+            'fm_chart_on' => $now,
+        ]);
+
+        foreach ($regs as $reg) {
+            $route = URL::route('service.registration.edit', ['id' => $reg->id]);
+            $this->actingAs($fmuser)
+                ->visit($route);
+
+            // Test Chart
+            if ($reg->fm_chart_on !== null) {
+                $this->check('fm_chart');
+            } else {
+                $this->uncheck('fm_chart');
+            }
+
+            // Test Diary;
+            if ($reg->fm_diary_on !== null) {
+                $this->check('fm_diary');
+            } else {
+                $this->uncheck('fm_diary');
+            }
+
+            // We get back to edit page
+            $this->press('Save Changes')
+                ->seeStatusCode(200)
+                ->seePageIs($route)
+            ;
+
+            // Check the data has changed
+            if ($reg->fm_chart_on !== null) {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_chart_on' => $now ]
+                );
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_chart_on' => null ]
+                );
+            }
+
+            if ($reg->fm_diary_on !== null) {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_diary_on' => $now ]
+                );
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_diary_on' => null ]
+                );
             }
         }
     }
