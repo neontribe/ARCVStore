@@ -58,7 +58,7 @@
                         <thead>
                         <tr>
                             <td>Age</td>
-                            <td>Month/Year</td>
+                            <td>Month / Year</td>
                             <td></td>
                         </tr>
                         </thead>
@@ -116,11 +116,6 @@
                         currently "{{ $notices['reason'] }}"</p>
                 @endforeach
             </div>
-            <div class="print-button">
-                <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
-                    Print a 4 week collection sheet for this family
-                </button>
-            </div>
             @if ( count($registration->getReminderReasons()) > 0 )
                 <div class="attention">
                     <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
@@ -150,6 +145,11 @@
                     @endif
                 </div>
             @endif
+            <div class="print-button">
+                <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
+                    Print a 4 week collection sheet for this family
+                </button>
+            </div>
         </div>
     </div>
 

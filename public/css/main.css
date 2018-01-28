@@ -322,6 +322,7 @@ strong {
 	height: 75vh;
 	background: #EEEEEE;
 	margin: 1rem;
+	min-width: 25%;
 }
 
 .col > div:first-child {
@@ -341,6 +342,7 @@ strong {
 	font-size: 1.4rem;
 	margin: 0;
 }
+
 .col > div {
 	margin: 1rem;
 }
@@ -349,6 +351,7 @@ strong {
 	font-size: 0.7rem;
 }
 
+.col td,
 .col .added {
 	font-size: 1rem;
 }
