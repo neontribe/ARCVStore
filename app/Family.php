@@ -22,6 +22,15 @@ class Family extends Model
     ];
 
     /**
+     * The attributes that are cast as dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'leaving_on',
+    ];
+
+    /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
@@ -91,7 +100,6 @@ class Family extends Model
      *
      * @return array
      */
-
     public function getCreditReasons()
     {
         $credit_reasons = [];
@@ -157,7 +165,6 @@ class Family extends Model
 
         return $notice_reasons;
     }
-
 
     /**
      * Calculates the entitlement
