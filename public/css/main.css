@@ -350,6 +350,17 @@ strong {
 	margin: 1rem;
 }
 
+.col > div:first-child {
+	background-color: #89d33c;
+	margin: 0;
+	color: white;
+	padding: 0.5rem 0;
+}
+
+.col > div:first-child > h2 {
+	font-size: 1.4rem;
+	margin: 0;
+}
 .col > div {
 	margin: 1rem 0;
 }
