@@ -28,6 +28,9 @@
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
+                </div>
+                <div class="added">
+                    <label for="carer_wrapper">You have added:</label>
                     <table id="carer_wrapper">
                         @if(is_array(old('carers')) || (!empty(old('carers'))))
                             @foreach (old('carers') as $old_sec_carer )
@@ -38,9 +41,6 @@
                             @endforeach
                         @endif
                     </table>
-                </div>
-                <div class="added">
-                    <h2>You have added:</h2>
                 </div>
             </div>
             <div class="col">
@@ -54,7 +54,7 @@
                     @include('service.partials.add_child_form')
                 </div>
                 <div class="added">
-                    <h2>You have added:</h2>
+                    <label for="child_wrapper">You have added:</label>
                     <table>
                         <tbody id="child_wrapper">
                             @if(is_array(old('children')) || (!empty(old('children'))))

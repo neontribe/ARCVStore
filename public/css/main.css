@@ -48,6 +48,7 @@ input[type="search"] {
 	line-height: 20px;
 	width: 100%;
 	border: 2px solid #ededed;
+	font-family: 'Roboto Slab', serif;
 }
 
 input[type="text"]:disabled {
@@ -159,7 +160,6 @@ button:active:after,
 
 table {
 	border-collapse: collapse;
-	background-color: white;
 	margin: 1rem 0;
 	width: 100%;
 }
@@ -304,6 +304,10 @@ strong {
 	width: 100%;
 }
 
+.subnav i {
+	padding: 0.2rem 1.5rem;
+}
+
 .subnav li {
 	font-size: 1rem;
 	list-style-type: none;
@@ -349,11 +353,7 @@ strong {
 }
 
 .col .added {
-	min-height: 10rem;
-	padding: 0.5rem;
-	font-size: 1.5rem;
-	font-weight: 200;
-	overflow: auto;
+	font-size: 1rem;
 }
 
 .small-button-container {
