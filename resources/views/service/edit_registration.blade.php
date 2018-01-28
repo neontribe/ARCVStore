@@ -123,10 +123,9 @@
             </div>
             @if ( count($registration->getReminderReasons()) > 0 )
                 <div class="attention">
-                    <h3>Reminders:</h3>
+                    <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
                     @foreach ( $registration->getReminderReasons() as $reminder )
-                        <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                            {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                        <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
                     @endforeach
                     @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
                         <div>
