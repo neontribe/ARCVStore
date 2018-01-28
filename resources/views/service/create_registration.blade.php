@@ -21,7 +21,7 @@
                     <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
-                    <label for="carer_adder_input">Other people who can collect: <span>(optional)</span></label>
+                    <label for="carer_adder_input">Other people who can collect <span>(optional)</span></label>
                     <div id="carer_adder" class="small-button-container">
                         <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
                         <button id="add_collector" class="addButton">
