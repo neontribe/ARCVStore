@@ -4,7 +4,7 @@
 
 @section('content')
 
-    @include('service.partials.navbar')
+    @include('service.partials.navbar', ['headerTitle' => 'New family sign up'])
 
     @include('service.partials.flash_notices')
 
