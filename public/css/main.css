@@ -268,7 +268,7 @@ strong {
 }
 
 .content {
-	height: 88%;
+	height: 80%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
@@ -344,10 +344,10 @@ strong {
 }
 
 .col {
-	display: flex;
-	flex-direction: column;
 	width: 100%;
-	margin: 2rem 1rem;
+	height: 75vh;
+	background: #EEEEEE;
+	margin: 1rem;
 }
 
 .col > div {
