@@ -99,10 +99,10 @@
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                     </div>
                 </div>
-                <div class="reminder">
+                <div>
                     <p>Reminder: don't forget to complete food diary and chart.</p>
                 </div>
-                <button type="Submit">Save Family</button>
+                <button class="long-button" type="Submit">Save Family</button>
             </div>
         </form>
     </div>
