@@ -29,10 +29,6 @@ ul {
 	list-style-type: circle;
 }
 
-span {
-	font-size: 0.7rem;
-}
-
 form {
 	display: flex;
 	width: 100%;
@@ -320,9 +316,6 @@ strong {
 	flex: 1;
 }
 
-.row {
-	display: flex;
-}
 /* register */
 .col {
 	width: 100%;
@@ -350,6 +343,10 @@ strong {
 }
 .col > div {
 	margin: 1rem;
+}
+
+.col span {
+	font-size: 0.7rem;
 }
 
 .col .added {
@@ -439,12 +436,9 @@ strong {
 
 .search {
 	padding-top: 2rem;
-	background-color: #FFF
-}
-
-.search .col {
+	background-color: #FFF;
 	width: 80%;
-	margin: 0 0 0 10%;
+	margin-left: 10%;
 }
 
 .search table button {
@@ -458,7 +452,6 @@ strong {
 
 .search-actions input {
 	padding: 1rem;
-	font-family: 'Roboto Slab', serif;
 }
 
 .search-actions button {
