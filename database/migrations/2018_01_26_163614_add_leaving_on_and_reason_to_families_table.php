@@ -14,9 +14,8 @@ class AddLeavingOnAndReasonToFamiliesTable extends Migration
     public function up()
     {
         Schema::table('families', function (Blueprint $table) {
-            $table->dateTime('leaving_on')->nullable()
-                ->string('leaving_reason')->nullable()
-            ;
+            $table->dateTime('leaving_on')->nullable();
+            $table->string('leaving_reason', 128)->nullable();
         });
     }
 
