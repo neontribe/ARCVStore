@@ -12,38 +12,21 @@ h1, h2, h3, h4, h5, h6 {
 	font-family: 'Roboto Slab', serif;
 }
 
-
 h1 {
-	flex-grow: 1;
-	font-weight: 200;
-	font-size: 2.5rem;
+	font-size: 2rem;
+	text-align: center;
 }
 
 h2 {
-	font-weight: 200;
 	font-size: 1.5rem;
 	margin: 0.5rem;
-}
-
-h3 {
-	font-weight: 400;
-}
-
-p {
-	margin: 10px;
-	font-weight: 200;
 }
 
 ul {
 	margin: 0;
 	text-align: left;
-	font-weight: 200;
 	font-size: 1.5rem;
 	list-style-type: circle;
-}
-
-i {
-	padding: 0.2rem 1.5rem;
 }
 
 form {
@@ -56,11 +39,12 @@ form {
 input[type="text"],
 input[type="month"],
 input[type="search"] {
-	min-height: 48px;
-	font-size: 1.5em;
+	padding: 0.5rem 0;
+	font-size: 1.5rem;
 	line-height: 20px;
 	width: 100%;
 	border: 2px solid #ededed;
+	font-family: 'Roboto Slab', serif;
 }
 
 input[type="text"]:disabled {
@@ -84,7 +68,6 @@ input[type=radio]+label,
 input[type="radio"]+label:before,
 .styled-checkbox+label:before {
 	content: "";
-	border: 2px solid;
 	background: #fff;
 	width: 34px;
 	height: 34px;
@@ -101,7 +84,7 @@ input[type="radio"]:focus+label:before,
 input[type="radio"]:checked+label:after,
 .styled-checkbox:checked+label:after {
 	content: "";
-	border: 10px solid;
+	border: 8px solid;
 	position: absolute;
 	width: 0;
 	height: 0;
@@ -117,7 +100,7 @@ input[type="radio"]:checked+label:after {
 
 .styled-checkbox:checked+label:after {
 	content: "✔";
-	top: 4px;
+	top: 6px;
 	border: 0;
 }
 
@@ -173,52 +156,44 @@ button:active:after,
 
 table {
 	border-collapse: collapse;
-	background-color: white;
 	margin: 1rem 0;
+	width: 100%;
 }
 
-table,
 label {
 	width: 100%;
-	font-weight: 200;
-	font-size: 1.5rem;
 }
 
 thead {
 	border: solid 2px transparent;
-	border-bottom-color: #BEBEBE;
-	font-weight: 400;
+	border-bottom-color: #a74e94;
+	font-weight: 600;
 	padding: 5px;
 	margin: 5px;
 }
 
 td {
-	border-top: 1px solid #ddd;
+	border-top: 1px solid #a74e94;
 	padding: 0.5rem;
-	text-align: center;
+	font-size: 1.2rem;
 }
 
 strong {
 	font-weight: 400;
 }
 
+.center {
+	text-align: center;
+}
 
-.logo {
-	margin : 0 auto;
+.logout-button {
+	width: 125px;
+	min-height: 35px;
+	margin: 0 0 3rem 1rem;
 }
 
 .logo img {
-	width: 50%;
-	margin: 0 auto;
-}
-
-.reminder {
-	font-weight: 200;
-	background: #ECECEC;
-	font-size: 1.5rem;
-	min-height: 8rem;
-	overflow: auto;
-
+	width: 200px;
 }
 
 .warning p,
@@ -226,8 +201,8 @@ strong {
 	color: #d2232a;
 }
 
-.attention p {
-	color: #e5710b;
+.attention h3 {
+	color: #a74e94;
 }
 
 .error li {
@@ -244,21 +219,20 @@ strong {
 }
 
 .header {
-	height: 15%;
+	height: 12%;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
 	display: flex;
 	align-items: center;
 	text-align: center;
 	position: relative;
-}
-
-.header img {
-	margin: 0 3rem;
+	justify-content: space-between;
 }
 
 .header ul {
 	padding: 0;
-	margin: 2rem;
+	margin: 1rem 1rem 3rem 1rem;
+	text-align: right;
+	font-size: 1rem;
 }
 
 .header li {
@@ -267,23 +241,24 @@ strong {
 }
 
 .content {
-	height: 85%;
+	height: 80%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
 
-.navigation {
-	margin: 4rem;
+.navigation ul {
+	display: inline-flex;
 	padding: 0;
-	font-size: 2rem;
-	font-weight: 200;
-	width: 70%;
-	margin-left: 15%;
+	width: 100%;
+	font-size: 1.2rem;
 }
 
 .navigation li {
-	padding: 2rem;
-	margin: 1.5rem;
+	padding: 1rem;
+	min-height: 120px;
+	display: grid;
+	margin: 1rem 0.5rem;
+	font-family: 'Roboto Slab', serif;
 	border-radius: 0.5rem;
 	background-color: #a74e94;
 	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
@@ -291,11 +266,18 @@ strong {
 	list-style-type: none;
 	transform: translate3d(0, 0, 0);
 	overflow: hidden;
+	text-align: center;
+}
+
+.navigation img {
+	width: 70px;
+	margin: 0 auto;
 }
 
 .navigation a {
 	color: white;
 	text-decoration: none;
+	width: 50%;
 }
 
 .navigation a:hover {
@@ -313,55 +295,78 @@ strong {
 .subnav ul {
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	padding: 0;
 	width: 100%;
 }
 
+.subnav i {
+	padding: 0.2rem 1.5rem;
+}
+
 .subnav li {
-	min-height: 48px;
-	font-size: 1.5rem;
-	padding: 0.5rem;
-	text-align: center;
+	font-size: 1rem;
 	list-style-type: none;
 	display: flex;
 	align-items: center;
 }
 
-.row {
+.subnav .left,
+.subnav .right {
+	flex: 1;
+}
+
+.subnav .right {
+	justify-content: flex-end;
+}
+
+/* register */
+.col {
+	width: 100%;
+	height: 75vh;
+	background: #EEEEEE;
+	margin: 1rem;
+	min-width: 25%;
+}
+
+.col > div:first-child {
+	background-color: #63C669;
+	margin: 0;
+	color: white;
+	padding: 0.5rem 0;
 	display: flex;
 }
 
-.col {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	margin: 2rem 1rem;
+.col > div:first-child > img {
+	max-height: 60px;
+	margin: 0 0.5rem;
+}
+
+.col > div:first-child > h2 {
+	font-size: 1.4rem;
+	margin: 0;
 }
 
 .col > div {
-	margin: 1rem 0;
+	margin: 1rem;
 }
 
-.col i {
-	padding: 0.2rem;
+.col span {
+	font-size: 0.7rem;
 }
 
+.col td,
 .col .added {
-	background: white;
-	min-height: 10rem;
-	padding: 0.5rem;
-	font-size: 1.5rem;
-	font-weight: 200;
-	overflow: auto;
+	font-size: 1rem;
 }
 
 .small-button-container {
 	display: flex;
-    justify-content: center;
+  justify-content: center;
 }
 
 .small-button-container button {
-	min-width: 48px;
+	width: 30px
 }
 
 .small-button-container input {
@@ -371,12 +376,18 @@ strong {
 .user-control {
 	position: relative;
 	padding-left: 55px;
-	margin-bottom: 1rem;
+	margin: 1rem 0 2rem 0;
+	min-height: 10px;
+}
+
+.long-button {
+	width: 90%;
+	margin-left: 5%;
 }
 
 .form-group {
 	float: left;
-	margin-right: 20px;
+	margin-right: 10px;
 	width: 60px;
 }
 
@@ -391,7 +402,7 @@ strong {
 .add-dob {
 	min-height: 34px;
 	min-width: 34px;
-	margin-top: 28px;
+	margin: 18px 0 0 10px;
 }
 
 .edit-button {
@@ -400,55 +411,61 @@ strong {
 	top: 0;
 }
 
-.other-carers-update ul {
-	list-style-type: circle;
-}
-
 .collect {
-	background-color: #ECECEC;
-	padding: 0.5rem 1rem;
-	flex-shrink: 2;
+	background-color: #dff2ce;
 }
 
 .collect p {
 	margin: 0 0.5rem;
-	font-weight: 400;
+}
 
+.collect ul {
+	font-size: 1rem;
 }
 
 .print-button button {
-	min-height: 6rem;
-	font-size: 1.5rem;
 	padding: 1rem;
-	font-weight: 200;
-	width: 90%;
-	margin-left: 5%;
-}
-
-.check,
-.search {
-	height: 77%;
+	font-family: 'Roboto Slab', serif;
+	width: 100%;
 }
 
 .search {
 	padding-top: 2rem;
-}
-
-.search .input,
-.search .col {
+	background-color: #FFF;
 	width: 80%;
-	margin: 0 0 0 10%;
+	margin-left: 10%;
 }
 
+.search table button {
+	width: 75px;
+}
+
+.search-actions {
+	width: 100%;
+	display: flex;
+}
+
+.search-actions input {
+	padding: 1rem;
+}
+
+.search-actions button {
+	width: 75px;
+	padding: 0.5rem;
+	margin-left: 0.5rem;
+}
 
 .pagination {
 	list-style-type: none;
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
+	margin-bottom: 2rem;
 }
 
-.pagination a {
+.pagination a,
+.subnav a {
 	color: black;
+	padding-right: 1rem;
 }
 
 /*

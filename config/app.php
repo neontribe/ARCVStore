@@ -191,6 +191,7 @@ return [
         // Extras
         Barryvdh\Debugbar\ServiceProvider::class,
         TomLingham\Searchy\SearchyServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
     ],
 
@@ -242,7 +243,8 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         // Extras
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-        'Searchy' => TomLingham\Searchy\Facades\Searchy::class
+        'Searchy' => TomLingham\Searchy\Facades\Searchy::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];

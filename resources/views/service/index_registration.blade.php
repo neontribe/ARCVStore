@@ -6,54 +6,45 @@
 
     @include('service.partials.flash_notices')
 
-    @include('service.partials.navbar')
+    @include('service.partials.navbar', ['headerTitle' => 'Search for a family'])
     <div class="content search">
-        <div class="row">
-            <div class="col">
-                <form action="{{ URL::route('service.registration.index') }}" method="GET" id="searchform">
-                    {!! csrf_field() !!}
-                    <div class="input">
-                        <h2>Search for a family name</h2>
-                        <div class="small-button-container">
-                            <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false">
-                            <button>
-                                <i class="fa fa-search" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+        <div>
+            <form action="{{ URL::route('service.registration.index') }}" method="GET" id="searchform">
+                {!! csrf_field() !!}
+                <div class="search-actions">
+                    <input type="search" name="family_name" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Enter family name">
+                    <button>
+                        <img src="{{ asset('assets/search-light.svg') }}" name="search">
+                    </button>
+                </div>
+            </form>
         </div>
-        <div class="row">
-            <div class="col">
-                <table>
-                    <thead>
+        <div>
+            <table>
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td class="center">Voucher Entitlement</td>
+                    <td class="center">RV-ID</td>
+                    <td></td>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach ($registrations as $registration)
                     <tr>
-                        <td>Name</td>
-                        <td>Voucher Entitlement</td>
-                        <td>RV-ID</td>
-                        <td></td>
+                        <td>{{ $registration->family->carers->first()->name }}</td>
+                        <td class="center">{{ $registration->family->entitlement }}</td>
+                        <td class="center">{{ $registration->family->rvid }}</td>
+                        <td>
+                            <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">Select</button>
+                        </td>
                     </tr>
-                    </thead>
-                    <tbody>
-                    @foreach ($registrations as $registration)
-                        <tr>
-                            <td>{{ $registration->family->carers->first()->name }}</td>
-                            <td>{{ $registration->family->entitlement }}</td>
-                            <td>{{ $registration->family->rvid }}</td>
-                            <td>
-                                <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">select</button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    </tbody>
-                </table>
-            </div>
+                @endforeach
+                </tbody>
+            </table>
         </div>
-        <div class = "row">
-            <div class="col">
-                {{ $registrations->links() }}
-            </div>
+        <div>
+            {{ $registrations->links() }}
         </div>
     </div>
 @endsection

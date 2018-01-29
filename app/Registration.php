@@ -32,6 +32,21 @@ class Registration extends Model
     ];
 
     /**
+     * These are turned into Date objects on get
+     *
+     * @var array
+     */
+
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'fm_chart_on',
+        'fm_diary_on',
+        'consented_on',
+    ];
+
+
+    /**
      * Get the Registration's Family
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
