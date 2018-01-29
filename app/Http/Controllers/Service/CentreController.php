@@ -71,8 +71,6 @@ class CentreController extends Controller
 
         // Per registration...
         foreach ($registrations as $reg) {
-            Log::info($reg->family->id . ' - ' . $reg->family->leaving_on . ' *** ');
-            if ($reg->family->leaving_on !== null) {
             $row = [
                 // TODO: null objects when DB is duff: try/catch findOrFail() in the relationship?
                 "RVID" => ($reg->family) ? $reg->family->rvid : 'Family not found',
@@ -81,11 +79,8 @@ class CentreController extends Controller
                 "Food Chart Received" => (!is_null($reg->fm_chart_on)) ? $reg->fm_chart_on->format('d/m/Y') : null,
                 "Food Diary Received" => (!is_null($reg->fm_diary_on)) ? $reg->fm_diary_on->format('d/m/Y') : null,
                 "Entitlement" => $reg->family->entitlement,
-                "Leaving Date" => $reg->family->leaving_on ? $reg->leaving_on->format('d/m/Y') : null,
-                // Would be confusing if an old reason was left in - so check leaving date is there.
-                "Leaving Reason" => $reg->family->leaving_on ? $reg->leaving_reason : null,
             ];
-            }
+
             // Per child dependent things
             $kids = [];
             $due_date = null;
@@ -121,9 +116,9 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
-
-            // @charlie - I think this was a placeholder for leaving_on? If not - please put it back.
-            //$row["Leaving Date"] = null;
+            $row["Leaving Date"] = $reg->family->leaving_on ? $reg->family->leaving_on->format('d/m/Y') : null;
+            // Would be confusing if an old reason was left in - so check leaving date is there.
+            $row["Leaving Reason"] = $reg->family->leaving_on ? $reg->family->leaving_reason : null;
 
             // update the headers if necessary
             if (count($headers) < count($row)) {
