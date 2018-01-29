@@ -413,8 +413,6 @@ strong {
 
 .collect {
 	background-color: #dff2ce;
-	width: 30%;
-	height: 73vh;
 }
 
 .collect p {
@@ -429,14 +427,6 @@ strong {
 	padding: 1rem;
 	font-family: 'Roboto Slab', serif;
 	width: 100%;
-}
-
-.check {
-	display: flex;
-}
-
-.check > form {
-	width: 70%;
 }
 
 .search {
