@@ -9,153 +9,148 @@
     @include('service.partials.flash_notices')
 
     <div class="content check">
-        <div class="row">
-            <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
-                {{ method_field('PUT') }}
-                {!! csrf_field() !!}
-                <input type="hidden" name="registration" value="{{ $registration->id }}">
-                <div class="col">
-                    <div>
-                        <h2>Main Carer:</h2>
-                        <div>
-                            <input id="carer" type="text" name="carer" value="{{ $pri_carer->name }}" autocomplete="off"
-                                   autocorrect="off" spellcheck="false">
-                        </div>
-                    </div>
-                    <div class="other-carers-update">
-                        <div class="added">
-                            <h2>
-                                <label for="carer_adder_input">
-                                    Other voucher collectors signed up:
-                                </label>
-                            </h2>
-                        </div>
-                        <table id="carer_wrapper">
-                            @foreach ( $sec_carers as $sec_carer )
-                                <tr>
-                                    <td><input name="carers[]" type="hidden"
-                                               value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
-                                    <td>
-                                        <button type="button" class="remove_field">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </table>
-                        <h2>Adding new collectors:</h2>
-                        <div id="carer_adder" class="small-button-container">
-                            <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off"
-                                   autocorrect="off" spellcheck="false">
-                            <button id="add_collector" class="addButton">
-                                <i class="fa fa-plus" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                    </div>
+        <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
+            {{ method_field('PUT') }}
+            {!! csrf_field() !!}
+            <input type="hidden" name="registration" value="{{ $registration->id }}">
+            <div class="col">
+                <div>
+                    <img src="{{ asset('assets/group-light.svg') }}" name="logo">
+                    <h2>Voucher collectors</h2>
                 </div>
-
-                <div class="col">
-                    <div class="added">
-                        <h2>Children or pregnancy signed up:</h2>
-                        <table>
-                            <thead>
+                <div>
+                    <label for="carer">Main carer</label>
+                    <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false">
+                </div>
+                <div>
+                    <label for="carer_adder_input">Voucher collectors</label>
+                    <table id="carer_wrapper">
+                        @foreach ( $sec_carers as $sec_carer )
                             <tr>
-                                <td>Age</td>
-                                <td>Month/Year</td>
-                                <td>Info</td>
-                                <td></td>
+                                <td><input name="carers[]" type="hidden" value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
+                                <td>
+                                    <button type="button" class="remove_field">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody id="existing_wrapper">
-                            @foreach ( $children as $child )
-                                <tr>
-                                    <td>{{ $child->getAgeString() }}</td>
-                                    <td>{{ $child->getDobAsString() }}</td>
-                                    <td>{{ $child->getStatusString() }}</td>
-                                    <td>
-                                        <input type="hidden" name="children[]"
-                                               value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
-                                        <button class="remove_date_field">
-                                            <i class="fa fa-minus" aria-hidden="true"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                        <h2>Adding children or pregnancy:</h2>
-                        <table>
-                            <tbody id="child_wrapper">
-
-                            </tbody>
-                        </table>
-                        @include('service.partials.add_child_form')
-                    </div>
-                    <button type="submit">Save Changes</button>
-                </div>
-                <div class="col collect">
-                    <p>ARC ID: {{ $family->rvid }}</p>
-                    <div>
-                        <h2>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</h2>
-                        <ul>
-                            @foreach( $family->getCreditReasons() as $credits )
-                                <li>
-                                    <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                    as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                    currently "{{ $credits['reason'] }}"
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <div class="warning">
-                        @foreach( $family->getNoticeReasons() as $notices )
-                            <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                                Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
-                                currently "{{ $notices['reason'] }}"</p>
                         @endforeach
-                    </div>
-                    <div class="print-button">
-                        <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
-                            Print a 4 week collection sheet for this family
+                    </table>
+                </div>
+                <div>
+                    <label for="carer_adder">Add new collectors:</label>
+                    <div id="carer_adder" class="small-button-container">
+                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <button id="add_collector" class="addButton">
+                            <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
                     </div>
-                    <div class="attention">
-                        @if ( count($registration->getReminderReasons()) > 0 )
-                            <div>
-                                <h2>Reminders:</h2>
-                                @foreach ( $registration->getReminderReasons() as $reminder )
-                                    <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                                        {{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
-                                @endforeach
-                            </div>
-                        @endif
-                        @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
-                            <div>
-                                <h2>Documents Received:</h2>
-                                @can( 'updateChart', App\Registration::class )
-                                    <div class="user-control">
-                                        <input type="hidden" name="fm_chart" value="0">
-                                        <input type="checkbox" id="update-chart" name="fm_chart" value="1"
-                                               @if( old('fm_chart') || isset($registration->fm_chart_on) ) checked @endif/>
-                                        <label for="update-chart">Chart</label>
-                                    </div>
-                                @endcan
-                                @can( 'updateDiary', App\Registration::class )
-                                    <div class="user-control">
-                                        <input type="hidden" name="fm_diary" value="0">
-                                        <input type="checkbox" id="update-diary" name="fm_diary" value="1"
-                                               @if( old('fm_diary') || isset($registration->fm_diary_on) ) checked @endif/>
-                                        <label for="update-diary">Diary</label>
-                                    </div>
-                                @endcan
-                            </div>
-                        @endif
-                    </div>
                 </div>
-            </form>
+            </div>
+
+            <div class="col">
+                <div>
+                    <img src="{{ asset('assets/pregnancy-light.svg') }}" name="logo">
+                    <h2>Children or pregnancy</h2>
+                </div>
+                <div>
+                    <table>
+                        <thead>
+                        <tr>
+                            <td>Age</td>
+                            <td>Month / Year</td>
+                            <td></td>
+                        </tr>
+                        </thead>
+                        <tbody id="existing_wrapper">
+                        @foreach ( $children as $child )
+                            <tr>
+                                <td>{{ $child->getAgeString() }}</td>
+                                <td>{{ $child->getDobAsString() }}</td>
+                                <td>
+                                    <input type="hidden" name="children[]" value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
+                                    <button class="remove_date_field">
+                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <label for="add-child-form">Add more children or a pregnancy:</label>
+                    @include('service.partials.add_child_form')
+                    <table>
+                        <tbody id="child_wrapper">
+
+                        </tbody>
+                    </table>
+                </div>
+                <button class="long-button" type="submit">Save Changes</button>
+            </div>
+
+        <div class="col collect">
+            <div>
+                <img src="{{ asset('assets/info-light.svg') }}" name="logo">
+                <h2>This family</h2>
+            </div>
+            <div>
+                <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
+                <ul>
+                    @foreach( $family->getCreditReasons() as $credits )
+                        <li>
+                            <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
+                            as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
+                            currently "{{ $credits['reason'] }}"
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
+            <div class="warning">
+                @foreach( $family->getNoticeReasons() as $notices )
+                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                        Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
+                        currently "{{ $notices['reason'] }}"</p>
+                @endforeach
+            </div>
+                <div class="attention">
+                    @if ( count($registration->getReminderReasons()) > 0 )
+                        <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
+                        @foreach ( $registration->getReminderReasons() as $reminder )
+                            <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                        @endforeach
+                    @endif
+                    @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
+                        <div>
+                            <h2>Documents Received:</h2>
+                            @can( 'updateChart', App\Registration::class )
+                                <div class="user-control">
+                                    <input type="hidden" name="fm_chart" value="0">
+                                    <input type="checkbox" id="update-chart" name="fm_chart" value="1"
+                                           @if( old('fm_chart') || isset($registration->fm_chart_on) ) checked @endif/>
+                                    <label for="update-chart">Chart</label>
+                                </div>
+                            @endcan
+                            @can( 'updateDiary', App\Registration::class )
+                                <div class="user-control">
+                                    <input type="hidden" name="fm_diary" value="0">
+                                    <input type="checkbox" id="update-diary" name="fm_diary" value="1"
+                                           @if( old('fm_diary') || isset($registration->fm_diary_on) ) checked @endif/>
+                                    <label for="update-diary">Diary</label>
+                                </div>
+                            @endcan
+                        </div>
+                    @endif
+                </div>
+            <div class="print-button">
+                <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
+                    Print a 4 week collection sheet for this family
+                </button>
+            </div>
         </div>
+        </form>
     </div>
 
     <script>
