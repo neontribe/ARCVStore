@@ -97,7 +97,12 @@
                 <h2>This family</h2>
             </div>
             <div>
-                <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
+                <p>This family:</p>
+                <ul>
+                    <li>Should collect <strong>{{ $family->entitlement }}</strong> per week</li>
+                    <li>Has <strong>{{ count($family->children) }}</strong> children on the scheme</li>
+                    <li> {{ $family }}
+
                 <ul>
                     @foreach( $family->getCreditReasons() as $credits )
                         <li>
