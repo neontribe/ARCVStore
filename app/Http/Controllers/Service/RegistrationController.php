@@ -315,19 +315,6 @@ class RegistrationController extends Controller
             Log::info('Registration ' . $registration->id . ' update for Diary denied for service user ' . $user->id);
         }
 
-        // Are we trying to deactivate the family? Should we add this to the try catch?
-        if ($request->leaving_on) {
-            if (!$request->leaving_reason) {
-                // Error message - should be displayed on form.
-                // Look at integratoin with validation - the family rules should kick back if we try to save.
-            }
-            // If the family is leaving box is ticked, we also need a reason...
-            // Assign leaving_on to now
-            $family->leaving_on = Carbon::now();
-            $family->leaving_reason = $request->leaving_reason;
-            $family->save();
-        }
-
         $family = $registration->family;
 
         // Try to transact, so we can roll it back
