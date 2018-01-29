@@ -35,6 +35,13 @@
                         Print collection sheets
                     </li>
                 </a>
+                @can( 'export', App\Registration::class )
+                <a href="{{ URL::route('service.centres.registrations.summary') }}">
+                    <li>
+                        <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export Registrations
+                    </li>
+                </a>
+                @endcan
             </ul>
         </div>
     </div>

@@ -38,6 +38,9 @@ Route::post('password/reset', 'Service\Auth\ResetPasswordController@reset');
 
 // Service Dashboard route
 // Default redirect to Service Dashboard
+
+// TODO : use of singular/ plurals in route names; Mixed opinions found. discuss.
+
 Route::get('/', function () {
     return redirect()->route('service.dashboard');
 })->name('service.base');
@@ -63,15 +66,22 @@ Route::group(['middleware' => 'auth:web'], function () {
     ]);
 
     // Printables
-    // TODO - these will one day be pdfs
+
+    // TODO : print feels... unRESTY; revise
     Route::get('/registration/{registration}/print', [
         'as' => 'service.registration.print',
         'uses' => 'Service\RegistrationController@print',
     ]);
 
-    // TODO Not sure I got this right...
+    // TODO : print feels... unRESTY; revise
     Route::get('/centre/{centre}/registrations/print', [
         'as' => 'service.centre.registrations.print',
         'uses' => 'Service\CentreController@printRegistrations',
     ]);
+
+    // Exportable reports
+    Route::get('/centres/registrations/summary', [
+        'as' => 'service.centres.registrations.summary',
+        'uses' => 'Service\CentreController@exportRegistrationsSummary',
+    ])->middleware(['can:export,App\Registration']);
 });
