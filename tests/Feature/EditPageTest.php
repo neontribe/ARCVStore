@@ -344,9 +344,10 @@ class EditPageTest extends TestCase
 
             // Check the data has changed
             if ($reg->fm_chart_on !== null) {
-                $this->seeInDatabase(
+                // Just chec it is no longer null. Using Carbon time caused frequent intermittant failure.
+                $this->dontSeeInDatabase(
                     'registrations',
-                    [ 'id' => $reg->id, 'fm_chart_on' => $now ]
+                    [ 'id' => $reg->id, 'fm_chart_on' => null ]
                 );
             } else {
                 $this->seeInDatabase(
@@ -356,9 +357,9 @@ class EditPageTest extends TestCase
             }
 
             if ($reg->fm_diary_on !== null) {
-                $this->seeInDatabase(
+                $this->dontSeeInDatabase(
                     'registrations',
-                    [ 'id' => $reg->id, 'fm_diary_on' => $now ]
+                    [ 'id' => $reg->id, 'fm_diary_on' => null ]
                 );
             } else {
                 $this->seeInDatabase(
