@@ -1,14 +1,6 @@
 body {
 	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
 	font-size: 10px;
-	height: 210mm;
-	width: 296mm;
-	margin-top: 11rem;
-	margin-left: -10rem;
-	-webkit-transform: rotate(-90deg);
-	-moz-transform:rotate(-90deg);
-	filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
-	position: absolute;
 }
 
 h1,
@@ -78,12 +70,31 @@ td {
 
 .header {
 	display: flex;
-	align-items: center;
+	justify-content: space-between;
 }
 
 .header > img {
 	height: 70px;
 	margin: 2rem 3rem;
+}
+
+.subhead,
+.subhead > div {
+	display: flex;
+	justify-content: space-between;
+}
+
+.subhead img {
+	width: 180px;
+}
+
+.subhead h2 {
+		margin-top: 0.8rem;
+}
+
+.subhead p {
+		font-size: 1rem;
+		margin: 1rem;
 }
 
 .content {
@@ -99,19 +110,20 @@ td {
 
 }
 
+.families_table th,
+.families_table td {
+	padding: 0.5rem;
+}
+
 .print-notes {
 	text-align: right;
 	font-size: 0.7rem;
-	position: fixed;
-	right: 1rem
-}
-
-.allocation {
-	font-size: 0.9rem;
+	margin: 2.5rem;
 }
 
 .notices,
-.allocation {
+.allocation,
+.attention {
 	width: 49.5%;
 	display: inline-table;
 }
@@ -123,7 +135,12 @@ td {
 	margin: 0.5rem 0;
 }
 
+.allocation {
+	font-size: 0.9rem;
+}
+
 .notices h3,
+.attention h3,
 .colspan i {
 	color: #a74e94;
 }
@@ -145,5 +162,9 @@ td {
 @media print {
 	@page {
 		margin: 0;
+	}
+
+	.content {
+		page-break-after: always;
 	}
 }

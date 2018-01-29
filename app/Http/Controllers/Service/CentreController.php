@@ -23,6 +23,7 @@ class CentreController extends Controller
     {
         $registrations = $centre->registrations;
 
+        $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now.
         // Could optimise DB hits with eager load of stuff we need.
         return view(
@@ -31,7 +32,7 @@ class CentreController extends Controller
                 'sheet_title' => 'Printable Register',
                 'sheet_header' => 'Register',
                 'centre' => $centre,
-                'registrations' => $registrations,
+                'reg_chunks' => $reg_chunks,
             ]
         );
     }
