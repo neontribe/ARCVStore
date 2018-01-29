@@ -24,7 +24,7 @@ class FamilyController extends Controller
         $user = $request->user();
         // Since a family might have more than one Registration we send it with the Request.
         $reg_family = $registration->family;
-        $family = Registration::findOrFail($request->get('id'));
+        $family = Family::findOrFail($request->get('id'));
 
         // Make sure we have a family, a registartion that match.
         if ($family !== $reg_family) {
