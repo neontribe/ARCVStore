@@ -39,13 +39,11 @@ class Child extends Model
     protected $hidden = [
     ];
 
-
     /**
      * These are turned into Date objects on get
      *
      * @var array
      */
-
     protected $dates = [
         'created_at',
         'updated_at',
@@ -64,7 +62,7 @@ class Child extends Model
      */
     public function getAgeString($format = '%y yr, %m mo')
     {
-        if($this->dob->isFuture()) {
+        if ($this->dob->isFuture()) {
             return "P";
         } else {
             return $this->dob->diff(Carbon::now(), false)->format($format);

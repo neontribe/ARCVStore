@@ -36,7 +36,7 @@ class DashboardPageTest extends TestCase
             "centre_id" => $this->centre->id,
         ]);
 
-        // make centre some registrations
+        // Make the centre a registration
         $this->registration = factory(Registration::class)->create([
             "centre_id" => $this->centre->id,
         ]);

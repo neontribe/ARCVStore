@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Registration;
 use Auth;
 use Carbon\Carbon;
+use \Excel;
 use Illuminate\View\View;
-use Excel;
 
 
 class CentreController extends Controller
@@ -71,9 +71,10 @@ class CentreController extends Controller
         // Per registration...
         foreach ($registrations as $reg) {
             $row = [
-                "RVID" => $reg->family->rvid,
-                "Centre" => $reg->centre->name,
-                "Primary Carer" => $reg->family->carers->first()->name,
+                // TODO: null objects when DB is duff: try/catch findOrFail() in the relationship?
+                "RVID" => ($reg->family) ? $reg->family->rvid : 'Family not found',
+                "Centre" => ($reg->centre) ? $reg->centre->name : 'Centre not found',
+                "Primary Carer" => ($reg->family->carers->first()) ? $reg->family->carers->first()->name : null,
                 "Food Chart Received" => (!is_null($reg->fm_chart_on)) ? $reg->fm_chart_on->format('d/m/Y') : null,
                 "Food Diary Received" => (!is_null($reg->fm_diary_on)) ? $reg->fm_diary_on->format('d/m/Y') : null,
                 "Entitlement" => $reg->family->entitlement,
@@ -83,33 +84,36 @@ class CentreController extends Controller
             $kids = [];
             $due_date = null;
             $eligible = 0;
-            foreach ($reg->family->children as $index => $child) {
-                // make a 'Child X DoB' key
-                $child_index = $index + 1;
-                $status = $child->getStatus();
-                $dob_header = 'Child ' . (string)$child_index . ' DoB';
 
-                // Arrange kids by eligibility
-                switch ($status['eligibility']) {
-                    case 'Pregnancy':
-                        $due_date = $child->dob->format('d/m/Y');
-                        break;
-                    case 'Eligible':
-                        $kids[$dob_header] = $child->dob->format('m/Y');
-                        $eligible += 1;
-                        break;
-                    case "Ineligible":
-                        $kids[$dob_header] = $child->dob->format('m/Y');
-                        break;
+            if ($reg->family) {
+                foreach ($reg->family->children as $index => $child) {
+                    // make a 'Child X DoB' key
+                    $child_index = $index + 1;
+                    $status = $child->getStatus();
+                    $dob_header = 'Child ' . (string)$child_index . ' DoB';
+
+                    // Arrange kids by eligibility
+                    switch ($status['eligibility']) {
+                        case 'Pregnancy':
+                            $due_date = $child->dob->format('d/m/Y');
+                            break;
+                        case 'Eligible':
+                            $kids[$dob_header] = $child->dob->format('m/Y');
+                            $eligible += 1;
+                            break;
+                        case "Ineligible":
+                            $kids[$dob_header] = $child->dob->format('m/Y');
+                            break;
+                    }
                 }
             }
-            // Add count oif eligible kids
+            // Add count of eligible kids
             $row["Eligible Children"] = $eligible;
 
             // Add our kids back in
-            $row=array_merge($row, $kids);
+            $row = array_merge($row, $kids);
 
-            // TODO: What happens for families with two concurrent pregnancies?
+            // Set the last dates.
             $row["Due Date"] = $due_date;
             $row["Leaving Date"] = null;
 
@@ -138,7 +142,6 @@ class CentreController extends Controller
          * - ineligible children showing grey
          * - children with changes in near future showing red.
          */
-
         $excel_doc = Excel::create(
             'RegSummary_' . $now->format('YmdHis'),
             function ($excel) use ($user, $rows, $headers) {
