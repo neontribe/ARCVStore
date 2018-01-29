@@ -9,7 +9,6 @@ use Auth;
 use Carbon\Carbon;
 use \Excel;
 use Illuminate\View\View;
-use Log;
 
 
 class CentreController extends Controller
