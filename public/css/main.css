@@ -316,6 +316,10 @@ strong {
 	flex: 1;
 }
 
+.subnav .right {
+	justify-content: flex-end;
+}
+
 /* register */
 .col {
 	width: 100%;
@@ -409,7 +413,6 @@ strong {
 
 .collect {
 	background-color: #dff2ce;
-	padding: 0.5rem 1rem;
 	width: 30%;
 	height: 73vh;
 }
