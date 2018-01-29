@@ -41,15 +41,27 @@ class FamilyController extends Controller
         }
 
         // Validate the request.
+        // Maybe this is messy but... converting $request true to date here before validation.
+        $request->merge([
+            'leaving_on' => $request->leaving_on ? Carbon::now() : null,
+        ]);
+
         $this->validate($request, Family::rules());
 
         // If the family is leaving box is ticked, we also need a reason...
-        // Assign leaving_on to now
-        $family->leaving_on = Carbon::now();
-        $family->leaving_reason = $request->leaving_reason;
-        $family->save();
+        if ($request->leaving_on) {
+            $family->leaving_on = $request->leaving_on;
+            $family->leaving_reason = $request->leaving_reason;
+            $family->save();
+        } else {
+            // Change nothing if the leaving_on box isn;t ticked - or has been converted to null.
+            return redirect()
+                ->route('service.registration.edit', $registration->id)
+                ->with('message', 'Nothing changed')
+            ;
+        }
 
-        // Go back to registratio/ family search listing
+        // Successful deactivation. Go back to registratio/ family search listing
         return redirect()
             ->route('service.registration.index')
             ->with('message', 'Family '. $family->id . ' de-activated.');
