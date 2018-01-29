@@ -36,6 +36,7 @@ class Family extends Model
      */
     protected $appends = [
         'entitlement',
+        'expecting',
     ];
 
 
@@ -143,9 +144,8 @@ class Family extends Model
         return $notice_reasons;
     }
 
-
     /**
-     * Calculates the entitlement
+     * Calculates the entitlement Attrbute
      *
      */
     public function getEntitlementAttribute()
@@ -154,18 +154,34 @@ class Family extends Model
         return $this->getStatus()['vouchers'];
     }
 
+    /**
+     * Gets the Nearest due date or Null;
+     *
+     * @return mixed
+     */
     public function getExpectingAttribute()
     {
-        // return true if there is a child that has a false 'born' attribute
-
-        $expecting = false;
-        foreach ($this->children as $child) {
+        return $this->children->reduce(function ($due, $child) {
             if ($child->born == false) {
-                $expecting = true;
-                break;
+                if (!is_null($due)) {
+                    $due = ($due->gt($child->dob)) ? $child->dob : $due;
+                }
             }
-        }
-        return $expecting;
+            return $due;
+        });
+    }
+
+    /**
+     * Attribute that gets the number of eligible children
+     *
+     * @return mixed
+     */
+    public function getEligibleChildrenCountAttribute()
+    {
+        return $this->children->reduce(function ($count, $child) {
+            $count += ($child->getStatus()['eligibility'] == "Eligible") ? 1 : 0;
+            return $count;
+        });
     }
 
     /**
