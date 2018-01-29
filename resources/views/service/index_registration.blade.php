@@ -31,14 +31,16 @@
                 </thead>
                 <tbody>
                 @foreach ($registrations as $registration)
-                    <tr>
-                        <td>{{ $registration->family->carers->first()->name }}</td>
-                        <td class="center">{{ $registration->family->entitlement }}</td>
-                        <td class="center">{{ $registration->family->rvid }}</td>
-                        <td>
+                    @if ($registration->family)
+                        <tr class="{{ $registration->family->leaving_on ? 'inactive' : 'active' }}">
+                            <td>{{ $registration->family->carers->first()->name }}</td>
+                            <td class="center">{{ $registration->family->entitlement }}</td>
+                            <td class="center">{{ $registration->family->rvid }}</td>
+                            <td>
                             <button onclick="window.location.href='{{ URL::route('service.registration.edit', ['id' => $registration->id ]) }}'">Select</button>
                         </td>
                     </tr>
+                    @endif
                 @endforeach
                 </tbody>
             </table>
