@@ -4,6 +4,8 @@
 
 @section('content')
 
+    @include('service.printables.partials.masthead', ['specificPrintNote' => 'Print a new form every 4 weeks so you have the most up to date information available.'])
+
     <div class="content">
         <h1>Family Voucher Collection Sheet</h1>
         <table>
