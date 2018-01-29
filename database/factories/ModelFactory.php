@@ -184,9 +184,9 @@ $factory->define(App\Child::class, function (Faker\Generator $faker) {
 });
 
 // Child - unborn
-$factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'unbornChild', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('1 month', '+9 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('+2 month', '+8 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -196,9 +196,9 @@ $factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $
 });
 
 // Child - under 1
-$factory->state(App\Child::class, 'withChildUnderOne', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'underOne', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-11 months', '-1 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-10 months', '-2 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -208,9 +208,9 @@ $factory->state(App\Child::class, 'withChildUnderOne', function (Faker\Generator
 });
 
 // Child - under School Age
-$factory->state(App\Child::class, 'withChildUnderSchoolAge', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'underSchoolAge', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-35 months', '-13 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-32 months', '-14 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -220,9 +220,9 @@ $factory->state(App\Child::class, 'withChildUnderSchoolAge', function (Faker\Gen
 });
 
 // Child - over SchoolAge
-$factory->state(App\Child::class, 'withChildOverSchoolAge', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'overSchoolAge', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-6 years', '-37 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-10 years', '-6 years')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [

@@ -155,20 +155,25 @@ class Family extends Model
     }
 
     /**
-     * Gets the Nearest due date or Null;
+     * Gets the due date or Null;
      *
      * @return mixed
      */
     public function getExpectingAttribute()
     {
-        return $this->children->reduce(function ($due, $child) {
-            if ($child->born == false) {
+        $due = null;
+        foreach ($this->children as $child) {
+            if (!$child->born) {
+                $due = $child->dob;
+            }
+        }
+        return $due;
+
+        /*
                 if (!is_null($due)) {
                     $due = ($due->gt($child->dob)) ? $child->dob : $due;
                 }
-            }
-            return $due;
-        });
+        */
     }
 
     /**
