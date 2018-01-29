@@ -78,6 +78,8 @@ class CentreController extends Controller
                 "Food Chart Received" => (!is_null($reg->fm_chart_on)) ? $reg->fm_chart_on->format('d/m/Y') : null,
                 "Food Diary Received" => (!is_null($reg->fm_diary_on)) ? $reg->fm_diary_on->format('d/m/Y') : null,
                 "Entitlement" => $reg->family->entitlement,
+                "Leaving Date" => $reg->family->leaving_on ? $reg->leaving_on->format('d/mY') : null,
+                "Leaving Reason" => $reg->family->leaving_on ? $reg->leaving_reason : null,
             ];
 
             // Per child dependent things
@@ -115,7 +117,9 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
-            $row["Leaving Date"] = null;
+
+            // @charlie - I think this was a placeholder for leaving_on? If not - please put it back.
+            //$row["Leaving Date"] = null;
 
             // update the headers if necessary
             if (count($headers) < count($row)) {
