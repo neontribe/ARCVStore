@@ -8,7 +8,7 @@
 
     @include('service.partials.flash_notices')
 
-    <div class="content check">
+    <div class="content">
         <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
             {!! csrf_field() !!}
@@ -20,14 +20,16 @@
                 </div>
                 <div>
                     <label for="carer">Main carer</label>
-                    <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
+                    <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off"
+                           autocorrect="off" spellcheck="false">
                 </div>
                 <div>
                     <label for="carer_adder_input">Voucher collectors</label>
                     <table id="carer_wrapper">
                         @foreach ( $sec_carers as $sec_carer )
                             <tr>
-                                <td><input name="carers[]" type="hidden" value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
+                                <td><input name="carers[]" type="hidden"
+                                           value="{{ $sec_carer->name }}">{{ $sec_carer->name }}</td>
                                 <td>
                                     <button type="button" class="remove_field">
                                         <i class="fa fa-minus" aria-hidden="true"></i>
@@ -38,9 +40,10 @@
                     </table>
                 </div>
                 <div>
-                    <label for="carer_adder">Add new collectors:</h2>
+                    <label for="carer_adder">Add new collectors:</label>
                     <div id="carer_adder" class="small-button-container">
-                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off" autocorrect="off" spellcheck="false">
+                        <input id="carer_adder_input" name="carer_adder_input" type="text" autocomplete="off"
+                               autocorrect="off" spellcheck="false">
                         <button id="add_collector" class="addButton">
                             <i class="fa fa-plus" aria-hidden="true"></i>
                         </button>
@@ -68,7 +71,8 @@
                                 <td>{{ $child->getAgeString() }}</td>
                                 <td>{{ $child->getDobAsString() }}</td>
                                 <td>
-                                    <input type="hidden" name="children[]" value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
+                                    <input type="hidden" name="children[]"
+                                           value="{{ Carbon\Carbon::parse($child->dob)->format('Y-m') }}">
                                     <button class="remove_date_field">
                                         <i class="fa fa-minus" aria-hidden="true"></i>
                                     </button>
@@ -89,39 +93,39 @@
                 </div>
                 <button class="long-button" type="submit">Save Changes</button>
             </div>
-        </form>
 
-        <div class="col collect">
-            <div>
-                <img src="{{ asset('assets/info-light.svg') }}" name="logo">
-                <h2>This family</h2>
-            </div>
-            <div>
-                <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
-                <ul>
-                    @foreach( $family->getCreditReasons() as $credits )
-                        <li>
-                            <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                            as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                            currently "{{ $credits['reason'] }}"
-                        </li>
+            <div class="col collect">
+                <div>
+                    <img src="{{ asset('assets/info-light.svg') }}" name="logo">
+                    <h2>This family</h2>
+                </div>
+                <div>
+                    <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
+                    <ul>
+                        @foreach( $family->getCreditReasons() as $credits )
+                            <li>
+                                <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
+                                as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
+                                currently "{{ $credits['reason'] }}"
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+                <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
+                <div class="warning">
+                    @foreach( $family->getNoticeReasons() as $notices )
+                        <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                            Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
+                            currently "{{ $notices['reason'] }}"</p>
                     @endforeach
-                </ul>
-            </div>
-            <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
-            <div class="warning">
-                @foreach( $family->getNoticeReasons() as $notices )
-                    <p><i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                        Warning: {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }}
-                        currently "{{ $notices['reason'] }}"</p>
-                @endforeach
-            </div>
-            @if ( count($registration->getReminderReasons()) > 0 )
+                </div>
                 <div class="attention">
-                    <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
-                    @foreach ( $registration->getReminderReasons() as $reminder )
-                        <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
-                    @endforeach
+                    @if ( count($registration->getReminderReasons()) > 0 )
+                        <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
+                        @foreach ( $registration->getReminderReasons() as $reminder )
+                            <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                        @endforeach
+                    @endif
                     @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
                         <div>
                             <h2>Documents Received:</h2>
@@ -144,15 +148,14 @@
                         </div>
                     @endif
                 </div>
-            @endif
-            <div class="print-button">
-                <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
-                    Print a 4 week collection sheet for this family
-                </button>
+                <div class="print-button">
+                    <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
+                        Print a 4 week collection sheet for this family
+                    </button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
-
 
     <script>
         $(document).ready(
