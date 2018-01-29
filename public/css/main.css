@@ -71,6 +71,7 @@ input[type="radio"]+label:before,
 	background: #fff;
 	width: 34px;
 	height: 34px;
+	border: 1px solid #ECECEC;
 	position: absolute;
 	left: 0;
 	cursor: pointer;
@@ -518,4 +519,8 @@ strong {
 
 .login .reset-button {
 	margin: 3rem 0 0 0;
+}
+
+.login .remember {
+	margin-top: 2rem;
 }
