@@ -201,8 +201,8 @@ strong {
 	color: #d2232a;
 }
 
-.attention p {
-	color: #e5710b;
+.attention h3 {
+	color: #a74e94;
 }
 
 .error li {
@@ -316,12 +316,17 @@ strong {
 	flex: 1;
 }
 
+.subnav .right {
+	justify-content: flex-end;
+}
+
 /* register */
 .col {
 	width: 100%;
 	height: 75vh;
 	background: #EEEEEE;
 	margin: 1rem;
+	min-width: 25%;
 }
 
 .col > div:first-child {
@@ -341,6 +346,7 @@ strong {
 	font-size: 1.4rem;
 	margin: 0;
 }
+
 .col > div {
 	margin: 1rem;
 }
@@ -349,6 +355,7 @@ strong {
 	font-size: 0.7rem;
 }
 
+.col td,
 .col .added {
 	font-size: 1rem;
 }
@@ -404,34 +411,32 @@ strong {
 	top: 0;
 }
 
-.other-carers-update ul {
-	list-style-type: circle;
-}
-
 .collect {
-	background-color: #ECECEC;
-	padding: 0.5rem 1rem;
-	flex-shrink: 2;
+	background-color: #dff2ce;
+	width: 30%;
+	height: 73vh;
 }
 
 .collect p {
 	margin: 0 0.5rem;
-	font-weight: 400;
+}
 
+.collect ul {
+	font-size: 1rem;
 }
 
 .print-button button {
-	min-height: 6rem;
-	font-size: 1.5rem;
 	padding: 1rem;
-	font-weight: 200;
-	width: 90%;
-	margin-left: 5%;
+	font-family: 'Roboto Slab', serif;
+	width: 100%;
 }
 
-.check,
-.search {
-	height: 77%;
+.check {
+	display: flex;
+}
+
+.check > form {
+	width: 70%;
 }
 
 .search {

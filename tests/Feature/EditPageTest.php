@@ -118,7 +118,6 @@ class EditPageTest extends TestCase
         foreach ($children as $child) {
             $this->see('<td>'. $child->getAgeString() .'</td>')
                 ->see('<td>'. $child->getDobAsString() .'</td>')
-                ->see('<td>'. $child->getStatusString() .'</td>')
                 ->seeElement('input[type="hidden"][value="'. $child->dob->format('Y-m') .'"]')
             ;
         }
