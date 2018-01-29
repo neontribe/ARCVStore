@@ -18,7 +18,16 @@ class Family extends Model
      * @var array
      */
     protected $fillable = [
-        'rvid',
+        'rvid', 'leaving_on', 'leaving_reason',
+    ];
+
+    /**
+     * The attributes that are cast as dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'leaving_on',
     ];
 
     /**
@@ -39,6 +48,21 @@ class Family extends Model
         'expecting',
     ];
 
+    /**
+     * Rules for validation. Can't provide in a static array because getting config array.
+     */
+    public function rules() {
+        return [
+            'leaving_on' => [
+                'required_with:leaving_reason',
+                'datetime'
+            ],
+            'leaving_reason' => [
+                'required_with:leaving_on',
+                Rule::in(config('arc.leaving_reasons')),
+            ],
+        ];
+    }
 
     /**
      * Fetches the
@@ -77,7 +101,6 @@ class Family extends Model
      *
      * @return array
      */
-
     public function getCreditReasons()
     {
         $credit_reasons = [];

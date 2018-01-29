@@ -3,6 +3,7 @@ php:
 - 7.0.22
 sudo: required
 dist: trusty
+group: deprecated-2017Q4
 addons:
   ssh_known_hosts: 46.101.18.83
 before_script:

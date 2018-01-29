@@ -23,6 +23,7 @@ class CentreController extends Controller
     {
         $registrations = $centre->registrations;
 
+        $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now.
         // Could optimise DB hits with eager load of stuff we need.
         return view(
@@ -31,7 +32,7 @@ class CentreController extends Controller
                 'sheet_title' => 'Printable Register',
                 'sheet_header' => 'Register',
                 'centre' => $centre,
-                'registrations' => $registrations,
+                'reg_chunks' => $reg_chunks,
             ]
         );
     }
@@ -115,7 +116,9 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
-            $row["Leaving Date"] = null;
+            $row["Leaving Date"] = $reg->family->leaving_on ? $reg->family->leaving_on->format('d/m/Y') : null;
+            // Would be confusing if an old reason was left in - so check leaving date is there.
+            $row["Leaving Reason"] = $reg->family->leaving_on ? $reg->family->leaving_reason : null;
 
             // update the headers if necessary
             if (count($headers) < count($row)) {

@@ -127,7 +127,7 @@ $factory->define(App\Registration::class, function () {
 
     $eligibilities = ['healthy-start', 'other'];
 
-    $family=factory(App\Family::class)->create();
+    $family = factory(App\Family::class)->create();
     $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
     $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
 
