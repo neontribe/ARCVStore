@@ -7,7 +7,7 @@
         @endif
         <h1>{{ $headerTitle }}</h1>
         @if ( Request::route()->getName() == 'service.registration.edit' )
-            <li><a href="{{ URL::route("service.registration.index") }}"><i class="fa fa-search" aria-hidden="true"></i> Find another family</a></li>
+            <li class="right"><a href="{{ URL::route("service.registration.index") }}"><i class="fa fa-search" aria-hidden="true"></i> Find another family</a></li>
         @else
         	<div class="right"></div>
         @endif
