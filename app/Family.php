@@ -191,18 +191,12 @@ class Family extends Model
             }
         }
         return $due;
-
-        /*
-                if (!is_null($due)) {
-                    $due = ($due->gt($child->dob)) ? $child->dob : $due;
-                }
-        */
     }
 
     /**
      * Attribute that gets the number of eligible children
      *
-     * @return mixed
+     * @return integer|null
      */
     public function getEligibleChildrenCountAttribute()
     {

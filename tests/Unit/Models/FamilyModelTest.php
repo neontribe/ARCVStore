@@ -11,11 +11,6 @@ class FamilyModelTest extends TestCase
 {
     use DatabaseMigrations;
 
-    public function setUp()
-    {
-        parent::setUp();
-    }
-
     /** @test */
     public function itHasAnAttributeThatCalculatesSumOfEligibleChildren()
     {
@@ -57,16 +52,12 @@ class FamilyModelTest extends TestCase
                     factory(Child::class, 'overSchoolAge')->make(),
                 ])->flatten()
             );
-
         // Test we've not got an expecting date
         $this->assertEquals(null, $family->expecting);
 
-
-        // Add a prenant Family
+        // Add a pregnant Family
         $pregnant_family = factory(Family::class)->create();
-
         $pregnancy = factory(Child::class, 'unbornChild')->make();
-
         $pregnant_family->children()
             ->saveMany(
                 collect([
@@ -76,10 +67,7 @@ class FamilyModelTest extends TestCase
                     factory(Child::class, 'overSchoolAge')->make(),
                 ])->flatten()
             );
-
         // Test we've not got an expecting date
         $this->assertEquals($pregnancy->dob, $pregnant_family->expecting);
     }
-
-
 }
