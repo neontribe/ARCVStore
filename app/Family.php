@@ -168,7 +168,7 @@ class Family extends Model
     }
 
     /**
-     * Calculates the entitlement Attrbute
+     * Calculates the entitlement Attribute
      *
      */
     public function getEntitlementAttribute()
