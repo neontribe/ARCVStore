@@ -75,7 +75,7 @@ td {
 
 .header > img {
 	height: 70px;
-	margin: 2rem 3rem;
+	/*margin: 2rem 3rem;*/
 }
 
 .subhead,
@@ -118,14 +118,14 @@ td {
 .print-notes {
 	text-align: right;
 	font-size: 0.7rem;
-	margin: 2.5rem;
+	/*margin: 2.5rem;*/
 }
 
 .notices,
 .allocation,
 .attention {
-	width: 49.5%;
-	display: inline-table;
+	width: 45%;
+	display: inline-block;
 }
 
 .notices > div {
@@ -161,7 +161,7 @@ td {
 /* Removes printout of automatic header and footer */
 @media print {
 	@page {
-		margin: 0;
+		margin: 0px;
 	}
 
 	.content {

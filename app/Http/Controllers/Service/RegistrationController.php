@@ -15,6 +15,7 @@ use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
 use Log;
+use PDF;
 
 class RegistrationController extends Controller
 {
@@ -151,33 +152,107 @@ class RegistrationController extends Controller
      * @param integer $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function print($id)
+    public function printOneIndividualFamilyForm($id)
     {
+        // Get User
         $user = Auth::user();
 
+        // Find the Registration and subdata
         $registration = Registration::with([
             'family' => function ($q) {
                 $q->with('children', 'carers');
             }
         ])->findOrFail($id);
 
-        $carers = $registration->family->carers->all();
+        // Make a filename
+        $filename = 'Registration' . Carbon::now()->format('YmdHis') .'.pdf';
 
-        return view(
-            'service.printables.family',
-            [
-                'user_name' => $user->name,
-                'centre_name' => ($user->centre) ? $user->centre->name : null,
-                'centre' => $registration->centre,
-                'sheet_title' => 'Printable Family Sheet',
-                'sheet_header' => 'Family Collection Sheet',
+        // Setup common data
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+        ];
+
+        // Setup registration data for blade.
+        $carers = $registration->family->carers->all();
+        $data['regs'][] = [
+            'centre' => $registration->centre,
+            'family' => $registration->family,
+            'pri_carer' => array_shift($carers),
+            // Remove the primary carer from collection
+            'sec_carers' => $carers,
+            'children' => $registration->family->children,
+        ];
+
+        //return view('service.printables.family', $data);
+
+
+        // throw at a PDF
+        $pdf = PDF::loadView('service.printables.family', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return @$pdf->download($filename);
+
+    }
+
+    /**
+     * Displays a printable version of the Registration.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function printBatchIndividualFamilyForms()
+    {
+        // Get the user and Centre
+        $user = Auth::user();
+        $centre = ($user->centre) ? $user->centre : null;
+
+        // Cope if User has no Centre.
+        if (!$centre) {
+            Log::info('User ' . $user->id . " has no Centre");
+            // Send me back to dashboard
+            return redirect()
+                ->route('service.dashboard')
+                ->withErrors(['error_message' => 'User has no Centre']);
+        }
+
+        // Get the registrations this User's centre is directly responsible for
+        $registrations = $centre->registrations()->with([
+            'family' => function ($q) {
+                $q->with('children', 'carers');
+            }
+        ])->get();
+
+        // Make a filename
+        $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';
+
+        // Set up the common view data.
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+        ];
+
+        // Stack the registration batch into the data
+        foreach ($registrations as $registration) {
+            $carers = $registration->family->carers->all();
+            $data['regs'][] = [
+                'centre' => $centre,
                 'family' => $registration->family,
                 'pri_carer' => array_shift($carers),
                 // Remove the primary carer from collection
                 'sec_carers' => $carers,
                 'children' => $registration->family->children,
-            ]
+            ];
+        }
+
+        // throw it at a PDF.
+        $pdf = PDF::loadView(
+            'service.printables.family',
+            $data
         );
+        return @$pdf->download($filename);
     }
 
     /**
