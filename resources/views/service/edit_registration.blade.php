@@ -164,7 +164,9 @@
                             Reason for leaving
                         </label>
                         <select id="reason-for-leaving">
-                            <option value="one">kjljnlkn;kl</option>
+                            @foreach(Config::get('arc.leaving_reasons') as $reason)
+                            <option value="one"> {{ $reason }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <p>Are you sure?</p>
