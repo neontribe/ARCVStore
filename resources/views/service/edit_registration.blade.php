@@ -8,7 +8,7 @@
 
     @include('service.partials.flash_notices')
 
-    <div class="content">
+    <div class="content check">
         <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
             {!! csrf_field() !!}
@@ -152,6 +152,24 @@
                     <button onclick="window.open( '{{ URL::route( "service.registration.print", ["id" => $registration->id]) }}' ); return false">
                         Print a 4 week collection sheet for this family
                     </button>
+                </div>
+            </div>
+        </form>
+        <form>
+            <div class="remove">
+                <button class="remove">Remove this family</button>
+                <div class="expandable">
+                    <label for="reason-for-leaving">
+                        Reason for leaving
+                    </label>
+                    <select id="reason-for-leaving">
+                        <option value="one">kjljnlkn;kl</option>
+                    </select>
+                    <p>Are you sure?</p>
+                    <div class="confirmation-buttons">
+                        <button>Yes</button>
+                        <button>Cancel</button>
+                    </div>
                 </div>
             </div>
         </form>
