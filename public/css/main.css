@@ -455,8 +455,12 @@ strong {
 	background-color: #000;
 }
 
-.expandable p {
+#expandable p {
 	margin-bottom: 10px;
+}
+
+.collapsed {
+	display: none;
 }
 
 .search {

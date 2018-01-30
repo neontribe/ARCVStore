@@ -160,7 +160,8 @@
             {!! csrf_field() !!}
             <div>
                 <button class="remove">Remove this family</button>
-                <div class="expandable">
+
+                <div id="expandable" class="collapsed" >
                     <div class="reason">
                         <label for="reason-for-leaving">
                             Reason for leaving
@@ -174,7 +175,7 @@
                     <p>Are you sure?</p>
                     <div class="confirmation-buttons">
                         <button type="submit">Yes</button>
-                        <button>Cancel</button>
+                        <button id="cancel">Cancel</button>
                     </div>
                 </div>
             <div>
@@ -230,6 +231,16 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        $('.remove').click(function (e) {
+            $('#expandable').removeClass('collapsed');
+            e.preventDefault();
+        });
+
+        $('#cancel').click(function (e) {
+            $('#expandable').addClass('collapsed');
+            e.preventDefault();
         });
 
     </script>
