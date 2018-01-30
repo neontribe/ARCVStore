@@ -155,23 +155,25 @@
                 </div>
             </div>
         </form>
-        <form>
-            <div class="remove">
+        <form class="leaving">
+            <div>
                 <button class="remove">Remove this family</button>
                 <div class="expandable">
-                    <label for="reason-for-leaving">
-                        Reason for leaving
-                    </label>
-                    <select id="reason-for-leaving">
-                        <option value="one">kjljnlkn;kl</option>
-                    </select>
+                    <div class="reason">
+                        <label for="reason-for-leaving">
+                            Reason for leaving
+                        </label>
+                        <select id="reason-for-leaving">
+                            <option value="one">kjljnlkn;kl</option>
+                        </select>
+                    </div>
                     <p>Are you sure?</p>
                     <div class="confirmation-buttons">
                         <button>Yes</button>
                         <button>Cancel</button>
                     </div>
                 </div>
-            </div>
+            <div>
         </form>
     </div>
 
