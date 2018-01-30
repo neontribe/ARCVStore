@@ -189,9 +189,6 @@ class RegistrationController extends Controller
      */
     public function store(StoreNewRegistrationRequest $request)
     {
-        // Duplicate families are fine at this point.
-        $family = new Family(['rvid' => Family::generateRVID()]);
-
 
         // Create Carers
         // TODO: Alter request to pre-join the array?
@@ -225,6 +222,11 @@ class RegistrationController extends Controller
             'eligibility' => $request->get('eligibility'),
             // diary and chart are not saved right now.
         ]);
+
+        // Duplicate families are fine at this point.
+        $family = new Family();
+
+        $family->generateRVID(Auth::user()->centre);
 
         // Try to transact, so we can roll it back
         try {

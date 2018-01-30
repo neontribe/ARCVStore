@@ -58,8 +58,12 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
         $sponsor = factory(App\Sponsor::class)->create();
     }
 
+    $name = $faker->streetName;
+
     return [
-        'name' => $faker->streetName,
+        'name' => $name,
+        // *Probably* not going to generate a duplicate...
+        'prefix' => metaphone($name, 5),
         'sponsor_id' => $sponsor->id,
     ];
 });

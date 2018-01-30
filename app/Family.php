@@ -212,15 +212,14 @@ class Family extends Model
      * @param int $l
      * @return string
      */
-    public static function generateRVID($l = 8)
+    public static function generateRVID(Centre $centre)
     {
-        //TODO: make a better guid function that produces human usable strings
-        //TODO: validate this is unique against the DB
-        $str = "";
-        for ($x=0; $x<$l; $x++) {
-            $str .= substr(str_shuffle("2346789BCDFGHJKMPQRTVWXY"), 0, 1);
+        $rvid = null;
+        if ($centre) {
+            $centre->registrations->orderBy();
+            $new_rvid =
         }
-        return "RV-".$str;
+        return $rvid;
     }
 
     /**
