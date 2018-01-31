@@ -25,7 +25,7 @@ class CentreModelTest extends TestCase
         $centre = factory(Centre::class)->create([
             'sponsor_id' => factory(Sponsor::class)->create()->id,
         ]);
-        $this->assertInstanceOf($centre->sponsor, Sponsor::class);
+        $this->assertInstanceOf(Sponsor::class, $centre->sponsor);
     }
 
     /** @test */
