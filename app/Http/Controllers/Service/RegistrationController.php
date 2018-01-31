@@ -252,6 +252,7 @@ class RegistrationController extends Controller
             'service.printables.family',
             $data
         );
+        $pdf->setPaper('A4', 'landscape');
         return @$pdf->download($filename);
     }
 
