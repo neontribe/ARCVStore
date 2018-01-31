@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
+use Auth;
 
 class Family extends Model
 {
@@ -18,7 +20,9 @@ class Family extends Model
      * @var array
      */
     protected $fillable = [
-        'rvid', 'leaving_on', 'leaving_reason',
+        'leaving_on',
+        'leaving_reason',
+        'centre_sequence',
     ];
 
     /**
@@ -46,16 +50,18 @@ class Family extends Model
     protected $appends = [
         'entitlement',
         'expecting',
+        'rvid'
     ];
 
     /**
      * Rules for validation. Can't provide in a static array because getting config array.
      */
-    public function rules() {
+    public function rules()
+    {
         return [
             'leaving_on' => [
                 'required_with:leaving_reason',
-                'datetime'
+                'datetime',
             ],
             'leaving_reason' => [
                 'required_with:leaving_on',
@@ -76,8 +82,8 @@ class Family extends Model
      */
     public function getStatus()
     {
-        $notices=[];
-        $credits=[];
+        $notices = [];
+        $credits = [];
 
         foreach ($this->children as $child) {
             $child_status = $child->getStatus();
@@ -206,21 +212,48 @@ class Family extends Model
         });
     }
 
+
     /**
-     * Spits out a pseudorandom string to ue an RVID
+     * Generates and sets the components required for an RVID.
      *
-     * @param int $l
+     * @param Centre $centre
+     */
+    public function generateRVID(Centre $centre)
+    {
+        if (is_null($this->centre_sequence)) {
+            if ($centre) {
+                // Get the last family made in this centre.
+                $family = Family::where('initial_centre_id', $centre->id)
+                    ->orderBy('centre_sequence', 'desc')
+                    ->first();
+                // set a default.
+                $sequence = 1;
+                // If there's a prior family
+                if ($family) {
+                    $sequence = ($family->centre_sequence) ? $family->centre_sequence + 1 : 1;
+                }
+                $this->centre_sequence = $sequence;
+                $this->initialCentre()->associate($centre);
+            } else {
+                Log::info('Failed to generate RVID: No Centre given.');
+            }
+        } else {
+            Log::info('Failed to generate RVID: ' . $this->rvid . ' already exists.');
+        }
+    }
+
+    /**
+     * Calculate the 'rvid' attribute and return it.
+     *
      * @return string
      */
-    public static function generateRVID($l = 8)
+    public function getRvidAttribute()
     {
-        //TODO: make a better guid function that produces human usable strings
-        //TODO: validate this is unique against the DB
-        $str = "";
-        for ($x=0; $x<$l; $x++) {
-            $str .= substr(str_shuffle("2346789BCDFGHJKMPQRTVWXY"), 0, 1);
+        $rvid = "UNKNOWN";
+        if ($this->initialCentre && $this->centre_sequence) {
+            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, "0", STR_PAD_LEFT);
         }
-        return "RV-".$str;
+        return $rvid;
     }
 
     /**
@@ -261,5 +294,14 @@ class Family extends Model
     public function registrations()
     {
         return $this->hasMany('App\Registration');
+    }
+
+    /**
+     * Get the Family's intial registered Centre.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function initialCentre()
+    {
+        return $this->belongsTo('App\Centre', 'initial_centre_id');
     }
 }
