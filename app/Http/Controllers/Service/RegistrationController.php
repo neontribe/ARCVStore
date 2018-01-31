@@ -207,8 +207,9 @@ class RegistrationController extends Controller
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // For crazy reasons known only to the creators of Carbon, when no day provided
-                // to createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                // For crazy reasons known only to the creators of Carbon, when no day provided,
+                // createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                // So we want '2013-02-01' not '2013-02-31'...
                 $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
 
                 return new Child([
