@@ -32,7 +32,7 @@
                 <a href="#" onclick="return printCentreRegistrations()">
                     <li>
                         <img src="{{ asset('assets/print-light.svg') }}" name="logo">
-                        Print collection sheets
+                        {{ $print_button_text }}
                     </li>
                 </a>
                 @can( 'export', App\Registration::class )

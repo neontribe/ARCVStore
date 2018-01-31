@@ -13,10 +13,14 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $centre = $user->centre;
+        $pref_collection = ($centre->print_pref === 'collection');
+
         $data = [
             "user_name" => $user->name,
-            "centre_name" => ($user->centre) ? $user->centre->name : null,
-            "centre_id" => ($user->centre->id) ? $user->centre->id : null,
+            "centre_name" => $centre ? $centre->name : null,
+            "centre_id" => $centre ? $centre->id : null,
+            "print_button_text" => $pref_collection ? 'Print collection sheet' : 'Print all family sheets',
         ];
         return view('service.dashboard', $data);
     }
