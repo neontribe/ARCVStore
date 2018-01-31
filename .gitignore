@@ -1,12 +1,6 @@
 /node_modules
 /public/storage
-
-!storage/
-storage/*
-!storage/fonts/
-storage/fonts/*
-!storage/fonts/Lato
-!storage/fonts/Roboto_Slab
+storage/
 /vendor
 /.idea
 Homestead.json
