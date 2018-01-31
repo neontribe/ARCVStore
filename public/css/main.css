@@ -130,6 +130,12 @@ button {
 	box-shadow:0 3px 12px -1px rgba(0,0,0,.2);
 }
 
+button:disabled,
+button[disabled] {
+	background-color: #AEAEAE;
+	color: #f9f9f9;
+}
+
 button:after,
 .navigation li:after {
 	content: "";
@@ -475,6 +481,10 @@ strong {
 
 .search table button {
 	width: 75px;
+}
+
+.search table tr.inactive {
+	color:#AEAEAE;
 }
 
 .search-actions {

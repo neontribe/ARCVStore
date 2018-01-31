@@ -155,20 +155,21 @@
                 </div>
             </div>
         </form>
-        <form class="leaving" action="{{ URL::route('service.registration.family.update',['id' => $registration->id]) }}" method="post">
+        @if (!isset($registration->family->leaving_on) )
+        <form class="leaving" action="{{ URL::route('service.registration.family',['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
             {!! csrf_field() !!}
             <div>
-                <button class="remove">Remove this family</button>
-
+                <button class="remove" type="button">Remove this family</button>
                 <div id="expandable" class="collapsed" >
                     <div class="reason">
                         <label for="reason-for-leaving">
                             Reason for leaving
                         </label>
-                        <select id="reason-for-leaving">
-                            @foreach(Config::get('arc.leaving_reasons') as $key => $reason)
-                            <option value="{{ $key }}"> {{ $reason }}</option>
+                        <select id="reason-for-leaving" name="leaving_reason">
+                            <option value="" disabled selected>Select a reason...</option>
+                            @foreach(Config::get('arc.leaving_reasons') as $reason)
+                                <option value="{{ $reason }}"> {{ $reason }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -178,10 +179,9 @@
                         <button id="cancel">Cancel</button>
                     </div>
                 </div>
-            <div>
-                <input type="hidden" name='id' value=' {{ $registration->family->id }}' >
-                <input type="hidden" name='leaving_on' value='1' >
+            </div>
         </form>
+        @endif
     </div>
 
     <script>
