@@ -131,7 +131,7 @@ class FamilyModelTest extends TestCase
         $family->generateRVID($centre);
 
         // and matches the following
-        $candidate = $centre->prefix . str_pad($family->centre_sequence, 4, STR_PAD_LEFT);
+        $candidate = $centre->prefix . str_pad($family->centre_sequence, 4, 0, STR_PAD_LEFT);
 
         $this->assertEquals($candidate, $family->rvid);
     }
