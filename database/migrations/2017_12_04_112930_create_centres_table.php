@@ -17,6 +17,7 @@ class CreateCentresTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('sponsor_id')->unsigned(); //FK Sponsor
+            $table->enum('print_pref', ['collection', 'individual'])->default('collection');
             $table->timestamps();
 
             $table->foreign('sponsor_id')

@@ -12,6 +12,10 @@ class CentreSeeder extends Seeder
     public function run()
     {
         // 4 random Centres
-        factory(App\Centre::class, 4)->create();
+        $centres = factory(App\Centre::class, 4)->create();
+
+        // Grab one and change print pref to individual.
+        $centres[2]->print_pref = 'individual';
+        $centres[2]->save();
     }
 }

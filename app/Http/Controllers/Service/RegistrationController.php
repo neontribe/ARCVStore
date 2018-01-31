@@ -161,23 +161,28 @@ class RegistrationController extends Controller
             }
         ])->findOrFail($id);
 
+        if (!$registration) {
+            // Todo better error handling - but for now, just return is better than 500.
+            // We don't expect this to happen- ever... but
+            return;
+        }
+
         $carers = $registration->family->carers->all();
 
-        return view(
-            'service.printables.family',
-            [
-                'user_name' => $user->name,
-                'centre_name' => ($user->centre) ? $user->centre->name : null,
-                'centre' => $registration->centre,
-                'sheet_title' => 'Printable Family Sheet',
-                'sheet_header' => 'Family Collection Sheet',
-                'family' => $registration->family,
-                'pri_carer' => array_shift($carers),
-                // Remove the primary carer from collection
-                'sec_carers' => $carers,
-                'children' => $registration->family->children,
-            ]
-        );
+        $params = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'centre' => $registration->centre,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+            'family' => $registration->family,
+            'pri_carer' => array_shift($carers),
+            // Remove the primary carer from collection
+            'sec_carers' => $carers,
+            'children' => $registration->family->children,
+        ];
+
+        return view('service.printables.family', $params);
     }
 
     /**

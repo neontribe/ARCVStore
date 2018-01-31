@@ -61,6 +61,9 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->streetName,
         'sponsor_id' => $sponsor->id,
+        // print_pref will be 'collection' by default.
+        // To ensure we always have one 'individual', adding to seeder instead.
+        // 'print_pref' => $faker->randomElement(['individual', 'collection']),
     ];
 });
 
