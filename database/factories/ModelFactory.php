@@ -131,14 +131,16 @@ $factory->define(App\Registration::class, function () {
 
     $eligibilities = ['healthy-start', 'other'];
 
-    $family = factory(App\Family::class)->create();
-    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
-    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
-
     $centre = App\Centre::inRandomOrder()->first();
     if (is_null($centre)) {
         $centre = factory(App\Centre::class)->create();
     }
+    $family = factory(App\Family::class)->make();
+    $family->generateRVID($centre);
+    $family->save();
+    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
+    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
+
 
     return [
         'centre_id' => $centre->id,

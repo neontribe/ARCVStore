@@ -251,7 +251,7 @@ class Family extends Model
     {
         $rvid = "UNKNOWN";
         if ($this->initialCentre && $this->centre_sequence) {
-            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, STR_PAD_LEFT);
+            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, "0", STR_PAD_LEFT);
         }
         return $rvid;
     }
