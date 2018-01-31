@@ -61,10 +61,10 @@
                 <td></td>
             </tr>
         </table>
-        <table class="more-info">
+        <table class="more-info {{ ($index + 1) == count($regs) ? 'no-page-break' : '' }}">
             <tr>
                 <td rowspan="2">
-                    <p>This family should collect <strong>{{ $reg["family"]->entitlement }}</strong> vouchers per week:</p>
+                    <p> {{ $index + 1}} {{ count($regs) }}This family should collect <strong>{{ $reg["family"]->entitlement }}</strong> vouchers per week:</p>
                     <ul>
                     @foreach( $reg["family"]->getCreditReasons() as $credits)
                         <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
