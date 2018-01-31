@@ -380,4 +380,28 @@ class EditPageTest extends TestCase
         ;
     }
 
+    /** @test */
+    public function itShowsTheLeavingFormIfFamilyIsOnScheme()
+    {
+    }
+
+    /** @test */
+    public function itDoeNotShowTheLeavingFormIfFamilyIsOnScheme()
+    {
+    }
+
+    /** @test */
+    public function itWillRejectLeavingWithoutAReason()
+    {
+    }
+
+    /** @test */
+    public function itWillAcceptLeavingWithAReason()
+    {
+    }
+
+    /** @test */
+    public function itWillRejectUpdatesIfFamilyHasLeft()
+    {
+    }
 }
