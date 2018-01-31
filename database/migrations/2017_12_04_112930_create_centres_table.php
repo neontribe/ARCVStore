@@ -16,6 +16,7 @@ class CreateCentresTable extends Migration
         Schema::create('centres', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('prefix', 5);
             $table->integer('sponsor_id')->unsigned(); //FK Sponsor
             $table->enum('print_pref', ['collection', 'individual'])->default('collection');
             $table->timestamps();
