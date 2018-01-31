@@ -79,19 +79,20 @@ class FamilyModelTest extends TestCase
         // Set up some families and centres.
         $centre1 = factory(Centre::class)->create();
         $centre2 = factory(Centre::class)->create();
+
         $family1 = factory(Family::class)->create();
         $family2 = factory(Family::class)->create();
         $family3 = factory(Family::class)->create();
 
         // Generate the RVIDs
         $family1->generateRVID($centre1);
-        $family2->generateRVID($centre1);
-        $family3->generateRVID($centre2);
-
         $family1->save();
+
+        $family2->generateRVID($centre1);
         $family2->save();
+
+        $family3->generateRVID($centre2);
         $family3->save();
-        //dd($family1->toArray());
 
         // Check the fields have been set
 
@@ -129,12 +130,9 @@ class FamilyModelTest extends TestCase
         // Set the RVID
         $family->generateRVID($centre);
 
-        // it's changed from "UNKNOWN"
-        $this->assertNotEquals("UNKNOWN", $family->rvid);
-
         // and matches the following
         $candidate = $centre->prefix . str_pad($family->centre_sequence, 4, STR_PAD_LEFT);
 
-        $this->assertEquals($family->rvid, $candidate);
+        $this->assertEquals($candidate, $family->rvid);
     }
 }

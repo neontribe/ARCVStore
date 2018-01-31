@@ -226,17 +226,17 @@ class Family extends Model
                 $family = Family::where('initial_centre_id', $centre->id)
                     ->orderBy('centre_sequence', 'desc')
                     ->first();
-
-                // If there's a prior family
+                // set a default.
                 $sequence = 1;
+                // If there's a prior family
                 if ($family) {
-                    // That has a sequence
-                    $sequence = (!is_null($family->centre_sequence)) ? $family->centre_sequence + 1 : 1;
+                    $sequence = ($family->centre_sequence) ? $family->centre_sequence + 1 : 1;
                 }
                 $this->centre_sequence = $sequence;
                 $this->initialCentre()->associate($centre);
+            } else {
+                Log::info('Failed to generate RVID: No Centre given.');
             }
-            Log::info('Failed to generate RVID: No Centre given.');
         } else {
             Log::info('Failed to generate RVID: ' . $this->rvid . ' already exists.');
         }
@@ -249,12 +249,11 @@ class Family extends Model
      */
     public function getRvidAttribute()
     {
-        // Check we've got one.
-        if ($this->intialCentre && $this->centre_sequence) {
-                return  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, STR_PAD_LEFT);
-        } else {
-            return "UNKNOWN";
+        $rvid = "UNKNOWN";
+        if ($this->initialCentre && $this->centre_sequence) {
+            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, STR_PAD_LEFT);
         }
+        return $rvid;
     }
 
     /**
