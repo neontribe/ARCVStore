@@ -162,9 +162,8 @@ $factory->state(App\Registration::class, 'withCCReference', function (Faker\Gene
 
 // Family
 $factory->define(App\Family::class, function () {
-    return [
-        'rvid' => \App\Family::generateRVID(),
-    ];
+    // One day there will be useful things here.
+    return [];
 });
 
 // Carer
@@ -173,8 +172,6 @@ $factory->define(App\Carer::class, function (Faker\Generator $faker) {
         'name' => $faker->firstName ." ". $faker->lastName,
     ];
 });
-
-
 
 // Random Age Child
 $factory->define(App\Child::class, function (Faker\Generator $faker) {

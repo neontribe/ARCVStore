@@ -226,6 +226,7 @@ class RegistrationController extends Controller
         // Duplicate families are fine at this point.
         $family = new Family();
 
+        // Set the RVID using the User's Centre.
         $family->generateRVID(Auth::user()->centre);
 
         // Try to transact, so we can roll it back

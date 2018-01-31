@@ -15,17 +15,16 @@ class CreateFamiliesTable extends Migration
     {
         Schema::create('families', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('init_centre_id')->nullable();
-            $table->string('rvid')->nullable(); // Rose Voucher ID; globally unique per participant.
+            $table->integer('initial_centre_id')->nullable(); // Where we registered first.
+            $table->integer('centre_sequence')->nullable(); //Component for RVID.
             $table->dateTime('leaving_on')->nullable();
             $table->string('leaving_reason', 128)->nullable();
             $table->timestamps();
-        });
 
-        $table->foreign('init_centre_id')
-            ->references('id')
-            ->on('centre');
-    });
+            $table->foreign('initial_centre_id')
+                ->references('id')
+                ->on('centre');
+        });
     }
 
     /**
