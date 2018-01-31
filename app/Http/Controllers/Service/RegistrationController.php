@@ -202,12 +202,15 @@ class RegistrationController extends Controller
             )
         );
 
-        // Create Children
+        // Create Children - todo refactor into helper - used twice
+        // Might be lovlier as a foreach too... rather than map closure :)
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided
+                // to createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
+
                 return new Child([
                         'born' => $month_of_birth->isPast(),
                         'dob' => $month_of_birth->toDateTimeString(),
@@ -274,8 +277,9 @@ class RegistrationController extends Controller
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided
+                // to createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
                 return new Child([
                     'born' => $month_of_birth->isPast(),
                     'dob' => $month_of_birth->toDateTimeString(),
