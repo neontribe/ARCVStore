@@ -383,21 +383,78 @@ class EditPageTest extends TestCase
     /** @test */
     public function itShowsTheLeavingFormIfFamilyIsOnScheme()
     {
+
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.edit', [ 'id' => $this->registration->id ]))
+            ->seeElement('form[action="' .
+                URL::route('service.registration.family', ['id' => $this->registration->id]) .
+                '"]')
+            ->seeInElement('button[class="remove"]', 'Remove this family')
+            ->seeElement('select[name="leaving_reason"]')
+        ;
+
+        $leaving_reasons = config('arc.leaving_reasons');
+        foreach ($leaving_reasons as $reason) {
+            $this->seeInElement('option[value="' . $reason . '"]', $reason);
+        }
     }
 
     /** @test */
-    public function itDoeNotShowTheLeavingFormIfFamilyIsOnScheme()
+    public function itDoesNotShowTheLeavingFormIfFamilyHasLeftScheme()
     {
+        // Set family to left;
+        $this->registration->family->leaving_on = Carbon::now();
+        $this->registration->family->save();
+        $this->registration->fresh();
+
+        // Check the form is not shown
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.edit', [ 'id' => $this->registration->id ]))
+            ->dontSeeElement('form[action="' .
+                URL::route('service.registration.family', ['id' => $this->registration->id]) .
+                '"]')
+            ->dontSeeInElement('button[class="remove"]', 'Remove this family')
+            ->dontSeeElement('select[name="leaving_reason"]')
+        ;
     }
 
     /** @test */
     public function itWillRejectLeavingWithoutAReason()
     {
+        $route = URL::route('service.registration.edit', [ 'id' => $this->registration->id ]);
+
+        $this->actingAs($this->user)
+            ->visit($route)
+            ->press("Yes")
+            ->seePageIs($route)
+            ->see(trans('validation.required', ['attribute' => 'leaving reason']));
     }
 
     /** @test */
     public function itWillAcceptLeavingWithAReason()
     {
+    }
+
+    /** @test */
+    public function itWillRejectAnInvalidLeavingReason()
+    {
+        $route = URL::route('service.registration.edit', [ 'id' => $this->registration->id ]);
+
+        $this->actingAs($this->user)
+            ->visit($route)
+        ;
+
+        $response = $this->call(
+            'PUT',
+            URL::route('service.registration.family', ['id' => $this->registration->id]),
+            [
+                'leaving_reason' => '!!not a valid reason!!',
+                '_token' => csrf_field()
+            ]
+        );
+        // incomplete test.
+        // We are expecting the respose to contain an error based on
+        // trans('validation:in, '["attribute" -> "leaving reason"]')
     }
 
     /** @test */

@@ -74,7 +74,6 @@ Route::group(['middleware' => 'auth:web'], function () {
 
     // Printables
 
-
     // TODO : print feels... unRESTY; revise
     Route::get('/registration/{registration}/print', [
         'as' => 'service.registration.print',
