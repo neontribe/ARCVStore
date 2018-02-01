@@ -65,6 +65,13 @@ Route::group(['middleware' => 'auth:web'], function () {
         ],
     ]);
 
+
+    // Update (deactivate) a Registration's Family
+    Route::put('/registrations/{registration}/family', [
+        'as' => 'service.registration.family',
+        'uses' => 'Service\FamilyController@update',
+    ]);
+
     // Printables
 
     // TODO : print feels... unRESTY; revise

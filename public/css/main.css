@@ -32,7 +32,6 @@ ul {
 form {
 	display: flex;
 	width: 100%;
-	height: 100%;
 	margin: 0;
 }
 
@@ -112,10 +111,11 @@ select:focus {
 }
 
 select {
-	border: 1px solid black;
-	height: 48px;
-	font-size: 1.1rem;
+	width: 250px;
+	height: 35px;
 	background-color: white;
+	margin-top: 0.5rem;
+	border-radius: 0;
 }
 
 button {
@@ -128,6 +128,11 @@ button {
 	border-radius: 3px;
 	overflow: hidden;
 	box-shadow:0 3px 12px -1px rgba(0,0,0,.2);
+}
+
+button:disabled {
+	background-color: #AEAEAE;
+	color: #f9f9f9;
 }
 
 button:after,
@@ -412,6 +417,10 @@ strong {
 	top: 0;
 }
 
+.check .col {
+	height: 67vh;
+}
+
 .collect {
 	background-color: #dff2ce;
 }
@@ -430,6 +439,38 @@ strong {
 	width: 100%;
 }
 
+.leaving {
+	height: auto;
+	margin: 0 1rem 1rem 1rem;
+}
+
+.remove {
+	background-color: #d2232a;
+	margin-bottom: 0.5rem;
+	width: 15.5rem
+}
+
+.leaving .reason {
+	display: grid;
+}
+
+.confirmation-buttons button {
+	min-height: 30px;
+	width: 7.7rem;
+}
+
+.confirmation-buttons button:nth-child(2) {
+	background-color: #000;
+}
+
+#expandable p {
+	margin-bottom: 10px;
+}
+
+.collapsed {
+	display: none;
+}
+
 .search {
 	padding-top: 2rem;
 	background-color: #FFF;
@@ -439,6 +480,10 @@ strong {
 
 .search table button {
 	width: 75px;
+}
+
+.search table tr.inactive {
+	color:#AEAEAE;
 }
 
 .search-actions {
