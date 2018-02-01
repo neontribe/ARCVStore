@@ -9,7 +9,7 @@
     <script type="text/javascript">
         function printCentreRegistrations()
         {
-            window.open('{{ URL::route("service.centre.registrations.print", ["centre" => $centre_id]) }}');
+            window.open('{{ URL::route("service.registrations.print") }}');
             return false;
         }
     </script>
