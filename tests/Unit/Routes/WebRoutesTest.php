@@ -210,4 +210,9 @@ class WebRoutesTest extends TestCase
             ->assertResponseOK()
         ;
     }
+
+    /** @test */
+    public function testRegistrationFamilyUpdateGate()
+    {
+    }
 }
