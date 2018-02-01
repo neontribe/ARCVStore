@@ -175,7 +175,6 @@ class RegistrationController extends Controller
             'sheet_header' => 'Family Collection Sheet',
         ];
 
-        // Setup registration data for blade.
         $carers = $registration->family->carers->all();
         $data['regs'][] = [
             'centre' => $registration->centre,
@@ -185,9 +184,6 @@ class RegistrationController extends Controller
             'sec_carers' => $carers,
             'children' => $registration->family->children,
         ];
-
-        //return view('service.printables.family', $data);
-
 
         // throw at a PDF
         $pdf = PDF::loadView('service.printables.family', $data);
@@ -265,9 +261,6 @@ class RegistrationController extends Controller
      */
     public function store(StoreNewRegistrationRequest $request)
     {
-        // Duplicate families are fine at this point.
-        $family = new Family(['rvid' => Family::generateRVID()]);
-
 
         // Create Carers
         // TODO: Alter request to pre-join the array?
@@ -281,12 +274,16 @@ class RegistrationController extends Controller
             )
         );
 
-        // Create Children
+        // Create Children - todo refactor into helper - used twice
+        // Might be lovlier as a foreach too... rather than map closure :)
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided,
+                // createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                // So we want '2013-02-01' not '2013-02-31'...
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
+
                 return new Child([
                         'born' => $month_of_birth->isPast(),
                         'dob' => $month_of_birth->toDateTimeString(),
@@ -301,6 +298,12 @@ class RegistrationController extends Controller
             'eligibility' => $request->get('eligibility'),
             // diary and chart are not saved right now.
         ]);
+
+        // Duplicate families are fine at this point.
+        $family = new Family();
+
+        // Set the RVID using the User's Centre.
+        $family->generateRVID(Auth::user()->centre);
 
         // Try to transact, so we can roll it back
         try {
@@ -347,8 +350,9 @@ class RegistrationController extends Controller
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided
+                // to createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
                 return new Child([
                     'born' => $month_of_birth->isPast(),
                     'dob' => $month_of_birth->toDateTimeString(),

@@ -58,9 +58,16 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
         $sponsor = factory(App\Sponsor::class)->create();
     }
 
+    $name = $faker->streetName;
+
     return [
-        'name' => $faker->streetName,
+        'name' => $name,
+        // *Probably* not going to generate a duplicate...
+        'prefix' => metaphone($name, 5),
         'sponsor_id' => $sponsor->id,
+        // print_pref will be 'collection' by default.
+        // To ensure we always have one 'individual', adding to seeder as well.
+        'print_pref' => $faker->randomElement(['individual', 'collection']),
     ];
 });
 
@@ -127,14 +134,16 @@ $factory->define(App\Registration::class, function () {
 
     $eligibilities = ['healthy-start', 'other'];
 
-    $family = factory(App\Family::class)->create();
-    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
-    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
-
     $centre = App\Centre::inRandomOrder()->first();
     if (is_null($centre)) {
         $centre = factory(App\Centre::class)->create();
     }
+    $family = factory(App\Family::class)->make();
+    $family->generateRVID($centre);
+    $family->save();
+    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
+    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
+
 
     return [
         'centre_id' => $centre->id,
@@ -158,9 +167,8 @@ $factory->state(App\Registration::class, 'withCCReference', function (Faker\Gene
 
 // Family
 $factory->define(App\Family::class, function () {
-    return [
-        'rvid' => \App\Family::generateRVID(),
-    ];
+    // One day there will be useful things here.
+    return [];
 });
 
 // Carer
@@ -169,8 +177,6 @@ $factory->define(App\Carer::class, function (Faker\Generator $faker) {
         'name' => $faker->firstName ." ". $faker->lastName,
     ];
 });
-
-
 
 // Random Age Child
 $factory->define(App\Child::class, function (Faker\Generator $faker) {
