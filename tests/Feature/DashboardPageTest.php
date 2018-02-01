@@ -86,4 +86,23 @@ class DashboardPageTest extends TestCase
         ;
     }
 
+    /** @test */
+    public function itShowsThePrintButtonWithReleventTextForPrintPref()
+    {
+        // Set centre print_pref to 'collection'.
+        $this->centre->print_pref = 'collection';
+        $this->centre->save();
+        $this->actingAs($this->user->fresh())
+            ->visit(url::route('service.dashboard'))
+            ->see('Print collection sheet')
+        ;
+
+        // Set centre print_pref to 'individual'.
+        $this->centre->print_pref = 'individual';
+        $this->centre->save();
+        $this->actingAs($this->user->fresh())
+            ->visit(url::route('service.dashboard'))
+            ->see('Print all family sheets')
+        ;
+    }
 }
