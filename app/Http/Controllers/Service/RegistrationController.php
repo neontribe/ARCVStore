@@ -125,11 +125,11 @@ class RegistrationController extends Controller
         ];
 
         // Get the registration, with deep eager-loaded Family (with Children and Carers)
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        $registration = Registration::withFullFamily()->find($id);
+
+        if (!$registration) {
+            abort(404, 'Registraion not found.');
+        }
 
         // Grab carers copy for shift)ing without altering family->carers
         $carers = $registration->family->carers->all();
@@ -158,11 +158,11 @@ class RegistrationController extends Controller
         $user = Auth::user();
 
         // Find the Registration and subdata
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        $registration = Registration::withFullFamily()->find($id);
+
+        if (!$registration) {
+            abort(404, 'Registraion not found.');
+        }
 
         // Make a filename
         $filename = 'Registration' . Carbon::now()->format('YmdHis') .'.pdf';
@@ -189,7 +189,6 @@ class RegistrationController extends Controller
         $pdf = PDF::loadView('service.printables.family', $data);
         $pdf->setPaper('A4', 'landscape');
         return @$pdf->download($filename);
-
     }
 
     /**
@@ -213,11 +212,7 @@ class RegistrationController extends Controller
         }
 
         // Get the registrations this User's centre is directly responsible for
-        $registrations = $centre->registrations()->with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->get();
+        $registrations = $centre->registrations()->withFullFamily()->get();
 
         // Make a filename
         $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';
