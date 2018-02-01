@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
 
         // ARC admin is an fmuser in centre 2, which has individual forms on the dashboard.
         factory(App\User::class)->create([
-            "name"  => "ARC FM User",
+            "name"  => "ARC Admin User",
             "email" => "arc+admin@neontribe.co.uk",
             "password" => bcrypt('store_pass'),
             "centre_id" => 2,
