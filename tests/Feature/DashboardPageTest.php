@@ -95,6 +95,7 @@ class DashboardPageTest extends TestCase
         $this->actingAs($this->user->fresh())
             ->visit(url::route('service.dashboard'))
             ->see('Print collection sheet')
+            ->see(URL::route('service.centre.registrations.collection', ['id' => $this->centre->id ]))
         ;
 
         // Set centre print_pref to 'individual'.
@@ -103,6 +104,7 @@ class DashboardPageTest extends TestCase
         $this->actingAs($this->user->fresh())
             ->visit(url::route('service.dashboard'))
             ->see('Print all family sheets')
+            ->see(URL::route('service.registrations.print'))
         ;
     }
 }

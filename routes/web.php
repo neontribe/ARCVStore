@@ -65,7 +65,6 @@ Route::group(['middleware' => 'auth:web'], function () {
         ],
     ]);
 
-
     // Update (deactivate) a Registration's Family
     Route::put('/registrations/{registration}/family', [
         'as' => 'service.registration.family',
@@ -87,9 +86,9 @@ Route::group(['middleware' => 'auth:web'], function () {
     ]);
 
     // Print a Specific Centre's Registration's register form
-    Route::get('/centre/{centre}/registrations/register-form', [
-        'as' => 'service.centre.registrations/register-form',
-        'uses' => 'Service\CentreController@printCentreRegisterForm',
+    Route::get('/centres/{centre}/registrations/collection', [
+        'as' => 'service.centre.registrations.collection',
+        'uses' => 'Service\CentreController@printCentreCollectionForm',
     ]);
 
     // ALL centres registrations as a summary spreadsheet

@@ -7,10 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Registration;
 use Auth;
 use Carbon\Carbon;
-use \Excel;
-use Illuminate\Http\Request;
+use Excel;
 use Illuminate\View\View;
-use Log;
+use PDF;
 
 class CentreController extends Controller
 {
@@ -21,7 +20,7 @@ class CentreController extends Controller
      * @param Centre $centre
      * @return \Illuminate\Contracts\View\Factory|View
      */
-    public function printCentreRegisterForm(Centre $centre)
+    public function printCentreCollectionForm(Centre $centre)
     {
         $registrations = $centre->registrations;
 
