@@ -65,6 +65,9 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
         // *Probably* not going to generate a duplicate...
         'prefix' => metaphone($name, 5),
         'sponsor_id' => $sponsor->id,
+        // print_pref will be 'collection' by default.
+        // To ensure we always have one 'individual', adding to seeder as well.
+        'print_pref' => $faker->randomElement(['individual', 'collection']),
     ];
 });
 
