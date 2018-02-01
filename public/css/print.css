@@ -3,11 +3,6 @@
 	src: url('Lato/Lato-Regular.ttf') format('truetype');
 }
 
-@font-face {
-	font-family: 'Roboto Slab';
-	src: url('Roboto_Slab/RobotoSlab-Regular.ttf') format('truetype');
-}
-
 body {
 	font-family: 'Lato', sans-serif;
 	font-size: 15px;
