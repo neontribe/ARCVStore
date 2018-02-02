@@ -242,7 +242,7 @@ strong {
 }
 
 .content {
-	height: 80%;
+	height: 88%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
@@ -504,7 +504,7 @@ strong {
 
 .login > form > div {
 	height: 3rem;
-	margin: 1rem;
+	margin: 2rem 0;
 }
 
 .login-input {
