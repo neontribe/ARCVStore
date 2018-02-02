@@ -203,20 +203,34 @@ class Family extends Model
      */
     public function generateRVID(Centre $centre)
     {
-        if (is_null($this->centre_sequence)) {
+        // If we're  unspecified object.
+        if (!$this->centre_sequence) {
             if ($centre) {
+                Log::info("-----");
+                Log::info("Passed centre " . $centre->id . " with " . $centre->prefix);
                 // Get the last family made in this centre.
-                $family = Family::where('initial_centre_id', $centre->id)
-                    ->orderBy('centre_sequence', 'desc')
+
+                $prior_family = Family::where('initial_centre_id', $centre->id)
+                    ->orderByDesc('id')
                     ->first();
-                // set a default.
-                $sequence = 1;
+
                 // If there's a prior family
-                if ($family) {
-                    $sequence = ($family->centre_sequence) ? $family->centre_sequence + 1 : 1;
+                if ($prior_family) {
+                    Log::info("have family " .
+                        $prior_family->getRvidAttribute() .
+                        " from " . $prior_family->initialCentre->prefix );
+                    $sequence = $prior_family->centre_sequence + 1;
+                } else {
+                    // set a default.
+                    $sequence = 1;
+                    Log::info(" No Prior family for " . $centre->prefix);
                 }
+
                 $this->centre_sequence = $sequence;
                 $this->initialCentre()->associate($centre);
+                Log::info("this family centre_sequence is " .
+                    $this->centre_sequence .
+                    " with ". $this->initialCentre->prefix);
             } else {
                 Log::info('Failed to generate RVID: No Centre given.');
             }
