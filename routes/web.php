@@ -74,20 +74,25 @@ Route::group(['middleware' => 'auth:web'], function () {
 
     // Printables
 
-
-    // TODO : print feels... unRESTY; revise
-    Route::get('/registration/{registration}/print', [
+    // Print a specific Family Form for User Centre (Edit page)
+    Route::get('/registrations/{registration}/print', [
         'as' => 'service.registration.print',
-        'uses' => 'Service\RegistrationController@print',
+        'uses' => 'Service\RegistrationController@printOneIndividualFamilyForm',
     ]);
 
-    // TODO : print feels... unRESTY; revise
-    Route::get('/centre/{centre}/registrations/print', [
-        'as' => 'service.centre.registrations.print',
-        'uses' => 'Service\CentreController@printRegistrations',
+    // Batch print Family Forms for User Centre
+    Route::get('/registrations/print', [
+        'as' => 'service.registrations.print',
+        'uses' => 'Service\RegistrationController@printBatchIndividualFamilyForms',
     ]);
 
-    // Exportable reports
+    // Print a Specific Centre's Registration's register form
+    Route::get('/centre/{centre}/registrations/register-form', [
+        'as' => 'service.centre.registrations/register-form',
+        'uses' => 'Service\CentreController@printCentreRegisterForm',
+    ]);
+
+    // ALL centres registrations as a summary spreadsheet
     Route::get('/centres/registrations/summary', [
         'as' => 'service.centres.registrations.summary',
         'uses' => 'Service\CentreController@exportRegistrationsSummary',

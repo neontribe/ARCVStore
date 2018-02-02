@@ -15,6 +15,7 @@ use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
 use Log;
+use PDF;
 
 class RegistrationController extends Controller
 {
@@ -124,11 +125,11 @@ class RegistrationController extends Controller
         ];
 
         // Get the registration, with deep eager-loaded Family (with Children and Carers)
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        $registration = Registration::withFullFamily()->find($id);
+
+        if (!$registration) {
+            abort(404, 'Registraion not found.');
+        }
 
         // Grab carers copy for shift)ing without altering family->carers
         $carers = $registration->family->carers->all();
@@ -151,30 +152,32 @@ class RegistrationController extends Controller
      * @param integer $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function print($id)
+    public function printOneIndividualFamilyForm($id)
     {
+        // Get User
         $user = Auth::user();
 
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        // Find the Registration and subdata
+        $registration = Registration::withFullFamily()->find($id);
 
         if (!$registration) {
-            // Todo better error handling - but for now, just return is better than 500.
-            // We don't expect this to happen- ever... but
-            return;
+            abort(404, 'Registraion not found.');
         }
 
-        $carers = $registration->family->carers->all();
+        // Make a filename
+        $filename = 'Registration' . Carbon::now()->format('YmdHis') .'.pdf';
 
-        $params = [
+        // Setup common data
+        $data = [
             'user_name' => $user->name,
             'centre_name' => ($user->centre) ? $user->centre->name : null,
-            'centre' => $registration->centre,
             'sheet_title' => 'Printable Family Sheet',
             'sheet_header' => 'Family Collection Sheet',
+        ];
+
+        $carers = $registration->family->carers->all();
+        $data['regs'][] = [
+            'centre' => $registration->centre,
             'family' => $registration->family,
             'pri_carer' => array_shift($carers),
             // Remove the primary carer from collection
@@ -182,7 +185,66 @@ class RegistrationController extends Controller
             'children' => $registration->family->children,
         ];
 
-        return view('service.printables.family', $params);
+        // throw at a PDF
+        $pdf = PDF::loadView('service.printables.family', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return @$pdf->download($filename);
+    }
+
+    /**
+     * Displays a printable version of the Registration.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function printBatchIndividualFamilyForms()
+    {
+        // Get the user and Centre
+        $user = Auth::user();
+        $centre = ($user->centre) ? $user->centre : null;
+
+        // Cope if User has no Centre.
+        if (!$centre) {
+            Log::info('User ' . $user->id . " has no Centre");
+            // Send me back to dashboard
+            return redirect()
+                ->route('service.dashboard')
+                ->withErrors(['error_message' => 'User has no Centre']);
+        }
+
+        // Get the registrations this User's centre is directly responsible for
+        $registrations = $centre->registrations()->withFullFamily()->get();
+
+        // Make a filename
+        $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';
+
+        // Set up the common view data.
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+        ];
+
+        // Stack the registration batch into the data
+        foreach ($registrations as $registration) {
+            $carers = $registration->family->carers->all();
+            $data['regs'][] = [
+                'centre' => $centre,
+                'family' => $registration->family,
+                'pri_carer' => array_shift($carers),
+                // Remove the primary carer from collection
+                'sec_carers' => $carers,
+                'children' => $registration->family->children,
+            ];
+        }
+
+        // throw it at a PDF.
+        $pdf = PDF::loadView(
+            'service.printables.family',
+            $data
+        );
+        $pdf->setPaper('A4', 'landscape');
+        return @$pdf->download($filename);
     }
 
     /**

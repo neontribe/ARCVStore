@@ -444,11 +444,7 @@ class EditPageTest extends TestCase
         $this->assertEquals('The given data failed to pass validation.', $response->exception->getMessage());
     }
 
-    /**
-     * @test
-     *
-     * @expectedException \Illuminate\Auth\Access\AuthorizationException
-     */
+    /** @test */
     public function itWillRejectUpdatesIfFamilyHasLeft()
     {
         $family = $this->registration->family;
