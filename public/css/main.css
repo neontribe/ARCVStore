@@ -258,6 +258,8 @@ strong {
 	padding: 1rem;
 	min-height: 120px;
 	display: grid;
+	display: -ms-flexbox;
+	-ms-flex-direction: column;
 	margin: 1rem 0.5rem;
 	font-family: 'Roboto Slab', serif;
 	border-radius: 0.5rem;
@@ -272,6 +274,7 @@ strong {
 
 .navigation img {
 	width: 70px;
+	height: 70px;
 	margin: 0 auto;
 }
 
