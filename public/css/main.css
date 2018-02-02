@@ -463,6 +463,11 @@ strong {
 	margin-left: 0.5rem;
 }
 
+/* Set fixed height for IE */
+.search-actions button img {
+	max-height: 40px;
+}
+
 .pagination {
 	list-style-type: none;
   display: flex;
