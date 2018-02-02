@@ -510,6 +510,7 @@ strong {
 .login-input {
 	width: 100%;
 	font-size: 2rem;
+	box-sizing: border-box;
 }
 
 .login-input.email {
@@ -534,5 +535,16 @@ strong {
 }
 
 .login .remember {
-	margin-top: 2rem;
+	margin-top: 3rem;
 }
+
+/* Media Queries 
+
+IPAD
+
+*/
+
+@media only screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px)  {
+
