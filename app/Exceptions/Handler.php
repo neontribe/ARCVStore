@@ -5,6 +5,8 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Session\TokenMismatchException;
+use Symfony\Component\HttpFoundation\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -40,10 +42,19 @@ class Handler extends ExceptionHandler
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|Response
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof TokenMismatchException) {
+            // Explicitly redirect to login form if token mismatches.
+            // Note: this will also draw attention to the login form timing out.
+            return redirect()
+                ->guest(route('service.login'))
+                // We anticipate expiry to be the most common reason.
+                ->withErrors(['error_message' => trans('auth.expired')])
+                ;
+        }
         return parent::render($request, $exception);
     }
 
@@ -60,6 +71,8 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
-        return redirect()->guest(route('service.login'));
+        return redirect()
+            ->guest(route('service.login'))
+            ->withErrors(['error_message' => trans('auth.exception')]);
     }
 }
