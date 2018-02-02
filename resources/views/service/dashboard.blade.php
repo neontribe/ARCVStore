@@ -21,11 +21,7 @@
                         Search for a family
                     </li>
                 </a>
-                @if ( $print_button_text == "Print all family sheets")
-                    <a href="{{ URL::route('service.registrations.print') }}" target="_blank" >
-                @else
-                    <a href="{{ URL::route('service.centre.registrations.collection', ['id' => $centre_id ]) }}" target="_blank" >
-                @endif
+                <a href="{{ $print_route }}" target="_blank" >
                     <li>
                         <img src="{{ asset('assets/print-light.svg') }}" name="logo">
                         {{ $print_button_text }}
