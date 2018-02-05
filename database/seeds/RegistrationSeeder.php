@@ -56,7 +56,7 @@ class RegistrationSeeder extends Seeder
         foreach (range(1, $quantity) as $q) {
             // creaate a family and set it up.
             $family = factory(App\Family::class)->make();
-            $family->generateRVID($centre);
+            $family->lockToCentre($centre);
             $family->save();
             $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
             $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
