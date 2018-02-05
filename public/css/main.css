@@ -387,6 +387,10 @@ strong {
 	width: calc(100% - 53px);
 }
 
+.remove_field {
+	float: right;
+}
+
 .user-control {
 	position: relative;
 	padding-left: 55px;
@@ -583,8 +587,7 @@ strong {
 }
 
 .login .remember {
-<<<<<<< HEAD
-	margin-top: 2rem;
+	margin-top: 3rem;
 }
 
 @media only screen
@@ -599,7 +602,3 @@ and (max-device-width : 1024px)  {
 		padding: 0;
 	}
 }
-=======
-	margin-top: 3rem;
-}
->>>>>>> 9a4b8cad05e24d45bbee3a6a0be93255be8eaa64
