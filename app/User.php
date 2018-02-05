@@ -79,6 +79,6 @@ class User extends Authenticatable
      */
     public function isRelevantCentre(Centre $centre)
     {
-        return $this->relevantCentres()->contains('id', $centre);
+        return $this->relevantCentres()->contains('id', $centre->id);
     }
 }

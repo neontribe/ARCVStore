@@ -30,7 +30,7 @@
         @foreach ($chunk as $registration)
         <tr>
           <td>{{ $registration->family->carers->first()->name }}</td>
-          <td>ARC00123</td>
+          <td>{{ $registration->family->rvid }}</td>
           <td><i class="fa fa-ticket" aria-hidden="true"></i> {{ $registration->family->entitlement }}</td>
           <td></td>
           <td></td>
