@@ -101,4 +101,18 @@ class Registration extends Model
         }
         return $reminder_reasons;
     }
+
+    /**
+     * Fetches the Registrations full Family and dependent models.
+     * @param $query
+     * @return mixed
+     */
+    public function scopeWithFullFamily($query)
+    {
+        return $query->with([
+            'family' => function ($q) {
+                $q->with('children', 'carers');
+            }
+        ]);
+    }
 }

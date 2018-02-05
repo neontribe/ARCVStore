@@ -1,47 +1,49 @@
+@font-face {
+	font-family: 'Lato';
+	src: url('Lato/Lato-Regular.ttf') format('truetype');
+}
+
 body {
-	font-family: Lato, 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	font-size: 10px;
+	font-family: 'Lato', sans-serif;
+	font-size: 15px;
 }
 
 h1,
 h2,
 h3 {
 	margin: 0;
-	font-family: 'Roboto Slab', serif;
 }
 
 h1 {
 	width: 100%;
 	text-align: center;
-	margin-bottom: 1rem;
-	font-weight: 400;
-	font-size: 1.5rem;
+	margin: 1rem;
+	font-size: 25px;
 }
 
 h2 {
-	font-size: 1.25rem;
-	font-weight: 400;
+	font-size: 20px;
+	margin-left: 5px; 
 }
 
 h3 {
-	font-size: 1rem;
-	font-weight: 400;
-
+	font-size: 15px;
+	margin-left: 5px;
 }
 
-li {
-	font-size: 0.7rem;
+p {
+	margin: 0;
 }
 
 th {
 	text-align: left;
+	padding: 5px;
 }
 
 th > p {
-	margin: 0 2rem;
-	font-size: 1.5rem;
+	margin: 0;
+	font-size: 15px;
 	text-align: right;
-
 }
 
 th > * {
@@ -50,14 +52,49 @@ th > * {
 
 td {
 	text-align: center;
+	padding: 18px;
 }
 
 th,
 td {
 	border: 1px solid #a74e94;
 	font-weight: 400;
-	padding: 1.2rem;
-	font-size: 0.8rem;
+	font-size: 15px;
+}
+
+.titles td {
+	padding: 5px;
+}
+
+.content .more-info {
+	border: 1px solid #fff;
+	margin-top: 10px;
+	page-break-after: always;
+	page-break-inside: avoid;
+}
+
+.content .no-page-break {
+	page-break-after: never;
+}
+
+.more-info th,
+.more-info td {
+	border: none;
+	text-align: left;
+	padding: 5px;
+}
+
+.more-info div {
+	border: 1px solid #a74e94;
+	border-radius: 10px;
+	margin: 0;
+	padding: 10px;
+	font-size: 12px;
+}
+
+.more-info h3,
+.colspan i {
+	color: #a74e94;
 }
 
 .colspan {
@@ -75,7 +112,6 @@ td {
 
 .header > img {
 	height: 70px;
-	margin: 2rem 3rem;
 }
 
 .subhead,
@@ -89,17 +125,17 @@ td {
 }
 
 .subhead h2 {
-		margin-top: 0.8rem;
+	margin-top: 0.8rem;
 }
 
 .subhead p {
-		font-size: 1rem;
-		margin: 1rem;
+	font-size: 1rem;
+	margin: 1rem;
 }
 
 .content {
-	width: 80%;
-	margin-left: 10%;
+	width: 90%;
+	margin-left: 5%;
 }
 
 .content > table {
@@ -107,7 +143,6 @@ td {
 	border-collapse: collapse;
 	empty-cells: show;
 	border: 1px solid #a74e94;
-
 }
 
 .families_table th,
@@ -117,32 +152,7 @@ td {
 
 .print-notes {
 	text-align: right;
-	font-size: 0.7rem;
-	margin: 2.5rem;
-}
-
-.notices,
-.allocation,
-.attention {
-	width: 49.5%;
-	display: inline-table;
-}
-
-.notices > div {
-	border: 1px solid #a74e94;
-	border-radius: 10px;
-	padding: 0.5rem;
-	margin: 0.5rem 0;
-}
-
-.allocation {
-	font-size: 0.9rem;
-}
-
-.notices h3,
-.attention h3,
-.colspan i {
-	color: #a74e94;
+	font-size: 10px;
 }
 
 /* Table cell spacing */
@@ -161,7 +171,7 @@ td {
 /* Removes printout of automatic header and footer */
 @media print {
 	@page {
-		margin: 0;
+		margin: 0px;
 	}
 
 	.content {

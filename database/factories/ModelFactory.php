@@ -63,7 +63,10 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
     return [
         'name' => $name,
         // *Probably* not going to generate a duplicate...
-        'prefix' => metaphone($name, 5),
+        // But metaphone will occassionally return 6 chars if endish char is an X -> KS
+        // https://bugs.php.net/bug.php?id=60123
+        // Also might return 4 chars - but that's ok for seeds? Or do we pad?
+        'prefix' => substr(metaphone($name, 5), 0, 5),
         'sponsor_id' => $sponsor->id,
         // print_pref will be 'collection' by default.
         // To ensure we always have one 'individual', adding to seeder as well.
