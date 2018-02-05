@@ -6,14 +6,6 @@
 
   @include('service.partials.navbar', ['headerTitle' => 'Main menu'])
 
-    <script type="text/javascript">
-        function printCentreRegistrations()
-        {
-            window.open('{{ URL::route("service.centre.registrations.print", ["centre" => $centre_id]) }}');
-            return false;
-        }
-    </script>
-
     <div class="content">
         <div class="navigation">
             <ul>
@@ -29,7 +21,7 @@
                         Search for a family
                     </li>
                 </a>
-                <a href="#" onclick="return printCentreRegistrations()">
+                <a href="{{ $print_route }}" target="_blank" >
                     <li>
                         <img src="{{ asset('assets/print-light.svg') }}" name="print-registrations">
                         {{ $print_button_text }}

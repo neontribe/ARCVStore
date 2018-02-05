@@ -8,7 +8,7 @@
 
     @include('service.partials.flash_notices')
 
-    <div class="content">
+    <div class="content check">
         <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
             {!! csrf_field() !!}
@@ -155,6 +155,33 @@
                 </div>
             </div>
         </form>
+        @if (!isset($registration->family->leaving_on) )
+        <form class="leaving" action="{{ URL::route('service.registration.family',['id' => $registration->id]) }}" method="post">
+            {{ method_field('PUT') }}
+            {!! csrf_field() !!}
+            <div>
+                <button class="remove" type="button">Remove this family</button>
+                <div id="expandable" class="collapsed" >
+                    <div class="reason">
+                        <label for="reason-for-leaving">
+                            Reason for leaving
+                        </label>
+                        <select id="reason-for-leaving" name="leaving_reason">
+                            <option value="" disabled selected>Select a reason...</option>
+                            @foreach(Config::get('arc.leaving_reasons') as $reason)
+                                <option value="{{ $reason }}"> {{ $reason }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <p>Are you sure?</p>
+                    <div class="confirmation-buttons">
+                        <button type="submit">Yes</button>
+                        <button id="cancel">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        @endif
     </div>
 
     <script>
@@ -204,6 +231,16 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        $('.remove').click(function (e) {
+            $('#expandable').removeClass('collapsed');
+            e.preventDefault();
+        });
+
+        $('#cancel').click(function (e) {
+            $('#expandable').addClass('collapsed');
+            e.preventDefault();
         });
 
     </script>
