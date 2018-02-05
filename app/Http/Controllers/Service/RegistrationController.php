@@ -298,7 +298,7 @@ class RegistrationController extends Controller
         $family = new Family();
 
         // Set the RVID using the User's Centre.
-        $family->generateRVID(Auth::user()->centre);
+        $family->lockToCentre(Auth::user()->centre);
 
         // Try to transact, so we can roll it back
         try {

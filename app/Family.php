@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Auth;
 
 class Family extends Model
 {
@@ -201,36 +200,15 @@ class Family extends Model
      *
      * @param Centre $centre
      */
-    public function generateRVID(Centre $centre)
+    public function lockToCentre(Centre $centre)
     {
-        // If we're  unspecified object.
+        // Check we don't have one.
         if (!$this->centre_sequence) {
             if ($centre) {
-                Log::info("-----");
-                Log::info("Passed centre " . $centre->id . " with " . $centre->prefix);
-                // Get the last family made in this centre.
-
-                $prior_family = Family::where('initial_centre_id', $centre->id)
-                    ->orderByDesc('id')
-                    ->first();
-
-                // If there's a prior family
-                if ($prior_family) {
-                    Log::info("have family " .
-                        $prior_family->getRvidAttribute() .
-                        " from " . $prior_family->initialCentre->prefix );
-                    $sequence = $prior_family->centre_sequence + 1;
-                } else {
-                    // set a default.
-                    $sequence = 1;
-                    Log::info(" No Prior family for " . $centre->prefix);
-                }
-
-                $this->centre_sequence = $sequence;
+                // Get the centre's next sequence.
+                $this->centre_sequence = $centre->nextCentreSequence();
+                // set the sequence
                 $this->initialCentre()->associate($centre);
-                Log::info("this family centre_sequence is " .
-                    $this->centre_sequence .
-                    " with ". $this->initialCentre->prefix);
             } else {
                 Log::info('Failed to generate RVID: No Centre given.');
             }
@@ -248,7 +226,7 @@ class Family extends Model
     {
         $rvid = "UNKNOWN";
         if ($this->initialCentre && $this->centre_sequence) {
-            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, "0", STR_PAD_LEFT);
+            $rvid =  $this->initialCentre->prefix . str_pad((string)$this->centre_sequence, 4, "0", STR_PAD_LEFT);
         }
         return $rvid;
     }
