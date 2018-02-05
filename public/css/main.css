@@ -279,7 +279,9 @@ strong {
 
 .navigation img {
 	width: 70px;
+	max-width: 70px;
 	height: 70px;
+	max-height: 70px;
 	margin: 0 auto;
 }
 
@@ -342,6 +344,7 @@ strong {
 	background-color: #63C669;
 	margin: 0;
 	color: white;
+	min-height: 60px;
 	padding: 0.5rem 0;
 	display: flex;
 	display: -ms-flexbox;
