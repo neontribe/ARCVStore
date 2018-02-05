@@ -142,11 +142,14 @@ $factory->define(App\Registration::class, function () {
         $centre = factory(App\Centre::class)->create();
     }
     $family = factory(App\Family::class)->make();
-    $family->generateRVID($centre);
+
+    // Set initial centre (and thus, rvid)
+    $family->lockToCentre($centre);
     $family->save();
+
+    // Add dependent models
     $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
     $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
-
 
     return [
         'centre_id' => $centre->id,
