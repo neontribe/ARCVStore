@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Log;
-use Auth;
 
 class Family extends Model
 {
@@ -201,21 +200,14 @@ class Family extends Model
      *
      * @param Centre $centre
      */
-    public function generateRVID(Centre $centre)
+    public function lockToCentre(Centre $centre)
     {
-        if (is_null($this->centre_sequence)) {
+        // Check we don't have one.
+        if (!$this->centre_sequence) {
             if ($centre) {
-                // Get the last family made in this centre.
-                $family = Family::where('initial_centre_id', $centre->id)
-                    ->orderBy('centre_sequence', 'desc')
-                    ->first();
-                // set a default.
-                $sequence = 1;
-                // If there's a prior family
-                if ($family) {
-                    $sequence = ($family->centre_sequence) ? $family->centre_sequence + 1 : 1;
-                }
-                $this->centre_sequence = $sequence;
+                // Get the centre's next sequence.
+                $this->centre_sequence = $centre->nextCentreSequence();
+                // set the sequence
                 $this->initialCentre()->associate($centre);
             } else {
                 Log::info('Failed to generate RVID: No Centre given.');
@@ -234,7 +226,7 @@ class Family extends Model
     {
         $rvid = "UNKNOWN";
         if ($this->initialCentre && $this->centre_sequence) {
-            $rvid =  $this->initialCentre->prefix . str_pad($this->centre_sequence, 4, "0", STR_PAD_LEFT);
+            $rvid =  $this->initialCentre->prefix . str_pad((string)$this->centre_sequence, 4, "0", STR_PAD_LEFT);
         }
         return $rvid;
     }
