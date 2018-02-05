@@ -20,17 +20,14 @@ class RegistrationSeeder extends Seeder
 
         // 5 with cc_references in our centre
         factory(App\Registration::class, 3)
-            ->states(['withCCReference'])
             ->create([ "centre_id" => Auth::user()->centre->id, ]);
 
         // 10 with cc_references in random centres
         factory(App\Registration::class, 3)
-            ->states(['withCCReference'])
             ->create();
 
         // One registration with our CC with an incative family.
         $inactive = factory(App\Registration::class)
-            ->states(['withCCReference'])
             ->create(['centre_id' => Auth::user()->centre->id, ])
             ;
 

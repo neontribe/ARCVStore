@@ -151,20 +151,8 @@ $factory->define(App\Registration::class, function () {
     return [
         'centre_id' => $centre->id,
         'family_id' => $family->id,
-        'cc_reference' => '',
         'eligibility' => $eligibilities[mt_rand(0, count($eligibilities) - 1)],
         'consented_on' => Carbon\Carbon::now(),
-    ];
-});
-
-// with RandomCCReference
-$factory->state(App\Registration::class, 'withCCReference', function (Faker\Generator $faker) {
-
-    $centre = Auth::user()->centre;
-    $shortcode = $centre->sponsor->shortcode;
-
-    return [
-        'cc_reference' => $shortcode . "-" . $faker->unique()->randomNumber(6),
     ];
 });
 
