@@ -247,7 +247,7 @@ strong {
 }
 
 .content {
-	height: 80%;
+	height: 88%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
@@ -263,6 +263,8 @@ strong {
 	padding: 1rem;
 	min-height: 120px;
 	display: grid;
+	display: -ms-flexbox;
+	-ms-flex-direction: column;
 	margin: 1rem 0.5rem;
 	font-family: 'Roboto Slab', serif;
 	border-radius: 0.5rem;
@@ -277,6 +279,7 @@ strong {
 
 .navigation img {
 	width: 70px;
+	height: 70px;
 	margin: 0 auto;
 }
 
@@ -341,10 +344,15 @@ strong {
 	color: white;
 	padding: 0.5rem 0;
 	display: flex;
+	display: -ms-flexbox;
+	-ms-flex-direction: column;
+	text-align: center;
+	align-items: center;
 }
 
 .col > div:first-child > img {
 	max-height: 60px;
+	max-width: 50px;
 	margin: 0 0.5rem;
 }
 
@@ -379,6 +387,10 @@ strong {
 	width: calc(100% - 53px);
 }
 
+.remove_field {
+	float: right;
+}
+
 .user-control {
 	position: relative;
 	padding-left: 55px;
@@ -393,8 +405,6 @@ strong {
 
 .form-group {
 	float: left;
-	margin-right: 10px;
-	width: 60px;
 }
 
 .form-group > label {
@@ -403,12 +413,16 @@ strong {
 
 .form-group > input {
 	font-size: 1.5rem;
+	max-width: 75px;
+
 }
 
 .add-dob {
-	min-height: 34px;
-	min-width: 34px;
-	margin: 18px 0 0 10px;
+	min-height: 35px;
+	min-width: 35px;
+	margin-top: 18px;
+	max-height: 35px;
+	max-width: 35px;
 }
 
 .edit-button {
@@ -501,6 +515,11 @@ strong {
 	margin-left: 0.5rem;
 }
 
+/* Set fixed height for IE */
+.search-actions button img {
+	max-height: 40px;
+}
+
 .pagination {
 	list-style-type: none;
   display: flex;
@@ -537,12 +556,13 @@ strong {
 
 .login > form > div {
 	height: 3rem;
-	margin: 1rem;
+	margin: 2rem 0;
 }
 
 .login-input {
 	width: 100%;
 	font-size: 2rem;
+	box-sizing: border-box;
 }
 
 .login-input.email {
@@ -567,5 +587,18 @@ strong {
 }
 
 .login .remember {
-	margin-top: 2rem;
+	margin-top: 3rem;
+}
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+	.add-dob {
+		min-height: 40px;
+		min-width: 40px;
+		margin-top: 20px;
+		max-height: 40px;
+		max-width: 40px;
+		padding: 0;
+	}
 }
