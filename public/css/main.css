@@ -349,6 +349,7 @@ strong {
 	display: -ms-flexbox;
 	-ms-flex-direction: column;
 	text-align: center;
+	align-items: center;
 }
 
 .col > div:first-child > img {
@@ -388,6 +389,10 @@ strong {
 	width: calc(100% - 53px);
 }
 
+.remove_field {
+	float: right;
+}
+
 .user-control {
 	position: relative;
 	padding-left: 55px;
@@ -402,8 +407,6 @@ strong {
 
 .form-group {
 	float: left;
-	margin-right: 10px;
-	width: 60px;
 }
 
 .form-group > label {
@@ -412,12 +415,16 @@ strong {
 
 .form-group > input {
 	font-size: 1.5rem;
+	max-width: 75px;
+
 }
 
 .add-dob {
-	min-height: 34px;
-	min-width: 34px;
-	margin: 18px 0 0 10px;
+	min-height: 35px;
+	min-width: 35px;
+	margin-top: 18px;
+	max-height: 35px;
+	max-width: 35px;
 }
 
 .edit-button {
@@ -583,4 +590,17 @@ strong {
 
 .login .remember {
 	margin-top: 3rem;
+}
+
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+	.add-dob {
+		min-height: 40px;
+		min-width: 40px;
+		margin-top: 20px;
+		max-height: 40px;
+		max-width: 40px;
+		padding: 0;
+	}
 }
