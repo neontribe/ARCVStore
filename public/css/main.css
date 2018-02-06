@@ -346,6 +346,7 @@ strong {
 	color: white;
 	min-height: 60px;
 	padding: 0.5rem 0;
+	min-height: 60px;
 	display: flex;
 	display: -ms-flexbox;
 	-ms-flex-direction: column;
