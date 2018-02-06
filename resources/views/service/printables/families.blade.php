@@ -8,14 +8,14 @@
 
   @include('service.printables.partials.masthead', ['specificPrintNote' => 'Ideally you should print this form every week to keep voucher allocations as up to date as possible.'])
 
-    <div class="content">
+    <div class="content families">
       <h1>Weekly Voucher Collection Sheet</h1>
       <table class="info">
         <tr>
           <td>
             <h2>Children's Centre: {{ $centre->name }}</h2>
           </td>
-          <td class="week-commencing" colspan="2">
+          <td class="week-commencing">
             <p>Week commencing</p>
             <img src="{{ asset('assets/date-field.svg') }}">
           </td>

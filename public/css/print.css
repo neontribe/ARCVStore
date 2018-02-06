@@ -140,6 +140,10 @@ td {
 	font-size: 12px;
 }
 
+.week-commencing * {
+	display: inline-block;
+}
+
 .content {
 	width: 90%;
 	margin-left: 5%;
@@ -147,6 +151,7 @@ td {
 
 .content.families {
 	width: 100%;
+	margin: 0;
 }
 
 .content > table {
