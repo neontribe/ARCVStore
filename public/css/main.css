@@ -52,6 +52,12 @@ input[type="text"]:disabled {
 	font-weight: 200;
 }
 
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
 input[type="radio"],
 .styled-checkbox {
 	cursor: pointer;
@@ -467,7 +473,10 @@ strong {
 
 .leaving {
 	height: auto;
-	margin: 0 1rem 1rem 1rem;
+	padding: 0.5rem;
+	position: fixed;
+	bottom: 0;
+	background-color: #fff;
 }
 
 .remove {
@@ -476,8 +485,8 @@ strong {
 	width: 15.5rem
 }
 
-.leaving .reason {
-	display: grid;
+.leaving .reason > * {
+	display: block;
 }
 
 .confirmation-buttons button {
