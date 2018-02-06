@@ -23,7 +23,7 @@ h1 {
 
 h2 {
 	font-size: 20px;
-	margin-left: 5px; 
+	margin-left: 5px;
 }
 
 h3 {
@@ -78,7 +78,9 @@ td {
 }
 
 .more-info th,
-.more-info td {
+.more-info td,
+.info th,
+.info td {
 	border: none;
 	text-align: left;
 	padding: 5px;
@@ -93,6 +95,7 @@ td {
 }
 
 .more-info h3,
+.info h3,
 .colspan i {
 	color: #a74e94;
 }
@@ -114,28 +117,49 @@ td {
 	height: 70px;
 }
 
-.subhead,
-.subhead > div {
-	display: flex;
-	justify-content: space-between;
+.content .info {
+	border: 1px solid #fff;
 }
 
-.subhead img {
+.info img {
 	width: 180px;
+	height: 20px;
 }
 
-.subhead h2 {
-	margin-top: 0.8rem;
+.info td {
+	width: 50%;
+	padding: 0;
+	margin: 0;
 }
 
-.subhead p {
-	font-size: 1rem;
-	margin: 1rem;
+.info.general {
+	margin-top: 30px;
+}
+
+.info.general p {
+	font-size: 12px;
+}
+
+.info.centre td {
+	width: 70%;
+}
+
+.info.centre .week-commencing {
+	width: 30%;
+}
+
+.week-commencing * {
+	display: inline-block;
 }
 
 .content {
 	width: 90%;
 	margin-left: 5%;
+}
+
+.content.families {
+	width: 100%;
+	margin: 0;
 }
 
 .content > table {
@@ -145,7 +169,11 @@ td {
 	border: 1px solid #a74e94;
 }
 
-.families_table th,
+.families_table th {
+	padding: 0 10px;
+	text-align: center;
+}
+
 .families_table td {
 	padding: 0.5rem;
 }
