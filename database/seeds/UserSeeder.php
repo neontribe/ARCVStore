@@ -28,6 +28,15 @@ class UserSeeder extends Seeder
             "role" => "foodmatters_user",
         ]);
 
+        // ARC admin is an fmuser in centre 2, which has individual forms on the dashboard.
+        factory(App\User::class)->create([
+            "name"  => "ARC Admin User",
+            "email" => "arc+admin@neontribe.co.uk",
+            "password" => bcrypt('store_pass'),
+            "centre_id" => 2,
+            "role" => "foodmatters_user",
+        ]);
+
         // 1 faked user not associated with a random Centre
         factory(App\User::class)->create();
 

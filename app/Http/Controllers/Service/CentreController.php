@@ -7,33 +7,41 @@ use App\Http\Controllers\Controller;
 use App\Registration;
 use Auth;
 use Carbon\Carbon;
-use \Excel;
+use Excel;
 use Illuminate\View\View;
-
+use PDF;
 
 class CentreController extends Controller
 {
+
     /**
      * Displays a printable version of the families registered with the center.
      *
      * @param Centre $centre
      * @return \Illuminate\Contracts\View\Factory|View
      */
-    public function printRegistrations(Centre $centre)
+    public function printCentreCollectionForm(Centre $centre)
     {
         $registrations = $centre->registrations;
 
+        $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now.
         // Could optimise DB hits with eager load of stuff we need.
-        return view(
+
+        $filename = 'CC' . $centre->id . 'Regs_' . Carbon::now()->format('YmdHis') .'.pdf';
+
+        $pdf = PDF::loadView(
             'service.printables.families',
             [
                 'sheet_title' => 'Printable Register',
                 'sheet_header' => 'Register',
                 'centre' => $centre,
-                'registrations' => $registrations,
+                'reg_chunks' => $reg_chunks,
             ]
         );
+        $pdf->setPaper('A4', 'landscape');
+
+        return @$pdf->download($filename);
     }
 
     /**
@@ -115,7 +123,9 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
-            $row["Leaving Date"] = null;
+            $row["Leaving Date"] = $reg->family->leaving_on ? $reg->family->leaving_on->format('d/m/Y') : null;
+            // Would be confusing if an old reason was left in - so check leaving date is there.
+            $row["Leaving Reason"] = $reg->family->leaving_on ? $reg->family->leaving_reason : null;
 
             // update the headers if necessary
             if (count($headers) < count($row)) {

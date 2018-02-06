@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Family extends Model
 {
@@ -18,7 +19,18 @@ class Family extends Model
      * @var array
      */
     protected $fillable = [
-        'rvid',
+        'leaving_on',
+        'leaving_reason',
+        'centre_sequence',
+    ];
+
+    /**
+     * The attributes that are cast as dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'leaving_on',
     ];
 
     /**
@@ -36,8 +48,9 @@ class Family extends Model
      */
     protected $appends = [
         'entitlement',
+        'expecting',
+        'rvid'
     ];
-
 
     /**
      * Fetches the
@@ -51,8 +64,8 @@ class Family extends Model
      */
     public function getStatus()
     {
-        $notices=[];
-        $credits=[];
+        $notices = [];
+        $credits = [];
 
         foreach ($this->children as $child) {
             $child_status = $child->getStatus();
@@ -76,7 +89,6 @@ class Family extends Model
      *
      * @return array
      */
-
     public function getCreditReasons()
     {
         $credit_reasons = [];
@@ -143,9 +155,8 @@ class Family extends Model
         return $notice_reasons;
     }
 
-
     /**
-     * Calculates the entitlement
+     * Calculates the entitlement Attribute
      *
      */
     public function getEntitlementAttribute()
@@ -154,35 +165,70 @@ class Family extends Model
         return $this->getStatus()['vouchers'];
     }
 
+    /**
+     * Gets the due date or Null;
+     *
+     * @return mixed
+     */
     public function getExpectingAttribute()
     {
-        // return true if there is a child that has a false 'born' attribute
-
-        $expecting = false;
+        $due = null;
         foreach ($this->children as $child) {
-            if ($child->born == false) {
-                $expecting = true;
-                break;
+            if (!$child->born) {
+                $due = $child->dob;
             }
         }
-        return $expecting;
+        return $due;
     }
 
     /**
-     * Spits out a pseudorandom string to ue an RVID
+     * Attribute that gets the number of eligible children
      *
-     * @param int $l
+     * @return integer|null
+     */
+    public function getEligibleChildrenCountAttribute()
+    {
+        return $this->children->reduce(function ($count, $child) {
+            $count += ($child->getStatus()['eligibility'] == "Eligible") ? 1 : 0;
+            return $count;
+        });
+    }
+
+
+    /**
+     * Generates and sets the components required for an RVID.
+     *
+     * @param Centre $centre
+     */
+    public function lockToCentre(Centre $centre)
+    {
+        // Check we don't have one.
+        if (!$this->centre_sequence) {
+            if ($centre) {
+                // Get the centre's next sequence.
+                $this->centre_sequence = $centre->nextCentreSequence();
+                // set the sequence
+                $this->initialCentre()->associate($centre);
+            } else {
+                Log::info('Failed to generate RVID: No Centre given.');
+            }
+        } else {
+            Log::info('Failed to generate RVID: ' . $this->rvid . ' already exists.');
+        }
+    }
+
+    /**
+     * Calculate the 'rvid' attribute and return it.
+     *
      * @return string
      */
-    public static function generateRVID($l = 8)
+    public function getRvidAttribute()
     {
-        //TODO: make a better guid function that produces human usable strings
-        //TODO: validate this is unique against the DB
-        $str = "";
-        for ($x=0; $x<$l; $x++) {
-            $str .= substr(str_shuffle("2346789BCDFGHJKMPQRTVWXY"), 0, 1);
+        $rvid = "UNKNOWN";
+        if ($this->initialCentre && $this->centre_sequence) {
+            $rvid =  $this->initialCentre->prefix . str_pad((string)$this->centre_sequence, 4, "0", STR_PAD_LEFT);
         }
-        return "RV-".$str;
+        return $rvid;
     }
 
     /**
@@ -223,5 +269,14 @@ class Family extends Model
     public function registrations()
     {
         return $this->hasMany('App\Registration');
+    }
+
+    /**
+     * Get the Family's intial registered Centre.
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function initialCentre()
+    {
+        return $this->belongsTo('App\Centre', 'initial_centre_id');
     }
 }

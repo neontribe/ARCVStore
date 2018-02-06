@@ -268,4 +268,14 @@ class SearchPageTest extends TestCase
             ->click('Next »')
             ->seePageIs(URL::route('service.base') . '/registration?page=2');
     }
+
+    /** @test */
+    public function itPreventsAccessToLeftFamilyRegistrations()
+    {
+    }
+
+    /** @test */
+    public function itShowsLeftFamilyRegistrationsAsDistinct()
+    {
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
+use App\Registration;
 
 class StoreUpdateRegistrationRequest extends FormRequest
 {
@@ -15,7 +16,9 @@ class StoreUpdateRegistrationRequest extends FormRequest
     public function authorize()
     {
         // Todo: replace with check that user can make this request rather than wave them through.
-        return true;
+        // Refuse updates to off-scheme users.
+        $registration = Registration::find($this->route('registration'))->first();
+        return (!isset($registration->family->leaving_on));
     }
 
     /**

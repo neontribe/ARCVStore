@@ -15,6 +15,7 @@ use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
 use Log;
+use PDF;
 
 class RegistrationController extends Controller
 {
@@ -124,11 +125,11 @@ class RegistrationController extends Controller
         ];
 
         // Get the registration, with deep eager-loaded Family (with Children and Carers)
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        $registration = Registration::withFullFamily()->find($id);
+
+        if (!$registration) {
+            abort(404, 'Registraion not found.');
+        }
 
         // Grab carers copy for shift)ing without altering family->carers
         $carers = $registration->family->carers->all();
@@ -151,33 +152,99 @@ class RegistrationController extends Controller
      * @param integer $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function print($id)
+    public function printOneIndividualFamilyForm($id)
     {
+        // Get User
         $user = Auth::user();
 
-        $registration = Registration::with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
-        ])->findOrFail($id);
+        // Find the Registration and subdata
+        $registration = Registration::withFullFamily()->find($id);
+
+        if (!$registration) {
+            abort(404, 'Registraion not found.');
+        }
+
+        // Make a filename
+        $filename = 'Registration' . Carbon::now()->format('YmdHis') .'.pdf';
+
+        // Setup common data
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+        ];
 
         $carers = $registration->family->carers->all();
+        $data['regs'][] = [
+            'centre' => $registration->centre,
+            'family' => $registration->family,
+            'pri_carer' => array_shift($carers),
+            // Remove the primary carer from collection
+            'sec_carers' => $carers,
+            'children' => $registration->family->children,
+        ];
 
-        return view(
-            'service.printables.family',
-            [
-                'user_name' => $user->name,
-                'centre_name' => ($user->centre) ? $user->centre->name : null,
-                'centre' => $registration->centre,
-                'sheet_title' => 'Printable Family Sheet',
-                'sheet_header' => 'Family Collection Sheet',
+        // throw at a PDF
+        $pdf = PDF::loadView('service.printables.family', $data);
+        $pdf->setPaper('A4', 'landscape');
+        return @$pdf->download($filename);
+    }
+
+    /**
+     * Displays a printable version of the Registration.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function printBatchIndividualFamilyForms()
+    {
+        // Get the user and Centre
+        $user = Auth::user();
+        $centre = ($user->centre) ? $user->centre : null;
+
+        // Cope if User has no Centre.
+        if (!$centre) {
+            Log::info('User ' . $user->id . " has no Centre");
+            // Send me back to dashboard
+            return redirect()
+                ->route('service.dashboard')
+                ->withErrors(['error_message' => 'User has no Centre']);
+        }
+
+        // Get the registrations this User's centre is directly responsible for
+        $registrations = $centre->registrations()->withFullFamily()->get();
+
+        // Make a filename
+        $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';
+
+        // Set up the common view data.
+        $data = [
+            'user_name' => $user->name,
+            'centre_name' => ($user->centre) ? $user->centre->name : null,
+            'sheet_title' => 'Printable Family Sheet',
+            'sheet_header' => 'Family Collection Sheet',
+        ];
+
+        // Stack the registration batch into the data
+        foreach ($registrations as $registration) {
+            $carers = $registration->family->carers->all();
+            $data['regs'][] = [
+                'centre' => $centre,
                 'family' => $registration->family,
                 'pri_carer' => array_shift($carers),
                 // Remove the primary carer from collection
                 'sec_carers' => $carers,
                 'children' => $registration->family->children,
-            ]
+            ];
+        }
+
+        // throw it at a PDF.
+        $pdf = PDF::loadView(
+            'service.printables.family',
+            $data
         );
+        $pdf->setPaper('A4', 'landscape');
+        return @$pdf->download($filename);
     }
 
     /**
@@ -189,9 +256,6 @@ class RegistrationController extends Controller
      */
     public function store(StoreNewRegistrationRequest $request)
     {
-        // Duplicate families are fine at this point.
-        $family = new Family(['rvid' => Family::generateRVID()]);
-
 
         // Create Carers
         // TODO: Alter request to pre-join the array?
@@ -205,12 +269,16 @@ class RegistrationController extends Controller
             )
         );
 
-        // Create Children
+        // Create Children - todo refactor into helper - used twice
+        // Might be lovlier as a foreach too... rather than map closure :)
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided,
+                // createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                // So we want '2013-02-01' not '2013-02-31'...
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
+
                 return new Child([
                         'born' => $month_of_birth->isPast(),
                         'dob' => $month_of_birth->toDateTimeString(),
@@ -225,6 +293,12 @@ class RegistrationController extends Controller
             'eligibility' => $request->get('eligibility'),
             // diary and chart are not saved right now.
         ]);
+
+        // Duplicate families are fine at this point.
+        $family = new Family();
+
+        // Set the RVID using the User's Centre.
+        $family->lockToCentre(Auth::user()->centre);
 
         // Try to transact, so we can roll it back
         try {
@@ -271,8 +345,9 @@ class RegistrationController extends Controller
         $children = array_map(
             function ($child) {
                 // Note: Carbon uses different time formats than laravel validation
-                // Also, format() uses the current day of month if unspecified, so we startOfMonth() it
-                $month_of_birth = Carbon::createFromFormat('Y-m', $child)->startOfMonth();
+                // For crazy reasons known only to the creators of Carbon, when no day provided
+                // to createFromFormat - defaults to 31 - which bumps to next month if not a real day.
+                $month_of_birth = Carbon::createFromFormat('Y-m-d', $child . '-01');
                 return new Child([
                     'born' => $month_of_birth->isPast(),
                     'dob' => $month_of_birth->toDateTimeString(),

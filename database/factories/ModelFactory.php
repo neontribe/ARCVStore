@@ -58,9 +58,19 @@ $factory->define(App\Centre::class, function (Faker\Generator $faker) {
         $sponsor = factory(App\Sponsor::class)->create();
     }
 
+    $name = $faker->streetName;
+
     return [
-        'name' => $faker->streetName,
+        'name' => $name,
+        // *Probably* not going to generate a duplicate...
+        // But metaphone will occassionally return 6 chars if endish char is an X -> KS
+        // https://bugs.php.net/bug.php?id=60123
+        // Also might return 4 chars - but that's ok for seeds? Or do we pad?
+        'prefix' => substr(metaphone($name, 5), 0, 5),
         'sponsor_id' => $sponsor->id,
+        // print_pref will be 'collection' by default.
+        // To ensure we always have one 'individual', adding to seeder as well.
+        'print_pref' => $faker->randomElement(['individual', 'collection']),
     ];
 });
 
@@ -127,40 +137,32 @@ $factory->define(App\Registration::class, function () {
 
     $eligibilities = ['healthy-start', 'other'];
 
-    $family=factory(App\Family::class)->create();
-    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
-    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
-
     $centre = App\Centre::inRandomOrder()->first();
     if (is_null($centre)) {
         $centre = factory(App\Centre::class)->create();
     }
+    $family = factory(App\Family::class)->make();
+
+    // Set initial centre (and thus, rvid)
+    $family->lockToCentre($centre);
+    $family->save();
+
+    // Add dependent models
+    $family->carers()->saveMany(factory(App\Carer::class, random_int(1, 3))->make());
+    $family->children()->saveMany(factory(\App\Child::class, random_int(0, 4))->make());
 
     return [
         'centre_id' => $centre->id,
         'family_id' => $family->id,
-        'cc_reference' => '',
         'eligibility' => $eligibilities[mt_rand(0, count($eligibilities) - 1)],
         'consented_on' => Carbon\Carbon::now(),
     ];
 });
 
-// with RandomCCReference
-$factory->state(App\Registration::class, 'withCCReference', function (Faker\Generator $faker) {
-
-    $centre = Auth::user()->centre;
-    $shortcode = $centre->sponsor->shortcode;
-
-    return [
-        'cc_reference' => $shortcode . "-" . $faker->unique()->randomNumber(6),
-    ];
-});
-
 // Family
 $factory->define(App\Family::class, function () {
-    return [
-        'rvid' => \App\Family::generateRVID(),
-    ];
+    // One day there will be useful things here.
+    return [];
 });
 
 // Carer
@@ -169,8 +171,6 @@ $factory->define(App\Carer::class, function (Faker\Generator $faker) {
         'name' => $faker->firstName ." ". $faker->lastName,
     ];
 });
-
-
 
 // Random Age Child
 $factory->define(App\Child::class, function (Faker\Generator $faker) {
@@ -184,9 +184,9 @@ $factory->define(App\Child::class, function (Faker\Generator $faker) {
 });
 
 // Child - unborn
-$factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'unbornChild', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('1 month', '+9 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('+2 month', '+8 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -196,9 +196,9 @@ $factory->state(App\Child::class, 'withUnbornChild', function (Faker\Generator $
 });
 
 // Child - under 1
-$factory->state(App\Child::class, 'withChildUnderOne', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'underOne', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-11 months', '-1 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-10 months', '-2 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -208,9 +208,9 @@ $factory->state(App\Child::class, 'withChildUnderOne', function (Faker\Generator
 });
 
 // Child - under School Age
-$factory->state(App\Child::class, 'withChildUnderSchoolAge', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'underSchoolAge', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-35 months', '-13 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-32 months', '-14 months')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
@@ -220,9 +220,9 @@ $factory->state(App\Child::class, 'withChildUnderSchoolAge', function (Faker\Gen
 });
 
 // Child - over SchoolAge
-$factory->state(App\Child::class, 'withChildOverSchoolAge', function (Faker\Generator $faker) {
+$factory->defineAs(App\Child::class, 'overSchoolAge', function (Faker\Generator $faker) {
 
-    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-6 years', '-37 months')->getTimestamp());
+    $dob = Carbon\Carbon::createFromTimestamp($faker->dateTimeBetween('-10 years', '-6 years')->getTimestamp());
     $dob = $dob->startOfMonth();
 
     return [
