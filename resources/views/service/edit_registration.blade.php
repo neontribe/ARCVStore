@@ -114,6 +114,9 @@
                                 {{ count($family->children) }}
                             </strong> 
                             children on the scheme 
+                            @if ( $family->expecting != null )
+                                and is pregnant
+                            @endif
                             <span class="clickable-span">(more)</span>
                         </li>
                         <li class="collapsed" id="more-family-info">
