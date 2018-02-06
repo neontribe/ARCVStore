@@ -101,28 +101,32 @@
                 <div>
                     <p>This family:</p>
                     <ul>
-                        <li>Should collect <strong>{{ $family->entitlement }}</strong> per week</li>
-                        <li>Has <strong>{{ count($family->children) }}</strong> children on the scheme <span>(more)</span></li>
-                        <li> {{ $family }}</li>
-                    </ul>
-
-                    <ul>
-                        @foreach( $family->getCreditReasons() as $credits )
-                            <li>
-                                <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                currently "{{ $credits['reason'] }}"
-                            </li>
-                    </ul>
-                    <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
-                    <ul>
-                        @foreach( $family->getCreditReasons() as $credits )
-                            <li>
-                                <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                currently "{{ $credits['reason'] }}"
-                            </li>
-                        @endforeach
+                        <li>
+                            Should collect 
+                            <strong>
+                                {{ $family->entitlement }}
+                            </strong> 
+                            per week
+                        </li>
+                        <li>
+                            Has 
+                            <strong>
+                                {{ count($family->children) }}
+                            </strong> 
+                            children on the scheme 
+                            <span>(more)</span>
+                        </li>
+                        <li id="expandable" class="collapsed">
+                            <ul>
+                                @foreach( $family->getCreditReasons() as $credits )
+                                    <li>
+                                        <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
+                                        as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
+                                        currently "{{ $credits['reason'] }}"
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
