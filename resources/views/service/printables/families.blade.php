@@ -10,7 +10,7 @@
 
     <div class="content families">
       <h1>Weekly Voucher Collection Sheet</h1>
-      <table class="info">
+      <table class="info centre">
         <tr>
           <td>
             <h2>Children's Centre: {{ $centre->name }}</h2>
