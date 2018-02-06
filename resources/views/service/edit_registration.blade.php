@@ -114,9 +114,9 @@
                                 {{ count($family->children) }}
                             </strong> 
                             children on the scheme 
-                            <span>(more)</span>
+                            <span class="clickable-span">(more)</span>
                         </li>
-                        <li id="expandable" class="collapsed">
+                        <li class="collapsed" id="more-family-info">
                             <ul>
                                 @foreach( $family->getCreditReasons() as $credits )
                                     <li>
@@ -249,6 +249,11 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        $('.clickable-span').click(function (e) {
+            $('#more-family-info').removeClass('collapsed');
+            e.preventDefault();
         });
 
         $('.remove').click(function (e) {
