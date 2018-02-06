@@ -95,6 +95,7 @@ td {
 }
 
 .more-info h3,
+.info h3,
 .colspan i {
 	color: #a74e94;
 }
@@ -135,9 +136,17 @@ td {
 	margin-top: 30px;
 }
 
+.info.general p {
+	font-size: 12px;
+}
+
 .content {
 	width: 90%;
 	margin-left: 5%;
+}
+
+.content.families {
+	width: 100%;
 }
 
 .content > table {
@@ -147,7 +156,11 @@ td {
 	border: 1px solid #a74e94;
 }
 
-.families_table th,
+.families_table th {
+	padding: 0 10px;
+	text-align: center;
+}
+
 .families_table td {
 	padding: 0.5rem;
 }
