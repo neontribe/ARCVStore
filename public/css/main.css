@@ -471,8 +471,8 @@ strong {
 	width: 15.5rem
 }
 
-.leaving .reason {
-	display: grid;
+.leaving .reason > * {
+	display: block;
 }
 
 .confirmation-buttons button {
