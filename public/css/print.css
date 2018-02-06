@@ -23,7 +23,7 @@ h1 {
 
 h2 {
 	font-size: 20px;
-	margin-left: 5px; 
+	margin-left: 5px;
 }
 
 h3 {
@@ -78,7 +78,9 @@ td {
 }
 
 .more-info th,
-.more-info td {
+.more-info td,
+.info th,
+.info td {
 	border: none;
 	text-align: left;
 	padding: 5px;
@@ -114,23 +116,23 @@ td {
 	height: 70px;
 }
 
-.subhead,
-.subhead > div {
-	display: flex;
-	justify-content: space-between;
+.content .info {
+	border: 1px solid #fff;
 }
 
-.subhead img {
+.info img {
 	width: 180px;
+	height: 20px;
 }
 
-.subhead h2 {
-	margin-top: 0.8rem;
+.info td {
+	width: 50%;
+	padding: 0;
+	margin: 0;
 }
 
-.subhead p {
-	font-size: 1rem;
-	margin: 1rem;
+.info.general {
+	margin-top: 30px;
 }
 
 .content {
