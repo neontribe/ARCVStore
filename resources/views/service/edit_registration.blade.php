@@ -113,7 +113,7 @@
                             <strong>
                                 {{ count($family->children) }}
                             </strong> 
-                            children on the scheme 
+                            children registered 
                             @if ( $family->expecting != null )
                                 and is pregnant
                             @endif
