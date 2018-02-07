@@ -123,9 +123,19 @@
                             <ul>
                                 @foreach( $family->getCreditReasons() as $credits )
                                     <li>
-                                        <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                        as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                        currently "{{ $credits['reason'] }}"
+                                        <strong>
+                                            {{ $credits['reason_vouchers'] }} 
+                                            {{ str_plural('voucher', $credits['reason_vouchers']) }}
+                                        </strong>
+                                        because 
+                                        @if($credits['count'] > 1)
+                                            {{ $credits['count'] }} 
+                                            of 
+                                        @endif
+                                        the 
+                                        {{ str_plural($credits['entity'], $credits['count']) }}
+                                        {{ str_plural('is', $credits['count']) }} 
+                                        {{ $credits['reason'] }}
                                     </li>
                                 @endforeach
                             </ul>
