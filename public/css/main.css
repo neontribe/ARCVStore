@@ -469,7 +469,7 @@ strong {
 }
 
 .print-button button {
-	padding: 1rem;
+	padding: 1rem 0.5rem;
 	font-family: 'Roboto Slab', serif;
 	width: 100%;
 }
