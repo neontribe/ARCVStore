@@ -132,13 +132,11 @@
                                         @if ($credits['count'] > 1)
                                             {{ $credits['count'] }} 
                                             of the
+                                            {{ str_plural($credits['entity'], $credits['count']) }} 
+                                            are 
                                         @else
-                                            one
-                                        @endif
-                                        {{ str_plural($credits['entity'], $credits['count']) }}
-                                        @if ( $credits['count'] > 1)
-                                            are
-                                        @else
+                                            one 
+                                            {{ str_plural($credits['entity'], $credits['count']) }} 
                                             is
                                         @endif
                                         {{ $credits['reason'] }}
