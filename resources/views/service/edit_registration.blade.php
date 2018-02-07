@@ -93,22 +93,43 @@
                 </div>
                 <button class="long-button" type="submit">Save Changes</button>
             </div>
-
             <div class="col collect">
                 <div>
                     <img src="{{ asset('assets/info-light.svg') }}" name="logo">
                     <h2>This family</h2>
                 </div>
                 <div>
-                    <p>This family may collect <strong>{{ $family->entitlement }}</strong> per week:</p>
+                    <p>This family:</p>
                     <ul>
-                        @foreach( $family->getCreditReasons() as $credits )
-                            <li>
-                                <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                currently "{{ $credits['reason'] }}"
-                            </li>
-                        @endforeach
+                        <li>
+                            Should collect 
+                            <strong>
+                                {{ $family->entitlement }}
+                            </strong> 
+                            per week
+                        </li>
+                        <li>
+                            Has 
+                            <strong>
+                                {{ count($family->children) }}
+                            </strong> 
+                            children registered 
+                            @if ( $family->expecting != null )
+                                and is pregnant
+                            @endif
+                            <span class="clickable-span">(more)</span>
+                        </li>
+                        <li class="collapsed" id="more-family-info">
+                            <ul>
+                                @foreach( $family->getCreditReasons() as $credits )
+                                    <li>
+                                        <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
+                                        as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
+                                        currently "{{ $credits['reason'] }}"
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
                     </ul>
                 </div>
                 <p>Their RV-ID is: <strong>{{ $family->rvid }}</strong></p>
@@ -231,6 +252,11 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        $('.clickable-span').click(function (e) {
+            $('#more-family-info').removeClass('collapsed');
+            e.preventDefault();
         });
 
         $('.remove').click(function (e) {

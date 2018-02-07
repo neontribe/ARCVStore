@@ -457,6 +457,14 @@ strong {
 	font-size: 1rem;
 }
 
+.clickable-span {
+	cursor: pointer;
+}
+
+.collect #more-family-info {
+	list-style-type: none;
+}
+
 .print-button button {
 	padding: 1rem;
 	font-family: 'Roboto Slab', serif;
