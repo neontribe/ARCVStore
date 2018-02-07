@@ -442,7 +442,10 @@ strong {
 }
 
 .check .col {
-	height: 67vh;
+	min-height: 67vh;
+	height: 100%;
+	margin-bottom: 80px;
+	padding-bottom: 10px;
 }
 
 .collect {
