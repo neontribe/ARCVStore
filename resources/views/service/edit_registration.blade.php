@@ -113,7 +113,8 @@
                             <strong>
                                 {{ count($family->children) }}
                             </strong> 
-                            children registered 
+                            {{ str_plural('child', count($family->children)) }} 
+                            registered 
                             @if ( $family->expecting != null )
                                 and is pregnant
                             @endif
@@ -128,13 +129,17 @@
                                             {{ str_plural('voucher', $credits['reason_vouchers']) }}
                                         </strong>
                                         because 
-                                        @if($credits['count'] > 1)
+                                        @if ($credits['count'] > 1)
                                             {{ $credits['count'] }} 
                                             of 
                                         @endif
                                         the 
                                         {{ str_plural($credits['entity'], $credits['count']) }}
-                                        {{ str_plural('is', $credits['count']) }} 
+                                        @if ( $credits['count'] > 1)
+                                            are
+                                        @else
+                                            is
+                                        @endif
                                         {{ $credits['reason'] }}
                                     </li>
                                 @endforeach
