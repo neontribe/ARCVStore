@@ -8,7 +8,7 @@
     @include('service.printables.partials.masthead', ['specificPrintNote' => 'Print a new form every 4 weeks so you have the most up to date information available.'])
 
     <div class="content">
-        <h1>Family Voucher Collection Sheet</h1>
+        <h1>{{ $reg["pri_carer"]->name }}</h1>
         <table>
             <tr class="titles">
                 <th colspan="5">
