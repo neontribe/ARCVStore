@@ -131,9 +131,10 @@
                                         because 
                                         @if ($credits['count'] > 1)
                                             {{ $credits['count'] }} 
-                                            of 
+                                            of the
+                                        @else
+                                            one
                                         @endif
-                                        the 
                                         {{ str_plural($credits['entity'], $credits['count']) }}
                                         @if ( $credits['count'] > 1)
                                             are
