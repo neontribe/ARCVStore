@@ -100,7 +100,7 @@
                     </div>
                 </div>
                 <div>
-                    <p>Reminder: don't forget to complete food diary and chart.</p>
+                    <p>Reminder: don't forget to complete food diary and pie chart.</p>
                 </div>
                 <button class="long-button" type="Submit">Save Family</button>
             </div>
