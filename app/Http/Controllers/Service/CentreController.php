@@ -62,8 +62,20 @@ class CentreController extends Controller
         // get registrations and order them
         $registrations = Registration::whereIn('centre_id', $centres->pluck('id')->all())
             ->with(['centre','family.children','family.carers'])
-            ->orderBy('centre_id', 'asc')
             ->get();
+
+        // Can't orderBy above without a really complicated join.
+        $registrations->sort(function ($a, $b) {
+            // sort by centre first
+            if ($a->centre->name === $b->centre->name) {
+                // then by centre sequence
+                if ($a->family->centre_sequence === $b->family->centre_sequence) {
+                    return 0;
+                }
+                return $a->family->centre_sequence < $b->family->centre_sequence ? -1 : 1;
+            }
+            return $a->centre->name < $b->centre->name ? -1 : 1;
+        });
 
         // set blank rows for laravel-excel
         $rows = [];
