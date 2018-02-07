@@ -318,7 +318,8 @@ strong {
 }
 
 .subnav i {
-	padding: 0.2rem 1.5rem;
+	padding: 0 0.5rem;
+	text-decoration: none;
 }
 
 .subnav li {
