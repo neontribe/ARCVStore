@@ -59,10 +59,9 @@ class CentreController extends Controller
         // Get centres
         $centres = $user->relevantCentres();
 
-        // get registrations and order them
+        // get registrations
         $registrations = Registration::whereIn('centre_id', $centres->pluck('id')->all())
             ->with(['centre','family.children','family.carers'])
-            ->orderBy('centre_id', 'asc')
             ->get();
 
         // set blank rows for laravel-excel
@@ -134,6 +133,11 @@ class CentreController extends Controller
             // stack new row onto the array
             $rows[] = $row;
         }
+        
+        // PHP 7 feature; comparison "spaceship" opertator "<=>" : returns -1/0/1 
+        usort($rows, function ($a, $b) {
+            return $a['RVID'] <=> $b['RVID'];
+        });
 
         // en-sparsen the rows with empty fields for unused header.
         foreach ($rows as $index => $row) {
