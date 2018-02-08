@@ -133,7 +133,8 @@ class CentreController extends Controller
             // stack new row onto the array
             $rows[] = $row;
         }
-
+        
+        // PHP 7 feature; comparison "spaceship" opertator "<=>" : returns -1/0/1 
         usort($rows, function ($a, $b) {
             return $a['RVID'] <=> $b['RVID'];
         });
