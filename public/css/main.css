@@ -448,7 +448,10 @@ strong {
 }
 
 .check .col {
-	height: 67vh;
+	min-height: 67vh;
+	height: 100%;
+	margin-bottom: 80px;
+	padding-bottom: 10px;
 }
 
 .collect {
@@ -472,7 +475,7 @@ strong {
 }
 
 .print-button button {
-	padding: 1rem;
+	padding: 1rem 0.5rem;
 	font-family: 'Roboto Slab', serif;
 	width: 100%;
 }

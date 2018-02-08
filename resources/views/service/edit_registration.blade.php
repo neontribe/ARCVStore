@@ -113,7 +113,8 @@
                             <strong>
                                 {{ count($family->children) }}
                             </strong> 
-                            children registered 
+                            {{ str_plural('child', count($family->children)) }} 
+                            registered 
                             @if ( $family->expecting != null )
                                 and is pregnant
                             @endif
@@ -123,9 +124,22 @@
                             <ul>
                                 @foreach( $family->getCreditReasons() as $credits )
                                     <li>
-                                        <strong>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }}</strong>
-                                        as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }}
-                                        currently "{{ $credits['reason'] }}"
+                                        <strong>
+                                            {{ $credits['reason_vouchers'] }} 
+                                            {{ str_plural('voucher', $credits['reason_vouchers']) }}
+                                        </strong>
+                                        because 
+                                        @if ($credits['count'] > 1)
+                                            {{ $credits['count'] }} 
+                                            of the
+                                            {{ str_plural($credits['entity'], $credits['count']) }} 
+                                            are 
+                                        @else
+                                            one 
+                                            {{ str_plural($credits['entity'], $credits['count']) }} 
+                                            is
+                                        @endif
+                                        {{ $credits['reason'] }}
                                     </li>
                                 @endforeach
                             </ul>
@@ -141,11 +155,13 @@
                     @endforeach
                 </div>
                 <div class="attention">
-                    @if ( count($registration->getReminderReasons()) > 0 )
-                        <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
-                        @foreach ( $registration->getReminderReasons() as $reminder )
-                            <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
-                        @endforeach
+                    @if ( (Auth::user()->cannot('updateChart', App\Registration::class)) || (Auth::user()->cannot('updateDiary', App\Registration::class)) )
+                        @if ( count($registration->getReminderReasons()) > 0 )
+                            <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
+                            @foreach ( $registration->getReminderReasons() as $reminder )
+                                <p>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</p>
+                            @endforeach
+                        @endif
                     @endif
                     @if ( (Auth::user()->can('updateChart', App\Registration::class)) || (Auth::user()->can('updateDiary', App\Registration::class)) )
                         <div>
