@@ -4,11 +4,8 @@ namespace Tests;
 
 use App\Centre;
 use App\Registration;
-use App\Sponsor;
-use App\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Support\Collection;
 
 class RegistrationModelTest extends TestCase
 {
