@@ -115,4 +115,19 @@ class Registration extends Model
             }
         ]);
     }
+
+    /**
+     * Attaches the primary carer by subselect.
+     * @param $query
+     * @return mixed
+     */
+    public function scopeWithFamilyName($query)
+    {
+        // scope family with primary carer field.
+        return $query->with([
+            'family' => function ($q) {
+                $q->withPrimaryCarer();
+            }
+        ]);
+    }
 }

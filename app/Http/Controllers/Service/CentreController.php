@@ -22,7 +22,16 @@ class CentreController extends Controller
      */
     public function printCentreCollectionForm(Centre $centre)
     {
-        $registrations = $centre->registrations;
+
+       // die(dd(\App\Family::withPrimaryCarer()->toSql()));
+
+        $registrations = $centre->registrations()
+            ->withFamilyName()
+            ->get()
+            ->sortBy(function ($registration) {
+                // Need strtolower because case comparison sucks.
+                return strtolower($registration->family->pri_carer);
+            });
 
         $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now.
