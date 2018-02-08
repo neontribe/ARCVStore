@@ -134,7 +134,9 @@ class CentreController extends Controller
             $rows[] = $row;
         }
 
-        array_sort
+        usort($rows, function ($a, $b) {
+            return $a['RVID'] <=> $b['RVID'];
+        });
 
         // en-sparsen the rows with empty fields for unused header.
         foreach ($rows as $index => $row) {
