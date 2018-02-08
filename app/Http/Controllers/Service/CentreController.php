@@ -22,11 +22,13 @@ class CentreController extends Controller
      */
     public function printCentreCollectionForm(Centre $centre)
     {
-        $registrations = $centre->registrations;
+        $registrations = $centre->registrations()
+            ->whereActiveFamily()
+            ->withFullFamily()
+            ->get();
 
         $reg_chunks = $registrations->chunk(20);
         // TODO Just passing the registrations and centre for now.
-        // Could optimise DB hits with eager load of stuff we need.
 
         $filename = 'CC' . $centre->id . 'Regs_' . Carbon::now()->format('YmdHis') .'.pdf';
 

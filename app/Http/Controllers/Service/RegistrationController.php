@@ -212,7 +212,10 @@ class RegistrationController extends Controller
         }
 
         // Get the registrations this User's centre is directly responsible for
-        $registrations = $centre->registrations()->withFullFamily()->get();
+        $registrations = $centre->registrations()
+            ->whereActiveFamily()
+            ->withFullFamily()
+            ->get();
 
         // Make a filename
         $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';

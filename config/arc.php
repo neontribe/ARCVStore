@@ -9,7 +9,11 @@ return [
     */
 
     'leaving_reasons' => [
-        'won the lottery',
-        'moved to the moon',
+        'positive circumstances',
+        'negative circumstances',
+        'moving out of service area',
+        'no longer eligible',
+        'no attendance',
+        'unspecified',
     ],
 ];
