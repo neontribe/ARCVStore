@@ -8,7 +8,7 @@ class Registration extends Model
 {
     const REMINDER_TYPES = [
         'FoodDiaryNeeded' => ['reason' => 'Food Diary|not been received'],
-        'FoodChartNeeded' => ['reason' => 'Food Chart|not been received'],
+        'FoodChartNeeded' => ['reason' => 'Pie Chart|not been received'],
     ];
 
     /**
