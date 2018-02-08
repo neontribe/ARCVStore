@@ -22,9 +22,6 @@ class CentreController extends Controller
      */
     public function printCentreCollectionForm(Centre $centre)
     {
-
-       // die(dd(\App\Family::withPrimaryCarer()->toSql()));
-
         $registrations = $centre->registrations()
             ->withFamilyName()
             ->get()
