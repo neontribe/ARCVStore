@@ -127,13 +127,16 @@ class Child extends Model
             $eligibility = "Pregnancy";
 
             // Calculate notices
+            /*
+             * Remove these Notices for beta;
+             * TODO: consider way to re-implement so they only show on Web, not print.
             $is_almost_born = ($today->diffInMonths($this->dob) < 1) && ($this->dob->isFuture());
             $is_overdue = ($today->diffInMonths($this->dob) > 1) && ($this->dob->isPast());
 
             // Add notices
             ($is_almost_born) ? $notices[] = self::NOTICE_TYPES['ChildIsAlmostBorn'] : false;
             ($is_overdue) ? $notices[] = self::NOTICE_TYPES['ChildIsOverDue'] : false;
-
+            */
         } else {
             // Setup dates
             /** @var Carbon $first_birthday */
