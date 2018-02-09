@@ -110,10 +110,22 @@ class Registration extends Model
     public function scopeWithFullFamily($query)
     {
         return $query->with([
-            'family' => function ($q) {
-                $q->with('children', 'carers');
-            }
+            'family',
+            'family.children',
+            'family.carers',
         ]);
+    }
+
+    /**
+     * Fetches only Registrations with an Active Family
+     * @param $query
+     * @return mixed
+     */
+    public function scopeWhereActiveFamily($query)
+    {
+        return $query->whereHas('family', function ($q) {
+            $q->whereNull('leaving_on');
+        });
     }
 
     /**
