@@ -25,7 +25,11 @@ class CentreController extends Controller
         $registrations = $centre->registrations()
             ->whereActiveFamily()
             ->withFullFamily()
-            ->get();
+            ->get()
+            ->sortBy(function ($registration) {
+                // Need strtolower because case comparison sucks.
+                return strtolower($registration->family->pri_carer);
+            });
 
         $filename = 'CC' . $centre->id . 'Regs_' . Carbon::now()->format('YmdHis') .'.pdf';
 

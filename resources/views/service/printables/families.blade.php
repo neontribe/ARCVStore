@@ -31,7 +31,7 @@
         </tr>
         @foreach ($registrations as $registration)
         <tr>
-          <td>{{ $registration->family->carers->first()->name }}</td>
+          <td>{{ $registration->family->pri_carer }}</td>
           <td>{{ $registration->family->rvid }}</td>
           <td><i class="fa fa-ticket" aria-hidden="true"></i> {{ $registration->family->entitlement }}</td>
           <td></td>

@@ -216,7 +216,11 @@ class RegistrationController extends Controller
         $registrations = $centre->registrations()
             ->whereActiveFamily()
             ->withFullFamily()
-            ->get();
+            ->get()
+            ->sortBy(function ($registration) {
+                // Need strtolower because case comparison sucks.
+                return strtolower($registration->family->pri_carer);
+            });
 
         // Make a filename
         $filename = 'Registrations_' . Carbon::now()->format('YmdHis') . '.pdf';
@@ -231,14 +235,12 @@ class RegistrationController extends Controller
 
         // Stack the registration batch into the data
         foreach ($registrations as $registration) {
-            $carers = $registration->family->carers->all();
             $data['regs'][] = [
                 'reminders' => $registration->getReminderReasons(),
                 'centre' => $centre,
                 'family' => $registration->family,
-                'pri_carer' => array_shift($carers),
+                'pri_carer' => $registration->family->pri_carer,
                 // Remove the primary carer from collection
-                'sec_carers' => $carers,
                 'children' => $registration->family->children,
             ];
         }

@@ -279,4 +279,15 @@ class Family extends Model
     {
         return $this->belongsTo('App\Centre', 'initial_centre_id');
     }
+
+    public function scopeWithPrimaryCarer($query)
+    {
+        $subQuery = \DB::table('carers')
+            ->select('name')
+            ->whereRaw('family_id = families.id')
+            ->orderBy('id', 'asc')
+            ->limit(1);
+
+        return $query->select('families.*')->selectSub($subQuery, 'pri_carer');
+    }
 }
