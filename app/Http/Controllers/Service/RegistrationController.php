@@ -243,10 +243,6 @@ class RegistrationController extends Controller
             ];
         }
 
-
-        return view('service.printables.family',
-            $data);
-
         // throw it at a PDF.
         $pdf = PDF::loadView(
             'service.printables.family',
