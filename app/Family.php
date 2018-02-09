@@ -285,7 +285,7 @@ class Family extends Model
         $subQuery = \DB::table('carers')
             ->select('name')
             ->whereRaw('family_id = families.id')
-            ->oldest()
+            ->orderBy('id', 'asc')
             ->limit(1);
 
         return $query->select('families.*')->selectSub($subQuery, 'pri_carer');

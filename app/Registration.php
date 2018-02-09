@@ -110,7 +110,7 @@ class Registration extends Model
     public function scopeWithFullFamily($query)
     {
         return $query->with([
-            // This may not be efficient, but it is convenient for odering when required.
+            // This may not be efficient, but it is convenient for ordering when required.
             'family' => function ($q) {
                 $q->withPrimaryCarer();
             },
