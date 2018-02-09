@@ -8,6 +8,11 @@ body {
 	font-size: 15px;
 }
 
+html {
+	padding: 1.5em;
+	margin: 2em 1.5em 1em 1.5em;
+}
+
 h1,
 h2,
 h3 {
@@ -105,7 +110,7 @@ td {
 }
 
 .vouchers {
-	font-size: 1.2rem;
+	font-size: 1.0rem;
 }
 
 .header {
