@@ -177,6 +177,7 @@ class RegistrationController extends Controller
 
         $carers = $registration->family->carers->all();
         $data['regs'][] = [
+            'reminders' => $registration->getReminderReasons(),
             'centre' => $registration->centre,
             'family' => $registration->family,
             'pri_carer' => array_shift($carers),
@@ -232,6 +233,7 @@ class RegistrationController extends Controller
         foreach ($registrations as $registration) {
             $carers = $registration->family->carers->all();
             $data['regs'][] = [
+                'reminders' => $registration->getReminderReasons(),
                 'centre' => $centre,
                 'family' => $registration->family,
                 'pri_carer' => array_shift($carers),
