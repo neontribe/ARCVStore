@@ -27,9 +27,6 @@ class CentreController extends Controller
             ->withFullFamily()
             ->get();
 
-        $reg_chunks = $registrations->chunk(20);
-        // TODO Just passing the registrations and centre for now.
-
         $filename = 'CC' . $centre->id . 'Regs_' . Carbon::now()->format('YmdHis') .'.pdf';
 
         $pdf = PDF::loadView(
@@ -38,7 +35,8 @@ class CentreController extends Controller
                 'sheet_title' => 'Printable Register',
                 'sheet_header' => 'Register',
                 'centre' => $centre,
-                'reg_chunks' => $reg_chunks,
+                //'reg_chunks' => $reg_chunks,
+                'registrations' => $registrations,
             ]
         );
         $pdf->setPaper('A4', 'landscape');
