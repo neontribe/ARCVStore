@@ -15,7 +15,12 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <body>
-
+    <script type="text/php">
+    if ( isset($pdf) ) {
+        $font = $fontMetrics->getFont("helvetica", "bold");
+        $pdf->page_text(72, 18, "Page: {PAGE_NUM} of {PAGE_COUNT}", $font, 6, array(0,0,0));
+    }
+    </script>
     @yield('content')
 
     </body>

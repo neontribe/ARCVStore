@@ -74,21 +74,17 @@
                 </td>
                 <td>
                     <div>
-                        <h3><i class="fa fa-question-circle" aria-hidden="true"></i> Hints &amp; Tips</h3>
-                        <p>Have you completed the food diary and pie chart for this family?</p>
-                        <p>When did you last chat to them about how they're finding shopping at the market?</p>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <div>
                         <h3><i class="fa fa-exclamation-circle" aria-hidden="true"></i> Reminder</h3>
-                        @forelse( $reg["family"]->getNoticeReasons() as $notices)
-                            <p> {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</p>
-                        @empty
+                        @if ( count($reg["reminders"]) > 0 || count($reg["family"]->getNoticeReasons()) > 0  )
+                        @foreach ( $reg["reminders"] as $reminder )
+                            <br>{{ $reminder['entity'] }} has {{ $reminder['reason'] }}</br>
+                        @endforeach
+                        @foreach( $reg["family"]->getNoticeReasons() as $notices)
+                            <br> {{ $notices['count'] }} {{ str_plural($notices['entity'], $notices['count']) }} currently "{{ $notices['reason'] }}"</br>
+                        @endforeach
+                        @else
                             <p>No reminders for this family.</p>
-                        @endforelse
+                        @endif
                     </div>
                 </td>
             </tr>
