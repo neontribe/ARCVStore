@@ -110,7 +110,10 @@ class Registration extends Model
     public function scopeWithFullFamily($query)
     {
         return $query->with([
-            'family',
+            // This may not be efficient, but it is convenient for odering when required.
+            'family' => function ($q) {
+                $q->withPrimaryCarer();
+            },
             'family.children',
             'family.carers',
         ]);
@@ -126,20 +129,5 @@ class Registration extends Model
         return $query->whereHas('family', function ($q) {
             $q->whereNull('leaving_on');
         });
-    }
-
-    /**
-     * Attaches the primary carer by subselect.
-     * @param $query
-     * @return mixed
-     */
-    public function scopeWithFamilyName($query)
-    {
-        // scope family with primary carer field.
-        return $query->with([
-            'family' => function ($q) {
-                $q->withPrimaryCarer();
-            }
-        ]);
     }
 }

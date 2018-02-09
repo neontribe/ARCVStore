@@ -24,7 +24,7 @@ class CentreController extends Controller
     {
         $registrations = $centre->registrations()
             ->whereActiveFamily()
-            ->withFamilyName()
+            ->withFullFamily()
             ->get()
             ->sortBy(function ($registration) {
                 // Need strtolower because case comparison sucks.

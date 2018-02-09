@@ -8,12 +8,12 @@
     @include('service.printables.partials.masthead', ['specificPrintNote' => 'Print a new form every 4 weeks so you have the most up to date information available.'])
 
     <div class="content">
-        <h1>{{ $reg["pri_carer"]->name }}</h1>
+        <h1>{{ $reg["pri_carer"] }}</h1>
         <table>
             <tr class="titles">
                 <th colspan="5">
                     <h2>Main Carer's Name:</h2>
-                    <p>{{ $reg["pri_carer"]->name }}</p>
+                    <p>{{ $reg["pri_carer"] }}</p>
                 </th>
                 <td rowspan="2" class="colspan">
                     <p>Date Printed:<p>
