@@ -8,6 +8,11 @@ body {
 	font-size: 15px;
 }
 
+html {
+	padding: 1.5em;
+	margin: 2em 1.5em 1em 1.5em;
+}
+
 h1,
 h2,
 h3 {
