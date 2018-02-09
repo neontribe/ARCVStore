@@ -175,14 +175,11 @@ class RegistrationController extends Controller
             'sheet_header' => 'Family Collection Sheet',
         ];
 
-        $carers = $registration->family->carers->all();
         $data['regs'][] = [
             'reminders' => $registration->getReminderReasons(),
             'centre' => $registration->centre,
             'family' => $registration->family,
-            'pri_carer' => array_shift($carers),
-            // Remove the primary carer from collection
-            'sec_carers' => $carers,
+            'pri_carer' => $registration->family->pri_carer,
             'children' => $registration->family->children,
         ];
 
