@@ -4,8 +4,6 @@
 
 @section('content')
 
-  @foreach ($reg_chunks as $chunk)
-
   @include('service.printables.partials.masthead', ['specificPrintNote' => 'Ideally you should print this form every week to keep voucher allocations as up to date as possible.'])
 
     <div class="content families">
@@ -31,7 +29,7 @@
           <th>Date collected</th>
           <th class="lrg-cell">Signature</th>
         </tr>
-        @foreach ($chunk as $registration)
+        @foreach ($registrations as $registration)
         <tr>
           <td>{{ $registration->family->carers->first()->name }}</td>
           <td>{{ $registration->family->rvid }}</td>
@@ -58,6 +56,5 @@
       </table>
     </div>
 
-  @endforeach
 
 @endsection
