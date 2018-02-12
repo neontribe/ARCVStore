@@ -2,11 +2,14 @@
 
 namespace App\Exceptions;
 
+use Auth;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Session\TokenMismatchException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+
 
 class Handler extends ExceptionHandler
 {
@@ -49,12 +52,24 @@ class Handler extends ExceptionHandler
         if ($exception instanceof TokenMismatchException) {
             // Explicitly redirect to login form if token mismatches.
             // Note: this will also draw attention to the login form timing out.
+            Auth::logout();
             return redirect()
                 ->guest(route('service.login'))
                 // We anticipate expiry to be the most common reason.
                 ->withErrors(['error_message' => trans('auth.expired')])
                 ;
         }
+
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            // User somehow tried an HTTP verb a resource doesn't support
+            // Send them somewhere safe.
+            $route = (Auth::check()) ? 'service.dashboard' : 'service.login';
+            return redirect()
+                // For some reason ->withErrors() won't "take";
+                // The session gets flashed, but it doesn't survive.
+                ->route($route);
+        }
+
         return parent::render($request, $exception);
     }
 

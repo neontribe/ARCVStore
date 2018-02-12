@@ -15,6 +15,7 @@
                 crossorigin="anonymous"></script>
         <style>@import url('https://fonts.googleapis.com/css?family=Roboto');</style>
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        @yield('hoist-head')
     </head>
     <body>
 
