@@ -39,10 +39,14 @@ Route::post('password/reset', 'Service\Auth\ResetPasswordController@reset');
 // Service Dashboard route
 // Default redirect to Service Dashboard
 
-// TODO : use of singular/ plurals in route names; Mixed opinions found. discuss.
+// TODO : use of singular/plurals in route names; Mixed opinions found. discuss.
 
 Route::get('/', function () {
-    return redirect()->route('service.dashboard');
+    if (Auth::check()) {
+        return redirect()->route('service.dashboard');
+    } else {
+        return redirect()->route('service.login');
+    }
 })->name('service.base');
 
 Route::group(['middleware' => 'auth:web'], function () {
