@@ -2,6 +2,11 @@
 
 @section('title', 'Login')
 
+@section('hoist-head')
+    <!-- specifically to avoid login page timeout -->
+    <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 30 }};url={{ route('service.login') }}" />
+@endsection
+
 @section('content')
     <div class="content">
         <div class="login">
