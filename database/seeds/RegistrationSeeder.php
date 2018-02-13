@@ -54,7 +54,7 @@ class RegistrationSeeder extends Seeder
         $eligibilities = ['healthy-start', 'other'];
 
         foreach (range(1, $quantity) as $q) {
-            // creaate a family and set it up.
+            // create a family and set it up.
             $family = factory(App\Family::class)->make();
             $family->lockToCentre($centre);
             $family->save();
