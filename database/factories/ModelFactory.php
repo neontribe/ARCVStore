@@ -207,6 +207,17 @@ $factory->defineAs(App\Child::class, 'underOne', function (Faker\Generator $fake
     ];
 });
 
+// Child - almost 1
+$factory->defineAs(App\Child::class, 'almostOne', function (Faker\Generator $faker) {
+
+    $dob = Carbon\Carbon::now()->startOfMonth()->subMonths(11);
+
+    return [
+        'born' => $dob->isPast(),
+        'dob' => $dob->toDateTimeString(),
+    ];
+});
+
 // Child - under School Age
 $factory->defineAs(App\Child::class, 'underSchoolAge', function (Faker\Generator $faker) {
 
