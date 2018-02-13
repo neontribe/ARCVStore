@@ -39,7 +39,7 @@ $(document).ready(
             // get the dates
             var month = monthEl.val();
             var year = yearEl.val();
-            var dateObj = moment(year + '-' + month, "YYYY-MM", true);
+            var dateObj = moment(year + '-' + month, "YYYY-MM", true).startOf('month');
 
             if (!dateObj.isValid()) {
                 switch(dateObj.invalidAt()) {
@@ -55,28 +55,26 @@ $(document).ready(
 			}
 
 			// Check date is less than 5 years ago of 10 months away.
-            var lowerBoundDate = moment("MM-YYYY").subtract(5, 'year');
-            var upperBoundDate = moment("MM-YYYY").add(10, 'month');
+            var lowerBoundDate = moment().startOf('month').subtract(5, 'year');
+            var upperBoundDate = moment().startOf('month').add(9, 'month');
 
-            if (!dateObj.isSameOrAfter(lowerBoundDate))
+            if (dateObj.isBefore(lowerBoundDate))
             {
                 dobError.text('Invalid Date: over 5 year ago.');
                 return false;
             }
 
-            if (!dateObj.isBefore(upperBoundDate))
+            if (dateObj.isAfter(upperBoundDate))
             {
                 dobError.text('Invalid Date: over 9 months away.');
                 return false;
             }
 
-            // Check that date less than 10 month in the future.
-
 			// It's a valid date, so manufacture a human readable string
             var innerTextDate = dateObj.format("MMM YYYY");
             var valueDate = dateObj.format("YYYY-MM");
 
-            // add an input;
+            // add an input
             $(el).append('<tr><td><input name="children[]" type="hidden" value="' +valueDate+ '" >' + innerTextDate + '</td><td><button type="button" class="remove_date_field"><i class="fa fa-minus" aria-hidden="true"></i></button></td></tr>');
 
 			// reset form
