@@ -9,10 +9,11 @@ return [
     */
 
     'leaving_reasons' => [
-        'positive circumstances',
-        'negative circumstances',
-        'moving out of service area',
-        'no longer eligible',
+        'moving out of centre area',
+        'found employment',
+        'no longer meets criteria',
+        'travel to get/spend vouchers too expensive',
+        'disliked market shopping',
         'no attendance',
         'unspecified',
     ],
