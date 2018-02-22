@@ -66,9 +66,30 @@
                 <td rowspan="2">
                     <p>This family should collect <strong>{{ $reg["family"]->entitlement }}</strong> vouchers per week:</p>
                     <ul>
-                    @foreach( $reg["family"]->getCreditReasons() as $credits)
-                        <li>{{ $credits['reason_vouchers'] }} {{ str_plural('voucher', $credits['reason_vouchers']) }} as {{ $credits['count'] }} {{ str_plural($credits['entity'], $credits['count']) }} currently "{{ $credits['reason'] }}"</li>
-                    @endforeach
+                        @foreach( $reg["family"]->getCreditReasons() as $credits)
+                            <li>
+                                <strong>
+                                    {{ $credits['reason_vouchers'] }}
+                                </strong>
+                                {{ str_plural('voucher', $credits['reason_vouchers']) }}
+                                because
+                                @if ($credits['count'] > 1)
+                                    {{ $credits['count'] }}
+                                    of the
+                                    {{ str_plural($credits['entity'], $credits['count']) }}
+                                    are
+                                @else
+                                    @if ($credits['entity'] == 'family')
+                                        the
+                                    @else
+                                        one
+                                    @endif
+                                    {{ str_plural($credits['entity'], $credits['count']) }}
+                                    is
+                                @endif
+                                {{ $credits['reason'] }}
+                            </li>
+                        @endforeach
                     </ul>
                     <p>Their RV-ID is: <strong>{{ $reg["family"]->rvid }}</strong></p>
                 </td>
@@ -89,6 +110,6 @@
                 </td>
             </tr>
         </table>
-    </div>    
+    </div>
     @endforeach
 @endsection
