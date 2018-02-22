@@ -49,7 +49,7 @@
                     <h2>Adding children or pregnancies</h2>
                 </div>
                 <div>
-                    <p>To add a child, complete the boxes below with their month and year of birth in numbers, e.g. '06 2017' for June 2017.</h3>
+                    <p>To add a child or pregnancy, complete the boxes below with their month and year of birth (or due date) in numbers, e.g. '06 2017' for June 2017.</h3>
                     </p>
                     @include('service.partials.add_child_form')
                 </div>
