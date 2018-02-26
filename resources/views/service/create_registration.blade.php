@@ -77,7 +77,6 @@
                 <div>
                     <label for="eligibility-reason">
                         Reason for receiving Rose Vouchers
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
                     </label>
                     <div class="user-control" id="eligibility-reason">
                         <input type="radio" id="healthy-start" value="healthy-start" name="eligibility"
