@@ -223,6 +223,10 @@ strong {
 	text-align: center;
 }
 
+.invalid+label:before,
+.content .invalid {
+	border: 2px solid #d2232a;
+}
 .message {
 	font-weight: 200;
 	font-size: 1.5rem;

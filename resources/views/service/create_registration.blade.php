@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <label for="carer">Main carer's full name</label>
-                    <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
+                    <input id="carer" name="carer" class="@if(" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
                     <label for="carer_adder_input">Other people who can collect <span>(optional)</span></label>
@@ -49,7 +49,7 @@
                     <h2>Adding children or pregnancies</h2>
                 </div>
                 <div>
-                    <p>To add a child or pregnancy, complete the boxes below with their month and year of birth (or due date) in numbers, e.g. '06 2017' for June 2017.</h3>
+                    <p>To add a child or pregnancy, complete the boxes below with their month and year of birth (or due date) in numbers, e.g. '06 2017' for June 2017.
                     </p>
                     @include('service.partials.add_child_form')
                 </div>
@@ -94,7 +94,7 @@
                 </div>
                 <div>
                     <div class="user-control">
-                        <input type="checkbox" class="styled-checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
+                        <input type="checkbox" class="styled-checkbox hello" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                     </div>
                 </div>
