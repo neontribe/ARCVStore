@@ -44,11 +44,4 @@ class StoreNewRegistrationRequest extends FormRequest
 
         return $rules;
     }
-    public function messages() 
-    {
-        return [
-            'consent.required' => 'Privacy Statement must be signed in order to complete registration',
-            'carer.required' => 'Main carer field is required'
-        ];
-    }
 }
