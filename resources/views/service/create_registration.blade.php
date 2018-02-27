@@ -18,7 +18,7 @@
                 </div>
                 <div>
                     <label for="carer">Main carer's full name</label>
-                    <input id="carer" name="carer" class="@if(" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
+                    <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
                     <label for="carer_adder_input">Other people who can collect <span>(optional)</span></label>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="added">
-                    <label for="carer_wrapper">You have added:</label>
+                    <label for="carer_wrapper">You have added: </label>
                     <table id="carer_wrapper">
                         @if(is_array(old('carers')) || (!empty(old('carers'))))
                             @foreach (old('carers') as $old_sec_carer )
@@ -94,7 +94,7 @@
                 </div>
                 <div>
                     <div class="user-control">
-                        <input type="checkbox" class="styled-checkbox hello" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
+                        <input type="checkbox" class="styled-checkbox @if($errors->has('consent'))invalid @endif" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                     </div>
                 </div>

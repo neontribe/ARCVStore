@@ -223,8 +223,8 @@ strong {
 	text-align: center;
 }
 
-.invalid+label:before,
-.content .invalid {
+input[type="text"].invalid,
+.invalid+label:before {
 	border: 2px solid #d2232a;
 }
 .message {
