@@ -16,7 +16,7 @@
                 </div>
                 <div>
                     <label for="carer">Main carer's full name</label>
-                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error">This field is required</span>
+                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error" id="carer-span">This field is required</span>
                     <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div>
-                    <span class="@if(!$errors->has('consent'))collapsed @endif invalid-error">Privacy Statement must be signed in order to complete registration</span>
+                    <span class="@if(!$errors->has('consent'))collapsed @endif invalid-error" id="privacy-statement-span">Privacy Statement must be signed in order to complete registration</span>
                     <div class="user-control">
                         <input type="checkbox" class="styled-checkbox @if($errors->has('consent'))invalid @endif" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
@@ -145,6 +145,9 @@
         //remove invalid class when input is selected/tabbed to
         $('#privacy-statement, #carer').on('click focus', function() {
             $(this).removeClass("invalid");
+            // Remove relevent error message
+            var spanclass = $(this)[0].id + '-span';
+            $('#' + spanclass).addClass('collapsed');
         });
     </script>
 
