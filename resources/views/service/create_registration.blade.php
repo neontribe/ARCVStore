@@ -142,6 +142,10 @@
                 return false;
             }
         });
+        //remove invalid class when input is selected/tabbed to
+        $('#privacy-statement, #carer').on('click focus', function() {
+            $(this).removeClass("invalid");
+        });
     </script>
 
 @endsection
