@@ -209,7 +209,8 @@ strong {
 }
 
 .warning p,
-.error li {
+.error li,
+.invalid-error {
 	color: #d2232a;
 }
 

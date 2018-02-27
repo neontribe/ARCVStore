@@ -6,8 +6,6 @@
 
     @include('service.partials.navbar', ['headerTitle' => 'New family sign up'])
 
-    @include('service.partials.flash_notices')
-
     <div class="content">
         <form action="{{ URL::route("service.registration.store") }}" method="post">
             {!! csrf_field() !!}
@@ -18,6 +16,7 @@
                 </div>
                 <div>
                     <label for="carer">Main carer's full name</label>
+                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error">This field is required</span>
                     <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
@@ -93,6 +92,7 @@
                     </div>
                 </div>
                 <div>
+                    <span class="@if(!$errors->has('consent'))collapsed @endif invalid-error">Privacy Statement must be signed in order to complete registration</span>
                     <div class="user-control">
                         <input type="checkbox" class="styled-checkbox @if($errors->has('consent'))invalid @endif" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
