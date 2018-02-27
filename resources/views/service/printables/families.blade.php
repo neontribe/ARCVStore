@@ -32,7 +32,7 @@
         @foreach ($registrations as $registration)
         <tr>
           <td>
-            @if($registration->family->getNoticeReasons())
+            @if(!empty($registration->family->getNoticeReasons()))
               <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
             @endif
             {{ $registration->family->pri_carer }}
