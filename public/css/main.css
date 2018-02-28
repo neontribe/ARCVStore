@@ -209,7 +209,8 @@ strong {
 }
 
 .warning p,
-.error li {
+.error li,
+.invalid-error {
 	color: #d2232a;
 }
 
@@ -223,6 +224,10 @@ strong {
 	text-align: center;
 }
 
+input[type="text"].invalid,
+.invalid+label:before {
+	border: 2px solid #d2232a;
+}
 .message {
 	font-weight: 200;
 	font-size: 1.5rem;

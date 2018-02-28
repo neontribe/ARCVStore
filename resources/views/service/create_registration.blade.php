@@ -6,8 +6,6 @@
 
     @include('service.partials.navbar', ['headerTitle' => 'New family sign up'])
 
-    @include('service.partials.flash_notices')
-
     <div class="content">
         <form action="{{ URL::route("service.registration.store") }}" method="post">
             {!! csrf_field() !!}
@@ -18,7 +16,8 @@
                 </div>
                 <div>
                     <label for="carer">Main carer's full name</label>
-                    <input id="carer" name="carer" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
+                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error" id="carer-span">This field is required</span>
+                    <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" autocomplete="off" autocorrect="off" spellcheck="false" value="{{ old('carer') }}">
                 </div>
                 <div>
                     <label for="carer_adder_input">Other people who can collect <span>(optional)</span></label>
@@ -30,7 +29,7 @@
                     </div>
                 </div>
                 <div class="added">
-                    <label for="carer_wrapper">You have added:</label>
+                    <label for="carer_wrapper">You have added: </label>
                     <table id="carer_wrapper">
                         @if(is_array(old('carers')) || (!empty(old('carers'))))
                             @foreach (old('carers') as $old_sec_carer )
@@ -49,7 +48,7 @@
                     <h2>Adding children or pregnancies</h2>
                 </div>
                 <div>
-                    <p>To add a child or pregnancy, complete the boxes below with their month and year of birth (or due date) in numbers, e.g. '06 2017' for June 2017.</h3>
+                    <p>To add a child or pregnancy, complete the boxes below with their month and year of birth (or due date) in numbers, e.g. '06 2017' for June 2017.
                     </p>
                     @include('service.partials.add_child_form')
                 </div>
@@ -93,8 +92,9 @@
                     </div>
                 </div>
                 <div>
+                    <span class="@if(!$errors->has('consent'))collapsed @endif invalid-error" id="privacy-statement-span">Privacy Statement must be signed in order to complete registration</span>
                     <div class="user-control">
-                        <input type="checkbox" class="styled-checkbox" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
+                        <input type="checkbox" class="styled-checkbox @if($errors->has('consent'))invalid @endif" id="privacy-statement" name="consent" @if( old('consent') ) checked @endif/>
                         <label for="privacy-statement">Have you got the signed privacy statement for the family?</label>
                     </div>
                 </div>
@@ -141,6 +141,13 @@
                 $("input").blur();
                 return false;
             }
+        });
+        //remove invalid class when input is selected/tabbed to
+        $('#privacy-statement, #carer').on('click focus', function() {
+            $(this).removeClass("invalid");
+            // Remove relevent error message
+            var spanclass = $(this)[0].id + '-span';
+            $('#' + spanclass).addClass('collapsed');
         });
     </script>
 
