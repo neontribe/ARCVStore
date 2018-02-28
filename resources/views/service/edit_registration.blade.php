@@ -102,19 +102,19 @@
                     <p>This family:</p>
                     <ul>
                         <li>
-                            Should collect 
+                            Should collect
                             <strong>
                                 {{ $family->entitlement }}
-                            </strong> 
+                            </strong>
                             per week
                         </li>
                         <li>
-                            Has 
+                            Has
                             <strong>
                                 {{ count($family->children) }}
-                            </strong> 
-                            {{ str_plural('child', count($family->children)) }} 
-                            registered 
+                            </strong>
+                            {{ str_plural('child', count($family->children)) }}
+                            registered
                             @if ( $family->expecting != null )
                                 and is pregnant
                             @endif
@@ -125,18 +125,22 @@
                                 @foreach( $family->getCreditReasons() as $credits )
                                     <li>
                                         <strong>
-                                            {{ $credits['reason_vouchers'] }} 
+                                            {{ $credits['reason_vouchers'] }}
                                             {{ str_plural('voucher', $credits['reason_vouchers']) }}
                                         </strong>
-                                        because 
+                                        because
                                         @if ($credits['count'] > 1)
-                                            {{ $credits['count'] }} 
+                                            {{ $credits['count'] }}
                                             of the
-                                            {{ str_plural($credits['entity'], $credits['count']) }} 
-                                            are 
+                                            {{ str_plural($credits['entity'], $credits['count']) }}
+                                            are
                                         @else
-                                            one 
-                                            {{ str_plural($credits['entity'], $credits['count']) }} 
+                                            @if ($credits['entity'] == 'family')
+                                                the
+                                            @else
+                                                one
+                                            @endif
+                                            {{ str_plural($credits['entity'], $credits['count']) }}
                                             is
                                         @endif
                                         {{ $credits['reason'] }}
