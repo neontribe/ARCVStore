@@ -275,12 +275,10 @@
             }
         });
 
-        //remove invalid class when input is selected/tabbed to
+        //remove invalid class & error span when input is selected/tabbed to
         $('#carer').on('click focus', function() {
             $(this).removeClass("invalid");
-            // Remove relevent error message
-            var spanclass = $(this)[0].id + '-span';
-            $('#' + spanclass).addClass('collapsed');
+            $('#carer-span').addClass('collapsed');
         });
 
         $('.clickable-span').click(function (e) {
