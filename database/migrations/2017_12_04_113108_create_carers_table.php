@@ -22,8 +22,6 @@ class CreateCarersTable extends Migration
             $table->foreign('family_id')
                 ->references('id')
                 ->on('families');
-
-            $table->unique(['name', 'family_id'], 'unique_family_carer');
         });
     }
 

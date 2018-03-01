@@ -128,7 +128,7 @@ class RegistrationController extends Controller
         $registration = Registration::withFullFamily()->find($id);
 
         if (!$registration) {
-            abort(404, 'Registraion not found.');
+            abort(404, 'Registration not found.');
         }
 
         // Grab carers copy for shift)ing without altering family->carers
@@ -161,7 +161,7 @@ class RegistrationController extends Controller
         $registration = Registration::withFullFamily()->find($id);
 
         if (!$registration) {
-            abort(404, 'Registraion not found.');
+            abort(404, 'Registration not found.');
         }
 
         // Make a filename
