@@ -20,7 +20,8 @@
                 </div>
                 <div>
                     <label for="carer">Main carer</label>
-                    <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off"
+                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error" id="carer-span">This field is required</span>
+                    <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" value="{{ $pri_carer->name }}" autocomplete="off"
                            autocorrect="off" spellcheck="false">
                 </div>
                 <div>
@@ -272,6 +273,14 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        //remove invalid class when input is selected/tabbed to
+        $('#carer').on('click focus', function() {
+            $(this).removeClass("invalid");
+            // Remove relevent error message
+            var spanclass = $(this)[0].id + '-span';
+            $('#' + spanclass).addClass('collapsed');
         });
 
         $('.clickable-span').click(function (e) {
