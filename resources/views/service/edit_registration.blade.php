@@ -6,8 +6,6 @@
 
     @include('service.partials.navbar', ['headerTitle' => 'Check, update or print'])
 
-    @include('service.partials.flash_notices')
-
     <div class="content check">
         <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
