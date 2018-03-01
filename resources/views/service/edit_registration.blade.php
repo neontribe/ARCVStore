@@ -206,7 +206,7 @@
                         <label for="reason-for-leaving">
                             Reason for leaving
                         </label>
-                        <select id="reason-for-leaving" name="leaving_reason">
+                        <select id="reason-for-leaving" name="leaving_reason" required>
                             <option value="" disabled selected>Select a reason...</option>
                             @foreach(Config::get('arc.leaving_reasons') as $reason)
                                 <option value="{{ $reason }}"> {{ $reason }}</option>
