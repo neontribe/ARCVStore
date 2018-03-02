@@ -2,14 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Carer;
+use App\Centre;
+use App\Child;
+use App\Family;
+use App\Registration;
+use App\User;
 use Auth;
-use \App\Carer;
-use \App\Centre;
-use \App\Child;
-use \App\Family;
-use \App\Registration;
-use \App\Sponsor;
-use \App\User;
 use Carbon\Carbon;
 use DB;
 use Excel;
@@ -17,13 +16,12 @@ use Illuminate\Console\Command;
 use Maatwebsite\Excel\Collections\CellCollection;
 use Maatwebsite\Excel\Collections\RowCollection;
 
-
 class RegisterFamiliesFromFile extends Command
 {
-    /** @var \App\User $user */
+    /** @var User $user */
     private $user;
 
-    /** @var \App\Centre $centre */
+    /** @var Centre $centre */
     private $centre;
 
     /** @var RowCollection $rows */
@@ -35,9 +33,9 @@ class RegisterFamiliesFromFile extends Command
      * @var string
      */
     protected $signature = 'arc:registerFamiliesFromFile
-                                {file : csv (\',\' file of family registrations to import, one per line.}
-                                {prefix : the children\'s centre prefix.}  
-                                {email : email address of User who\'s responsible for this.}
+                                {file : CSV file of family registrations to import, one per line}
+                                {prefix : the children\'s centre prefix}  
+                                {email : email address of User who\'s responsible for this}
                                 ';
 
     /**
@@ -64,15 +62,10 @@ class RegisterFamiliesFromFile extends Command
      */
     public function handle()
     {
-        /*
-        $this->lines = file(
-            $this->argument('file'),
-            FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES
-        );
-        */
-
+        // Load the CSV
         $this->rows = Excel::load($this->argument('file'))->get();
 
+        // Search for existing user and centre
         $this->user = User::where('email', $this->argument('email'))->first();
         $this->centre = Centre::where('prefix', $this->argument('prefix'))->first();
 
@@ -91,9 +84,9 @@ class RegisterFamiliesFromFile extends Command
                 if (!$this->warnUser()) {
                     exit("Exit without change.\n");
                 };
-                // log the user in.
-                Auth::login($this->user);
 
+                // Log the user in.
+                Auth::login($this->user);
                 if (!Auth::check()) {
                     exit("Failed to login.\n");
                 };
@@ -105,10 +98,7 @@ class RegisterFamiliesFromFile extends Command
 
                 $bar = $this->output->createProgressBar($this->rows->count());
 
-
-
                 $this->rows->each(function (CellCollection $row) use ($bar) {
-
 
                     $signup_date = Carbon::createFromFormat('Y-m-d', $row->signup_date)->startOfDay();
 
@@ -193,6 +183,7 @@ class RegisterFamiliesFromFile extends Command
                     $bar->advance();
                 });
                 $bar->finish();
+                exit("Done.\n");
         }
     }
 
