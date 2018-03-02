@@ -13,7 +13,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\RegisterFamiliesFromFile::class,
+        Commands\AddSponsor::class,
+        Commands\AddCentre::class,
     ];
 
     /**
