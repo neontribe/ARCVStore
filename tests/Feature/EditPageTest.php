@@ -390,7 +390,7 @@ class EditPageTest extends TestCase
     }
 
     /** @test */
-    public function itDoeNotShowTheLeavingFormIfFamilyHaLeftScheme()
+    public function itDoesNotShowTheLeavingFormIfFamilyHasLeftScheme()
     {
         $family = $this->registration->family;
         $family->leaving_on = Carbon::now();
@@ -409,7 +409,8 @@ class EditPageTest extends TestCase
             ->visit(URL::route('service.registration.edit', $this->registration->id))
             ->press('Remove this family')
             ->press('Yes')
-            ->see('The leaving reason field is required')
+            // Still see header of leaving popup
+            ->see('Reason for leaving')
             // Still see the button - will prove that the family is still in scheme
             ->see('Remove this family')
         ;
@@ -424,7 +425,6 @@ class EditPageTest extends TestCase
             ->select(config('arc.leaving_reasons')[0], 'leaving_reason')
             ->press('Yes')
             ->seePageIs(route('service.registration.index'))
-            ->see('Family ' . $this->registration->family->id . ' de-activated.')
         ;
     }
 

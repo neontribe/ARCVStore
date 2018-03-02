@@ -6,8 +6,6 @@
 
     @include('service.partials.navbar', ['headerTitle' => 'Check, update or print'])
 
-    @include('service.partials.flash_notices')
-
     <div class="content check">
         <form action="{{ URL::route("service.registration.update",['id' => $registration->id]) }}" method="post">
             {{ method_field('PUT') }}
@@ -20,7 +18,8 @@
                 </div>
                 <div>
                     <label for="carer">Main carer</label>
-                    <input id="carer" name="carer" type="text" value="{{ $pri_carer->name }}" autocomplete="off"
+                    <span class="@if(!$errors->has('carer'))collapsed @endif invalid-error" id="carer-span">This field is required</span>
+                    <input id="carer" name="carer" class="@if($errors->has('carer'))invalid @endif" type="text" value="{{ $pri_carer->name }}" autocomplete="off"
                            autocorrect="off" spellcheck="false">
                 </div>
                 <div>
@@ -207,7 +206,7 @@
                         <label for="reason-for-leaving">
                             Reason for leaving
                         </label>
-                        <select id="reason-for-leaving" name="leaving_reason">
+                        <select id="reason-for-leaving" name="leaving_reason" required>
                             <option value="" disabled selected>Select a reason...</option>
                             @foreach(Config::get('arc.leaving_reasons') as $reason)
                                 <option value="{{ $reason }}"> {{ $reason }}</option>
@@ -272,6 +271,12 @@
                 $("input").blur();
                 return false;
             }
+        });
+
+        //remove invalid class & error span when input is selected/tabbed to
+        $('#carer').on('click focus', function() {
+            $(this).removeClass("invalid");
+            $('#carer-span').addClass('collapsed');
         });
 
         $('.clickable-span').click(function (e) {

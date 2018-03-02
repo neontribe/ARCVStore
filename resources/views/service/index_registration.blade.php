@@ -4,8 +4,6 @@
 
 @section('content')
 
-    @include('service.partials.flash_notices')
-
     @include('service.partials.navbar', ['headerTitle' => 'Search for a family'])
     <div class="content search">
         <div>
