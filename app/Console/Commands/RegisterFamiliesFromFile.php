@@ -107,7 +107,6 @@ class RegisterFamiliesFromFile extends Command
                         'fm_diary_on' => ($row->pie_chart == "Y") ? $signup_date : null,
                         'consented_on' => $signup_date,
                         'eligibility' => 'other',
-                        ''
                     ]);
 
                     // Make a new family.
