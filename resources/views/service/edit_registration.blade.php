@@ -185,6 +185,11 @@
                                     <label for="update-diary">Diary</label>
                                 </div>
                             @endcan
+                            <div class="user-control">
+                                <input type="hidden" name="fm_privacy" value="0">
+                                <input type="checkbox" class="styled-checkbox" id="update-privacy" name="fm_privacy" value="1"/>
+                                <label for="update-privacy">Privacy Statement</label>
+                            </div>
                         </div>
                     @endif
                 </div>
