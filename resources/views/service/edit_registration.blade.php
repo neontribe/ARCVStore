@@ -115,7 +115,7 @@
                             {{ str_plural('child', count($family->children)) }}
                             registered
                             @if ( $family->expecting != null )
-                                and is pregnant
+                                including one pregnancy
                             @endif
                             <span class="clickable-span">(more)</span>
                         </li>
