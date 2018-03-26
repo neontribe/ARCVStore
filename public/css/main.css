@@ -262,7 +262,6 @@ input[type="text"].invalid,
 }
 
 .content {
-	height: 88%;
 	background-color: #f9f9f9;
 	overflow: auto;
 }
