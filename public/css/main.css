@@ -204,6 +204,10 @@ strong {
 	margin: 0 0 3rem 1rem;
 }
 
+.logo {
+	flex-grow: 1;
+}
+
 .logo img {
 	width: 200px;
 }
