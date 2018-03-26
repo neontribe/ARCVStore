@@ -21,6 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->dateTime('consented_on')->nullable();
             $table->dateTime('fm_chart_on')->nullable();
             $table->dateTime('fm_diary_on')->nullable();
+            $table->dateTime('fm_privacy_on')->nullable();
             $table->timestamps();
 
             $table->foreign('family_id')
