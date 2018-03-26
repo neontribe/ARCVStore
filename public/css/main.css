@@ -106,7 +106,8 @@ input[type="radio"]:checked+label:after {
 
 .styled-checkbox:checked+label:after {
 	content: "✔";
-	top: 6px;
+	top: 8px;
+	left: 12px;
 	border: 0;
 }
 
