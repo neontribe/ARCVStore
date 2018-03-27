@@ -264,8 +264,8 @@ class SearchPageTest extends TestCase
         // Visit search page, make sure next page link is present and works
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
-            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">Next »</a>')
-            ->click('Next »')
+            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">»</a>')
+            ->click('»')
             ->seePageIs(URL::route('service.base') . '/registration?page=2');
     }
 
