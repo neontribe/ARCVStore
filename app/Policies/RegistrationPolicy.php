@@ -20,6 +20,11 @@ class RegistrationPolicy
         return ($user->role == "foodmatters_user");
     }
 
+    public function updatePrivacy(User $user)
+    {
+        return ($user->role == "foodmatters_user");
+    }
+
     public function export(User $user)
     {
         return ($user->role == "foodmatters_user");
