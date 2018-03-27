@@ -579,23 +579,27 @@ input[type="text"].invalid,
 */
 
 .login {
-	width: 50%;
-	margin: 2rem auto;
+	height: 88%;
 }
 
-.login > h2 {
+.login h2 {
 	text-align: center;
 	font-size: 2rem;
 	padding-bottom: 1rem;
 }
 
-.login > form {
+.login form {
 	display: block;
 }
 
-.login > form > div {
+.login form > div {
 	height: 3rem;
 	margin: 2rem 0;
+}
+
+.login-container {
+	width: 50%;
+	margin: 2rem auto;
 }
 
 .login-input {
