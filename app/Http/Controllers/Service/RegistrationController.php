@@ -87,17 +87,16 @@ class RegistrationController extends Controller
             ;
         }
 
-        //$registrations = $q->simplePaginate(10);
 
-        // This is bad becuase it relies on getting all the families, then sorting them.
+        // This isn't ideal as it relies on getting all the families, then sorting them.
         // However, the whereIn statements above destroy any sorted order on family_ids.
-
         $reg_models = $q->withFullFamily()
             ->get()
             ->sortBy(function ($registration) {
                 return strtolower($registration->family->pri_carer);
             })->values();
 
+        // throw it into a paginator.
         $page = LengthAwarePaginator::resolveCurrentPage();
         $perPage = 10;
         $offset = ($page * $perPage) - $perPage;
