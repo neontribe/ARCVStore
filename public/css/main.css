@@ -267,6 +267,10 @@ input[type="text"].invalid,
 	overflow: auto;
 }
 
+.navigation {
+	height: 80%;
+}
+
 .navigation ul {
 	display: inline-flex;
 	padding: 0;
@@ -350,7 +354,7 @@ input[type="text"].invalid,
 /* register */
 .col {
 	width: 100%;
-	height: 75vh;
+	height: 75.8vh;
 	background: #EEEEEE;
 	margin: 1rem;
 	min-width: 25%;
@@ -457,7 +461,7 @@ input[type="text"].invalid,
 }
 
 .check .col {
-	min-height: 67vh;
+	min-height: 66vh;
 	height: 100%;
 	margin-bottom: 80px;
 	padding-bottom: 10px;
