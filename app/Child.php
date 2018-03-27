@@ -65,7 +65,9 @@ class Child extends Model
         if ($this->dob->isFuture()) {
             return "P";
         } else {
-            return $this->dob->diff(Carbon::now(), false)->format($format);
+            $firstOfMonth='2018-03-01 22:56:30';
+            $newFirstOfMonth= new \DateTime($firstOfMonth);
+            return $this->dob->diff($newFirstOfMonth)->format($format);
         }
     }
 
