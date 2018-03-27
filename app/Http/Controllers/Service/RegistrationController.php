@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers\Service;
 
-use Searchy;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
-use DB;
 use App\Family;
 use App\Carer;
 use App\Child;
@@ -14,8 +10,13 @@ use App\Http\Requests\StoreNewRegistrationRequest;
 use App\Http\Requests\StoreUpdateRegistrationRequest;
 use App\Registration;
 use Auth;
+use Carbon\Carbon;
+use DB;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Log;
 use PDF;
+use Searchy;
 
 class RegistrationController extends Controller
 {
@@ -58,7 +59,6 @@ class RegistrationController extends Controller
         if ($driver == 'mysql') {
             // We can use Searchy for mysql; defaults to "fuzzy" search;
             // results are a collection of basic objects, but we can still "pluck()"
-
             $filtered_family_ids = Searchy::search('carers')
                 ->fields('name')
                 ->query($family_name)
@@ -74,15 +74,43 @@ class RegistrationController extends Controller
                 ->toArray();
         }
 
+        //find the registrations
         $q = Registration::query();
         if (!empty($neighbor_centre_ids)) {
             $q = $q->whereIn('centre_id', $neighbor_centre_ids);
         }
         if (!empty($filtered_family_ids)) {
-            $q = $q->whereIn('family_id', $filtered_family_ids);
+            $q = $q->whereIn('family_id', $filtered_family_ids)
+                //  Somehow, whereIn re-orders the filtered array into numeric order.
+                //  this would be the "cheap" solution, IF sqlite supported FIELD so we could test that.
+                //  ->orderByRaw(DB::raw("FIELD(family_id, " .implode(',', $filtered_family_ids). ")"));
+            ;
         }
 
-        $registrations = $q->simplePaginate(15);
+        //$registrations = $q->simplePaginate(10);
+
+        // This is bad becuase it relies on getting all the families, then sorting them.
+        // However, the whereIn statements above destroy any sorted order on family_ids.
+
+        $reg_models = $q->withFullFamily()
+            ->get()
+            ->sortBy(function ($registration) {
+                return strtolower($registration->family->pri_carer);
+            })->values();
+
+        $page = LengthAwarePaginator::resolveCurrentPage();
+        $perPage = 10;
+        $offset = ($page * $perPage) - $perPage;
+        $registrations = new LengthAwarePaginator(
+            $reg_models->slice($offset, $perPage),
+            $reg_models->count(),
+            $perPage,
+            $page,
+            [
+                'path' => LengthAwarePaginator::resolveCurrentPath(),
+                'query' => array_except($request->query(), 'page'),
+            ]
+        );
 
         $data = array_merge(
             $data,
