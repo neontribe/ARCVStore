@@ -3,8 +3,8 @@
 @section('title', 'Reset Password')
 
 @section('content')
-<div class="content">
-    <div class="login">
+<div class="content login">
+    <div class="login-container">
         <h2>Reset Password</h2>
         @if (session('status'))
             <div class="alert alert-success">
