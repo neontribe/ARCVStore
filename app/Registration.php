@@ -9,6 +9,7 @@ class Registration extends Model
     const REMINDER_TYPES = [
         'FoodDiaryNeeded' => ['reason' => 'Food Diary|not been received'],
         'FoodChartNeeded' => ['reason' => 'Pie Chart|not been received'],
+        'PrivacyStatementNeeded' => ['reason' => 'Privacy Statement|not been received'],
     ];
 
     /**
@@ -21,6 +22,7 @@ class Registration extends Model
         'consented_on',
         'fm_chart_on',
         'fm_diary_on',
+        'fm_privacy_on',
     ];
 
     /**
@@ -43,6 +45,7 @@ class Registration extends Model
         'fm_chart_on',
         'fm_diary_on',
         'consented_on',
+        'fm_privacy_on',
     ];
 
 
@@ -75,6 +78,9 @@ class Registration extends Model
         }
         if (!$this->fm_diary_on) {
             $reminders[] = self::REMINDER_TYPES['FoodDiaryNeeded'];
+        }
+        if (!$this->fm_privacy_on) {
+            $reminders[] = self::REMINDER_TYPES['PrivacyStatementNeeded'];
         }
 
         return $reminders;

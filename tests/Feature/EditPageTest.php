@@ -276,6 +276,58 @@ class EditPageTest extends TestCase
     }
 
     /** @test */
+    public function itShowsPrivacyStatementCheckedCorrectlyAsStoredInDatabase()
+    {
+        // Create a User
+        $fmuser = factory(User::class)->create([
+            'name' => 'test fm user',
+            'email' => 'testfmuser@example.com',
+            'password' => bcrypt('test_fmuser_pass'),
+            'centre_id' => $this->centre->id,
+            'role' => 'foodmatters_user',
+        ]);
+
+        $now = Carbon::now();
+
+        // make a no doc registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_privacy_on' => null,
+        ]);
+
+        // make a privacy registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_privacy_on' => $now,
+        ]);
+
+        foreach ($regs as $reg) {
+            $route = URL::route('service.registration.edit', ['id' => $reg->id]);
+            Auth::logout();
+            $this->actingAs($fmuser)
+                ->visit($route)
+            ;
+
+            // Test Chart
+            if ($reg->fm_privacy_on !== null) {
+                $this->seeInDatabase(
+                    'registrations',
+                    ['id' => $reg->id, 'fm_privacy_on' => $now]
+                );
+                $this->seeElement('input[name="fm_privacy"][checked]');
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_privacy_on' => null ]
+                );
+                $this->seeElement('input[name="fm_privacy"]:not(:checked)');
+                $this->dontSeeElement('input[name="fm_privacy"][checked]');
+            }
+        }
+
+    }
+
+    /** @test */
     public function itLetsAnAuthedUserUpdateDiaryOrChartState()
     {
         // Create a User
@@ -365,6 +417,66 @@ class EditPageTest extends TestCase
                 $this->seeInDatabase(
                     'registrations',
                     [ 'id' => $reg->id, 'fm_diary_on' => null ]
+                );
+            }
+        }
+    }
+
+    /** @test */
+    public function itLetsAnAuthedUserUpdatePrivacyStatementState()
+    {
+        // Create a User
+        $fmuser = factory(User::class)->create([
+            'name' => 'test fm user',
+            'email' => 'testfmuser@example.com',
+            'password' => bcrypt('test_fmuser_pass'),
+            'centre_id' => $this->centre->id,
+            'role' => 'foodmatters_user',
+        ]);
+
+        $now = Carbon::now();
+
+        // make a no doc registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_privacy_on' => null,
+        ]);
+
+        // make privacy only registration
+        $regs[] = factory(Registration::class)->create([
+            'centre_id' => $this->centre->id,
+            'fm_privacy_on' => $now,
+        ]);
+
+        foreach ($regs as $reg) {
+            $route = URL::route('service.registration.edit', ['id' => $reg->id]);
+            $this->actingAs($fmuser)
+                ->visit($route);
+
+            // Test Privacy
+            if ($reg->fm_privacy_on !== null) {
+                $this->check('fm_privacy');
+            } else {
+                $this->uncheck('fm_privacy');
+            }
+
+            // We get back to edit page
+            $this->press('Save Changes')
+                ->seeStatusCode(200)
+                ->seePageIs($route)
+            ;
+
+            // Check the data has changed
+            if ($reg->fm_privacy_on !== null) {
+                // Just chec it is no longer null. Using Carbon time caused frequent intermittant failure.
+                $this->dontSeeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_privacy_on' => null ]
+                );
+            } else {
+                $this->seeInDatabase(
+                    'registrations',
+                    [ 'id' => $reg->id, 'fm_privacy_on' => null ]
                 );
             }
         }
