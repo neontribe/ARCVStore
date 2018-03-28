@@ -13,6 +13,55 @@ class FamilyModelTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function itCanHaveCarers()
+    {
+        // Create Family
+        $family = factory(Family::class)->create();
+
+        // There should be no carers, and that's fine.
+        $this->assertEquals(0, $family->carers()->count());
+
+        // Add 3 Carers
+        $carers = factory(Carer::class, 3)->make();
+        $family->carers()->saveMany($carers);
+
+        // Check they're there.
+        $this->assertEquals(3, $family->carers->count());
+        foreach ($family->carers as $index => $carer) {
+            $this->assertEquals($carer->name, $carers[$index]->name);
+        }
+    }
+
+    /** @test */
+    public function itCanAppendItsPrimaryCarerName()
+    {
+        // Make a family with carers
+        $family = factory(Family::class)->create();
+
+        // There is no pri_carer on a normal family
+        $this->assertArrayNotHasKey('pri_carer', $family->getAttributes());
+
+        // We can call a scoped family.
+        $pri_carer_family = Family::withPrimaryCarer()->find(1);
+
+        $attribs =  $pri_carer_family->getAttributes();
+        // There is a pri_carer attribute on a scoped family.
+        $this->assertArrayHasKey('pri_carer', $attribs);
+
+        // But it's empty (no carers)
+        $this->assertEmpty($attribs['pri_carer']);
+
+        // Now add some families
+        $carers = factory(Carer::class, 3)->make();
+        $pri_carer_family->carers()->saveMany($carers);
+        $pri_carer_family = Family::withPrimaryCarer()->find(1);
+
+        // test the pri_carer  is now filled
+        $pri_carer = $carers->first();
+        $this->assertEquals($pri_carer->name, $pri_carer_family->pri_carer);
+    }
+
+    /** @test */
     public function itHasAnAttributeThatCalculatesSumOfEligibleChildren()
     {
         // Create Family
