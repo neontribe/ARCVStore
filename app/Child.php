@@ -65,19 +65,20 @@ class Child extends Model
         $firstOfMonth = '2018-03-01';
         $newFirstOfMonth = new \DateTime($firstOfMonth);
         $carbonFirstOfMonth = Carbon::instance($newFirstOfMonth);
+        $start = Carbon::instance($newFirstOfMonth)->startOfMonth();
         $now = Carbon::now();
 
         if ($this->dob->isFuture()) {
 
             return "P";
 
-        } else if (date($firstOfMonth) == date('Y-m-01')){
+        } else if ($carbonFirstOfMonth == $start){
 
-            return $carbonFirstOfMonth;
+            return $this->dob->diff($carbonFirstOfMonth)->format($format);
 
         } else {
 
-            return $this->dob->diff(Carbon::now())->format($format);
+            return $this->dob->diff($carbonFirstOfMonth)->format($format);
         }
     }
 
