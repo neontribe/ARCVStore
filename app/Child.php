@@ -64,6 +64,7 @@ class Child extends Model
     {
         $firstOfMonth = '2018-03-01';
         $newFirstOfMonth = new \DateTime($firstOfMonth);
+        $carbonFirstOfMonth = Carbon::instance($newFirstOfMonth);
         $now = Carbon::now();
 
         if ($this->dob->isFuture()) {
@@ -72,7 +73,7 @@ class Child extends Model
 
         } else if (date($firstOfMonth) == date('Y-m-01')){
 
-            return $firstOfMonth;
+            return $carbonFirstOfMonth;
 
         } else {
 
