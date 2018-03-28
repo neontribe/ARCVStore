@@ -64,7 +64,7 @@ class Child extends Model
     {
         $currentDate = Carbon::now();
         $startOfMonth = Carbon::now()->startOfMonth();
-        $currentDatePlusOne = Carbon::instance($newFirstOfMonth)->addDays(1);
+        $currentDatePlusOne = Carbon::instance($currentDate)->addDays(1);
 
         if ($this->dob->isFuture()) {
             return "P";

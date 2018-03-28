@@ -571,4 +571,31 @@ class EditPageTest extends TestCase
         ;
         //$this->assertResponseStatus(403);
     }
+
+        /**
+     * @test
+     */
+    public function childrensDOBsGiveExpectedAge()
+    {
+        // Set Carbon::now to 01/01/2018
+        Carbon::setTestNow(Carbon::parse('first day of January 2018'));
+
+        // Test that entering children's DOB's gives the expected age.
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.edit', [ 'id' => $this->registration->id ]))
+            ->type('12', 'dob-month')
+            ->type('2016', 'dob-year')
+            ->press('add-dob')
+            ->type('01', 'dob-month')
+            ->type('2017', 'dob-year')
+            ->press('add-dob')
+            ->type('02', 'dob-month')
+            ->type('2017', 'dob-year')
+            ->press('add-dob')
+            ->press('Save Changes')
+            ->see('<td>1 yr, 1 mo</td>')
+            ->see('<td>1 yr, 0 mo</td>')
+            ->see('<td>0 yr, 11 mo</td>')
+            ->see('<div class="warning">');
+    }
 }
