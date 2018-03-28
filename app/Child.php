@@ -62,12 +62,21 @@ class Child extends Model
      */
     public function getAgeString($format = '%y yr, %m mo')
     {
+        $firstOfMonth = '2018-03-01';
+        $newFirstOfMonth = new \DateTime($firstOfMonth);
+        $now = Carbon::now();
+
         if ($this->dob->isFuture()) {
+
             return "P";
+
+        } else if (date($firstOfMonth) == date('Y-m-01')){
+
+            return $firstOfMonth;
+
         } else {
-            $firstOfMonth='2018-03-01 22:56:30';
-            $newFirstOfMonth= new \DateTime($firstOfMonth);
-            return $this->dob->diff($newFirstOfMonth)->format($format);
+
+            return $this->dob->diff(Carbon::now())->format($format);
         }
     }
 
