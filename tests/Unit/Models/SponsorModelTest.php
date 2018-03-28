@@ -8,6 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SponsorModelTest extends TestCase
 {
+
     use DatabaseMigrations;
 
     /** @test */

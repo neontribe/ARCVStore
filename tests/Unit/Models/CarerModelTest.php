@@ -33,5 +33,4 @@ class CarerModelTest extends TestCase
         $this->assertNotNull($carer->family);
         $this->assertEquals($carer->family->id, $carer->family_id);
     }
-
 }

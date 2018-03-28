@@ -21,8 +21,6 @@ class ChildModelTest extends TestCase
         $this->assertNotNull($child->born);
     }
 
-
-
     /** @test */
     public function itCreditsWhenAChildIsUnderOne()
     {
@@ -31,22 +29,24 @@ class ChildModelTest extends TestCase
     /** @test */
     public function itCreditsWhenAChildIsUnderSchoolAge()
     {
+
     }
 
     /** @test */
     public function itNoticesWhenAChildIsAlmostBorn()
     {
+
     }
 
     /** @test */
     public function itNoticesWhenAChildIsAlmostOne()
     {
+
     }
 
     /** @test */
     public function itNoticesWhenAChildIsAlmostSchoolAge()
     {
+
     }
-
-
 }

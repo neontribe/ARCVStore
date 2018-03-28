@@ -13,6 +13,21 @@ class FamilyModelTest extends TestCase
     use DatabaseMigrations;
 
     /** @test */
+    public function itCreditsWhenAFamilyIsPregnant()
+    {
+        // Make a pregnant family
+        $family = factory(Family::class)->create();
+
+        $pregnancy = factory(Child::class, 'unbornChild')->make();
+        $family->children()->save($pregnancy);
+
+        // There should be a credit reason of 'FamilyIsPregnant'
+        $credit_reasons = $family->getCreditReasons();
+        $this->assertEquals(1, count($credit_reasons));
+        $this->assertEquals('pregnant', $credit_reasons[0]["reason"]);
+    }
+
+    /** @test */
     public function itCanHaveCarers()
     {
         // Create Family
