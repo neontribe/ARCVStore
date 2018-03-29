@@ -43,6 +43,8 @@ class StoreUpdateRegistrationRequest extends FormRequest
             'fm_chart' => 'nullable|in:0,1',
             // MAY be null (if not present) or 0||1
             'fm_diary' => 'nullable|in:0,1',
+            // MAY be null (if not present) or 0||1
+            'fm_privacy' => 'nullable|in:0,1',
         ];
 
         return $rules;
