@@ -25,8 +25,38 @@ class ChildModelTest extends TestCase
     }
 
     /** @test */
+    public function itCanHaveAFamily()
+    {
+        // Make a Family with a Child.
+        $family = factory(Family::class)->create();
+        $child = factory(Child::class)->make();
+        $family->children()->save($child);
+
+        // Check the relationship
+        $this->assertNotNull($child->family);
+        $this->assertEquals($family->id,$child->family->id);
+    }
+
+    /** @test */
     public function itHasAMethodThatCalculatesSchoolAge()
     {
+        // create a child born before Aug 1st
+        $child = new Child([
+            "born" => 'true',
+            "dob" => Carbon::createFromDate('2017','8','1')->toDateTimeString(),
+        ]);
+        // check his school month is August 2021
+        $start_school_date = Carbon::createFromDate('2021', '9', '1')->toDateString();
+        $this->assertEquals($start_school_date, $child->calcSchoolStart()->toDateString());
+
+        // create a child born after Aug 1st
+        $child = new Child([
+            "born" => 'true',
+            "dob" => Carbon::createFromDate('2017','9','1')->toDateTimeString(),
+        ]);
+        // check his school month is August 2022
+        $start_school_date = Carbon::createFromDate('2022', '9', '1')->toDateString();
+        $this->assertEquals($start_school_date, $child->calcSchoolStart()->toDateString());
     }
 
     /** @test */
@@ -101,7 +131,6 @@ class ChildModelTest extends TestCase
         // Need to change the values we use for school start to next month's integer
         $old_school_month = config('arc.school_month');
         Config::set('arc.school_month', Carbon::now()->addMonth(1)->month);
-
 
         $child = factory(Child::class, 'readyForSchool')->make();
         $notices = $child->getStatus()['notices'];
