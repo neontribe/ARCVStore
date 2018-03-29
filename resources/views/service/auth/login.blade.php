@@ -8,8 +8,8 @@
 @endsection
 
 @section('content')
-    <div class="content">
-        <div class="login">
+    <div class="content login">
+        <div class="login-container">
             <h2>Log In</h2>
             @if ($errors->has('error_message'))
                 <div class="alert alert-danger">

@@ -88,6 +88,7 @@ class CentreController extends Controller
                 "Primary Carer" => ($reg->family->carers->first()) ? $reg->family->carers->first()->name : null,
                 "Food Chart Received" => (!is_null($reg->fm_chart_on)) ? $reg->fm_chart_on->format('d/m/Y') : null,
                 "Food Diary Received" => (!is_null($reg->fm_diary_on)) ? $reg->fm_diary_on->format('d/m/Y') : null,
+                "Privacy Statement Received" => (!is_null($reg->fm_privacy_on)) ? $reg->fm_privacy_on->format('d/m/Y') : null,
                 "Entitlement" => $reg->family->entitlement,
             ];
 
