@@ -137,6 +137,16 @@ class EditPageTest extends TestCase
         }
     }
 
+
+    /** @test */
+    public function itShowsALogoutButton()
+    {
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.edit', [ 'id' => $this->registration ]))
+            ->seeInElement('button[type=submit]', 'Log out')
+        ;
+    }
+
     /** @test */
     public function itShowsAFormSaveButton()
     {
