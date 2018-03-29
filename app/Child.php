@@ -89,14 +89,14 @@ class Child extends Model
      */
     public function calcSchoolStart()
     {
-        // september is month 9
-        if ($this->dob->month < 9) {
+        $school_month = config('arc.school_month');
+        if ($this->dob->month < $school_month) {
             $years = 4;
         } else {
             $years = 5;
         }
         $school_year = $this->dob->addYears($years)->year;
-        return Carbon::createFromDate($school_year, 9)->startOfMonth();
+        return Carbon::createFromDate($school_year, $school_month)->startOfMonth();
     }
 
     /**

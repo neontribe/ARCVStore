@@ -207,10 +207,34 @@ $factory->defineAs(App\Child::class, 'underOne', function (Faker\Generator $fake
     ];
 });
 
+// Child - almost born
+$factory->defineAs(App\Child::class, 'almostBorn', function (Faker\Generator $faker) {
+
+    $dob = Carbon\Carbon::now()->startOfMonth()->addMonths(1);
+
+    return [
+        'born' => $dob->isPast(),
+        'dob' => $dob->toDateTimeString(),
+    ];
+});
+
+
 // Child - almost 1
 $factory->defineAs(App\Child::class, 'almostOne', function (Faker\Generator $faker) {
 
     $dob = Carbon\Carbon::now()->startOfMonth()->subMonths(11);
+
+    return [
+        'born' => $dob->isPast(),
+        'dob' => $dob->toDateTimeString(),
+    ];
+});
+
+// Child - readyForSchool when the school_month rolls around
+$factory->defineAs(App\Child::class, 'readyForSchool', function (Faker\Generator $faker) {
+
+    // Make a child who's four now, and thus due to start school soon(ish)
+    $dob = Carbon\Carbon::now()->startOfMonth()->subYears(4);
 
     return [
         'born' => $dob->isPast(),
