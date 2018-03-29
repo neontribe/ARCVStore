@@ -6,6 +6,7 @@ use App\Family;
 use App\Carer;
 use App\Child;
 use App\Centre;
+use App\Registration;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class FamilyModelTest extends TestCase
@@ -28,6 +29,37 @@ class FamilyModelTest extends TestCase
     }
 
     /** @test */
+    public function itCanHaveRegistrations()
+    {
+        // Create Family
+        $family = factory(Family::class)->create();
+
+        // There should be no registrations, and that's fine.
+        $this->assertEquals(0, $family->registrations()->count());
+
+        // Associate with two registrations
+        $registration1 = new Registration();
+        $registration1->family_id = $family->id;
+        $registration1->centre_id = factory(Centre::class)->create()->id;
+        $registration1->eligibility = "other";
+        $registration1->save();
+
+        $registration2 = new Registration();
+        $registration2->family_id = $family->id;
+        $registration2->centre_id = factory(Centre::class)->create()->id;
+        $registration2->eligibility = "other";
+        $registration2->save();
+
+        $registrations = [$registration1, $registration2];
+
+        // Check they're there.
+        $this->assertEquals(2, $family->registrations->count());
+        foreach ($family->registrations as $index => $registration) {
+            $this->assertEquals($registration->id, $registrations[$index]->id);
+        }
+    }
+
+        /** @test */
     public function itCanHaveCarers()
     {
         // Create Family
@@ -43,7 +75,27 @@ class FamilyModelTest extends TestCase
         // Check they're there.
         $this->assertEquals(3, $family->carers->count());
         foreach ($family->carers as $index => $carer) {
-            $this->assertEquals($carer->name, $carers[$index]->name);
+            $this->assertEquals($carer->id, $carers[$index]->id);
+        }
+    }
+
+    /** @test */
+    public function itCanHaveChildren()
+    {
+        // Create Family
+        $family = factory(Family::class)->create();
+
+        // There should be no kids, and that's fine.
+        $this->assertEquals(0, $family->children()->count());
+
+        // Add 3 Children
+        $children = factory(Child::class, 3)->make();
+        $family->carers()->saveMany($children);
+
+        // Check they're there.
+        $this->assertEquals(3, $family->children->count());
+        foreach ($family->children as $index => $child) {
+            $this->assertEquals($child->id, $children[$index]->id);
         }
     }
 
