@@ -2,10 +2,11 @@
 
 namespace Tests;
 
-use App\Family;
+
 use App\Carer;
 use App\Child;
 use App\Centre;
+use App\Family;
 use App\Registration;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -90,9 +91,10 @@ class FamilyModelTest extends TestCase
 
         // Add 3 Children
         $children = factory(Child::class, 3)->make();
-        $family->carers()->saveMany($children);
+        $family->children()->saveMany($children);
 
         // Check they're there.
+        $this->assertNotEquals(2, $family->children->count());
         $this->assertEquals(3, $family->children->count());
         foreach ($family->children as $index => $child) {
             $this->assertEquals($child->id, $children[$index]->id);
@@ -112,13 +114,13 @@ class FamilyModelTest extends TestCase
         $pri_carer_family = Family::withPrimaryCarer()->find(1);
 
         $attribs =  $pri_carer_family->getAttributes();
-        // There is a pri_carer attribute on a scoped family.
+        // There is a pri_carer attribute on a scoped family, even if it's null.
         $this->assertArrayHasKey('pri_carer', $attribs);
 
         // But it's empty (no carers)
         $this->assertEmpty($attribs['pri_carer']);
 
-        // Now add some families
+        // Now add some carers
         $carers = factory(Carer::class, 3)->make();
         $pri_carer_family->carers()->saveMany($carers);
         $pri_carer_family = Family::withPrimaryCarer()->find(1);

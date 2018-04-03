@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use App\Family;
-use App\Carer;
 use App\Child;
-use App\Centre;
+use App\Family;
 use Carbon\Carbon;
 use Config;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -34,28 +32,33 @@ class ChildModelTest extends TestCase
 
         // Check the relationship
         $this->assertNotNull($child->family);
-        $this->assertEquals($family->id,$child->family->id);
+        $this->assertEquals($family->id, $child->family->id);
     }
 
     /** @test */
     public function itHasAMethodThatCalculatesSchoolAge()
     {
-        // create a child born before Aug 1st
+        // Use app.school_month to set the expected "start month".
+        $school_month = config('arc.school_month');
+
+        // Create a child born before 1st of app.school_month
         $child = new Child([
             "born" => 'true',
-            "dob" => Carbon::createFromDate('2017','8','1')->toDateTimeString(),
+            "dob" => Carbon::createFromDate('2017', ($school_month -1), '1')->toDateTimeString(),
         ]);
-        // check his school month is August 2021
-        $start_school_date = Carbon::createFromDate('2021', '9', '1')->toDateString();
+
+        // Check his school month is app.school_month 2021
+        $start_school_date = Carbon::createFromDate('2021', $school_month, '1')->toDateString();
         $this->assertEquals($start_school_date, $child->calcSchoolStart()->toDateString());
 
-        // create a child born after Aug 1st
+        // Create a child born after app.school_month 1st
         $child = new Child([
             "born" => 'true',
-            "dob" => Carbon::createFromDate('2017','9','1')->toDateTimeString(),
+            "dob" => Carbon::createFromDate('2017', $school_month, '1')->toDateTimeString(),
         ]);
-        // check his school month is August 2022
-        $start_school_date = Carbon::createFromDate('2022', '9', '1')->toDateString();
+
+        // Check his school month is app.school_month 2022
+        $start_school_date = Carbon::createFromDate('2022', $school_month, '1')->toDateString();
         $this->assertEquals($start_school_date, $child->calcSchoolStart()->toDateString());
     }
 
@@ -66,12 +69,12 @@ class ChildModelTest extends TestCase
         $child = factory(Child::class, 'underOne')->make();
         $credits = $child->getStatus()['credits'];
 
-        // check there's two, because child *also* under school age.
+        // Check there's two, because child *also* under school age.
         $this->assertEquals(2, count($credits));
 
-        // check the correct credit type is applied.
-        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits,'',false,false);
-        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits,'',false,false);
+        // Check the correct credit type is applied.
+        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits);
+        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits);
         $this->assertEquals(6, $child->entitlement);
     }
 
@@ -82,12 +85,12 @@ class ChildModelTest extends TestCase
         $child = factory(Child::class, 'underSchoolAge')->make();
         $credits = $child->getStatus()['credits'];
 
-        // check there's one, because child is not under one.
+        // Check there's one, because child is not under one.
         $this->assertEquals(1, count($credits));
 
-        // check the correct credit type is applied.
-        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits,'',false,false);
-        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits,'',false,false);
+        // Check the correct credit type is applied.
+        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits, '');
+        $this->assertContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits, '');
         $this->assertEquals(3, $child->entitlement);
     }
 
@@ -98,12 +101,12 @@ class ChildModelTest extends TestCase
         $child = factory(Child::class, 'overSchoolAge')->make();
         $credits = $child->getStatus()['credits'];
 
-        // check there's one, because child is not under one.
+        // Check there's one, because child is not under one.
         $this->assertEquals(0, count($credits));
 
-        // check the correct credit type is applied.
-        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits,'',false,false);
-        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits,'',false,false);
+        // Check the correct credit type is applied.
+        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderOne'], $credits);
+        $this->assertNotContains(Child::CREDIT_TYPES['ChildIsUnderSchoolAge'], $credits);
         $this->assertEquals(0, $child->entitlement);
     }
 
@@ -117,32 +120,28 @@ class ChildModelTest extends TestCase
         $child = factory(Child::class, 'almostOne')->make();
         $notices = $child->getStatus()['notices'];
 
-        // check there's one, because no other event is pending.
+        // Check there's one, because no other event is pending.
         $this->assertEquals(1, count($notices));
 
-        // check the correct credit type is applied.
-        $this->assertContains(Child::NOTICE_TYPES['ChildIsAlmostOne'], $notices,'',false,false);
-        $this->assertNotContains(Child::NOTICE_TYPES['ChildIsAlmostSchoolAge'], $notices,'',false,false);
+        // Check the correct credit type is applied.
+        $this->assertContains(Child::NOTICE_TYPES['ChildIsAlmostOne'], $notices);
+        $this->assertNotContains(Child::NOTICE_TYPES['ChildIsAlmostSchoolAge'], $notices);
     }
 
     /** @test */
     public function itNoticesWhenAChildIsAlmostSchoolAge()
     {
         // Need to change the values we use for school start to next month's integer
-        $old_school_month = config('arc.school_month');
         Config::set('arc.school_month', Carbon::now()->addMonth(1)->month);
 
         $child = factory(Child::class, 'readyForSchool')->make();
         $notices = $child->getStatus()['notices'];
 
-        // check there's one, because no other event is pending.
+        // Check there's one, because no other event is pending.
         $this->assertEquals(1, count($notices));
 
-        // check the correct credit type is applied.
-        $this->assertNotContains(Child::NOTICE_TYPES['ChildIsAlmostOne'], $notices,'',false,false);
-        $this->assertContains(Child::NOTICE_TYPES['ChildIsAlmostSchoolAge'], $notices,'',false,false);
-
-        // Set it back, just in case.
-        Config::set('arc.school_month', $old_school_month);
+        // Check the correct credit type is applied.
+        $this->assertNotContains(Child::NOTICE_TYPES['ChildIsAlmostOne'], $notices);
+        $this->assertContains(Child::NOTICE_TYPES['ChildIsAlmostSchoolAge'], $notices);
     }
 }

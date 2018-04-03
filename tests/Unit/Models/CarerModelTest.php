@@ -2,10 +2,8 @@
 
 namespace Tests;
 
-use App\Family;
 use App\Carer;
-use App\Child;
-use App\Centre;
+use App\Family;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CarerModelTest extends TestCase
