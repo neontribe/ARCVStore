@@ -31,7 +31,7 @@
                 @foreach ($registrations as $registration)
                     @if ($registration->family)
                         <tr class="{{ $registration->family->leaving_on ? 'inactive' : 'active' }}">
-                            <td>{{ $registration->family->carers->first()->name }}</td>
+                            <td class="pri_carer">{{ $registration->family->carers->first()->name }}</td>
                             <td class="center">{{ $registration->family->entitlement }}</td>
                             <td class="center">{{ $registration->family->rvid }}</td>
                             <td>
