@@ -30,10 +30,10 @@ class SearchPageTest extends TestCase
     /** @test */
     public function itShowsRegistrationsFromNeighborCentres()
     {
-        // create a single Sponsor
+        // Create a single Sponsor
         $sponsor = factory(App\Sponsor::class)->create();
 
-        // create centres
+        // Create centres
         $centres = factory(App\Centre::class, 2)->create([
             "sponsor_id" => $sponsor->id,
         ]);
@@ -49,7 +49,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre1->id,
         ]);
 
-        // make centre1 some registrations
+        // Make centre1 some registrations
         $registrations1 = factory(App\Registration::class, 4)->create([
             "centre_id" => $centre1->id,
         ]);
@@ -59,13 +59,13 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre2->id,
         ]);
 
-        // visit the page
+        // Visit the page
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'));
 
         $registrations = $registrations1->concat($registrations2);
 
-        // check we can see the edit link with the registration ID in it.
+        // Check we can see the edit link with the registration ID in it.
         foreach ($registrations as $registration) {
             $edit_url_string = URL::route('service.registration.edit', [ 'id' => $registration->id]);
             $this->see($edit_url_string);
@@ -76,10 +76,10 @@ class SearchPageTest extends TestCase
     /** @test */
     public function itShowsRegistrationsFromMyCentre()
     {
-        // create a single Sponsor
+        // Create a single Sponsor
         $sponsor = factory(App\Sponsor::class)->create();
 
-        // create centre
+        // Create centre
         $centre = factory(App\Centre::class)->create([
             "sponsor_id" => $sponsor->id,
         ]);
@@ -92,7 +92,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        // make centre some registrations
+        // Make centre some registrations
         $registrations = factory(App\Registration::class, 4)->create([
             "centre_id" => $centre->id,
         ]);
@@ -100,7 +100,7 @@ class SearchPageTest extends TestCase
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'));
 
-        // check we can see the edit link with the registration ID in it.
+        // Check we can see the edit link with the registration ID in it.
         foreach ($registrations as $registration) {
             $edit_url_string = URL::route('service.registration.edit', [ 'id' => $registration->id]);
             $this->see($edit_url_string);
@@ -110,10 +110,10 @@ class SearchPageTest extends TestCase
     /** test */
     public function itDoesNotShowRegistrationsFromUnrelatedCentres()
     {
-        // create a single Sponsor
+        // Create a single Sponsor
         $sponsor = factory(App\Sponsor::class)->create();
 
-        // create centres
+        // Create centres
         $neighbor_centres = factory(App\Centre::class, 2)->create([
             "sponsor_id" => $sponsor->id,
         ]);
@@ -151,7 +151,7 @@ class SearchPageTest extends TestCase
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'));
 
-        // check we can see the edit link with the registration ID in it.
+        // Check we can see the edit link with the registration ID in it.
         foreach ($registrations3 as $registration) {
             $edit_url_string = URL::route('service.registration.edit', [ 'id' => $registration->id]);
             $this->dontSee($edit_url_string);
@@ -178,7 +178,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        //get the primary carer
+        // Get the primary carer
         $pri_carer = $registration->family->carers->first();
 
         // Spot the Registration Family's primary carer name
@@ -240,10 +240,10 @@ class SearchPageTest extends TestCase
     /** @test */
     public function itPaginatesWhenRequired()
     {
-        // create a single Sponsor
+        // Create a single Sponsor
         $sponsor = factory(App\Sponsor::class)->create();
 
-        // create centre
+        // Create centre
         $centre = factory(App\Centre::class)->create([
             "sponsor_id" => $sponsor->id,
         ]);
@@ -256,7 +256,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        // make centre some registrations
+        // Make centre some registrations
         $registrations = factory(App\Registration::class, 20)->create([
             "centre_id" => $centre->id,
         ]);
@@ -264,9 +264,45 @@ class SearchPageTest extends TestCase
         // Visit search page, make sure next page link is present and works
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
-            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">Next »</a>')
-            ->click('Next »')
+            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">»</a>')
+            ->click('»')
             ->seePageIs(URL::route('service.base') . '/registration?page=2');
+    }
+
+    /** @test */
+    public function itShowsFamilyPrimaryCarersAlphabetically()
+    {
+        // Create a Centre (and, implicitly a random Sponsor)
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create a random registration or 5, which should be well under the limit.
+        $registrations = factory(App\Registration::class, 5)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        //get the primary carers as an array
+        $pri_carers = $registrations->map(function ($registration) {
+            return $registration->family->carers->first()->name;
+        })->toArray();
+
+        sort($pri_carers);
+
+        // Spot the Registration Family's primary carer name
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'));
+
+        $selector = 'td.pri_carer';
+        foreach ($pri_carers as $index => $pri_carer) {
+            $this->seeInElementAtPos($selector, $pri_carer, $index);
+        }
     }
 
     /** @test */

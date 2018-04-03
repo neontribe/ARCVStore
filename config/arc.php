@@ -17,4 +17,11 @@ return [
         'no attendance',
         'unspecified',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | The numeric value of the school start month
+    |--------------------------------------------------------------------------
+    */
+    'school_month' => env('ARC_SCHOOL_MONTH', 9), // Default to September.
 ];

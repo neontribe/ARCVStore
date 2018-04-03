@@ -106,7 +106,8 @@ input[type="radio"]:checked+label:after {
 
 .styled-checkbox:checked+label:after {
 	content: "✔";
-	top: 6px;
+	top: 8px;
+	left: 12px;
 	border: 0;
 }
 
@@ -204,6 +205,10 @@ strong {
 	margin: 0 0 3rem 1rem;
 }
 
+.logo {
+	flex-grow: 1;
+}
+
 .logo img {
 	width: 200px;
 }
@@ -258,9 +263,12 @@ input[type="text"].invalid,
 }
 
 .content {
-	height: 88%;
 	background-color: #f9f9f9;
 	overflow: auto;
+}
+
+.navigation {
+	height: 80%;
 }
 
 .navigation ul {
@@ -346,7 +354,7 @@ input[type="text"].invalid,
 /* register */
 .col {
 	width: 100%;
-	height: 75vh;
+	height: 75.8vh;
 	background: #EEEEEE;
 	margin: 1rem;
 	min-width: 25%;
@@ -453,7 +461,7 @@ input[type="text"].invalid,
 }
 
 .check .col {
-	min-height: 67vh;
+	min-height: 66vh;
 	height: 100%;
 	margin-bottom: 80px;
 	padding-bottom: 10px;
@@ -575,23 +583,27 @@ input[type="text"].invalid,
 */
 
 .login {
-	width: 50%;
-	margin: 2rem auto;
+	height: 88%;
 }
 
-.login > h2 {
+.login h2 {
 	text-align: center;
 	font-size: 2rem;
 	padding-bottom: 1rem;
 }
 
-.login > form {
+.login form {
 	display: block;
 }
 
-.login > form > div {
+.login form > div {
 	height: 3rem;
 	margin: 2rem 0;
+}
+
+.login-container {
+	width: 50%;
+	margin: 2rem auto;
 }
 
 .login-input {
