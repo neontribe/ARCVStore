@@ -69,7 +69,9 @@ class Child extends Model
         if ($this->dob->isFuture()) {
             return "P";
         } else if ($currentDate == $startOfMonth){
-            // Return 2nd of month as workaround for date bug.
+            // Return 2nd of month as on the first of every month
+            // Carbon treats it as the previous month and returns 
+            // A month less than it should be.
             return $this->dob->diff($currentDatePlusOne)->format($format);
         } else {
             return $this->dob->diff($currentDate)->format($format);

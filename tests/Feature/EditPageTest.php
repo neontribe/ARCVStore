@@ -604,12 +604,12 @@ class EditPageTest extends TestCase
         ;
 
         // Amend 3 children's DOB to be 11, 12 + 13 months old.
-        $family->children[1]->dob = "2016-12-01 00:00:00";
+        $family->children[0]->dob = "2016-12-01 00:00:00";
+        $family->children[0]->save();
+        $family->children[1]->dob = "2017-01-01 00:00:00";
         $family->children[1]->save();
-        $family->children[2]->dob = "2017-01-01 00:00:00";
+        $family->children[2]->dob = "2017-02-01 00:00:00";
         $family->children[2]->save();
-        $family->children[3]->dob = "2017-02-01 00:00:00";
-        $family->children[3]->save();
 
         // Test that entering children's DOB's gives the expected age.
         $this->actingAs($user)

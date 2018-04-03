@@ -2,7 +2,6 @@
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Carbon\Carbon;
 
 class RegistrationPageTest extends TestCase
 {
