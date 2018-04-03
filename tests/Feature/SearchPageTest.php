@@ -264,9 +264,45 @@ class SearchPageTest extends TestCase
         // Visit search page, make sure next page link is present and works
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
-            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">Next »</a>')
-            ->click('Next »')
+            ->see('<a href="' . URL::route('service.base') . '/registration?page=2' . '" rel="next">»</a>')
+            ->click('»')
             ->seePageIs(URL::route('service.base') . '/registration?page=2');
+    }
+
+    /** @test */
+    public function itShowsFamilyPrimaryCarersAlphabetically()
+    {
+        // Create a Centre (and, implicitly a random Sponsor)
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create a random registration or 5, which should be well under the limit.
+        $registrations = factory(App\Registration::class, 5)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        //get the primary carers as an array
+        $pri_carers = $registrations->map(function ($registration) {
+            return $registration->family->carers->first()->name;
+        })->toArray();
+
+        sort($pri_carers);
+
+        // Spot the Registration Family's primary carer name
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'));
+
+        $selector = 'td.pri_carer';
+        foreach ($pri_carers as $index => $pri_carer) {
+            $this->seeInElementAtPos($selector, $pri_carer, $index);
+        }
     }
 
     /** @test */
