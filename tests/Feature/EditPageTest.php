@@ -618,5 +618,8 @@ class EditPageTest extends TestCase
             ->see('<td>1 yr, 0 mo</td>')
             ->see('<td>0 yr, 11 mo</td>')
             ->see('<div class="warning">');
+
+        // Set Carbon date & time back 
+        Carbon::setTestNow();
     }
 }
