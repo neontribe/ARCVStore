@@ -37,10 +37,6 @@
                     </span>
                     @endif
                 </div>
-                <div class="remember user-control">
-                    <input type="checkbox" id="remember-me" class="styled-checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label for="remember-me">Remember Me</label>
-                </div>
                 <button type="submit">Log In</button>
                 <a href="{{ route('password.request') }}">Forgot Your Password?</a>
             </form>
