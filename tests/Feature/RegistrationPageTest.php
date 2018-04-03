@@ -1,6 +1,7 @@
 <?php
 
 use App\Centre;
+use App\Registration;
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -123,5 +124,73 @@ class RegistrationPageTest extends TestCase
             ->visit(URL::route('service.registration.create'))
             ->click('logo')
             ->seePageIs(URL::route('service.registration.create'));
+    }
+
+    /** @test */
+    public function itCanSaveARegistration()
+    {
+        // There are no registrations
+        $this->assertEquals(0, Registration::get()->count());
+
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.create'))
+            ->type('Test Carer', 'carer')
+            ->check('consent')
+            ->press('Save Family')
+            ->seePageIs(URL::route('service.registration.edit', [ 'id' => 1 ]))
+        ;
+
+        // There is now a Registration.
+        $this->assertEquals(1, Registration::get()->count());
+
+        $registration =  Registration::find(1);
+
+        $this->assertNotNull($registration->consented_on);
+        $this->assertNotNull($registration->eligibility);
+        $this->assertNotNull($registration->family);
+        $this->assertNotNull($registration->family->carers);
+        $this->assertEquals('Test Carer', $registration->family->carers->first()->name);
+    }
+
+    /** @test */
+    public function itRequiresConsentToSave()
+    {
+        // There are no registrations
+        $this->assertEquals(0, Registration::get()->count());
+
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.create'))
+            ->type('Test Carer', 'carer')
+            ->press('Save Family')
+            ->seePageIs(URL::route('service.registration.create'))
+            ->seeInElement(
+                '#privacy-statement-span',
+                'Privacy Statement must be signed in order to complete registration'
+            )
+        ;
+
+        // There is still not a Registration.
+        $this->assertEquals(0, Registration::get()->count());
+    }
+
+    /** @test */
+    public function itRequiresAPrimaryCarerToSave()
+    {
+        // There are no registrations
+        $this->assertEquals(0, Registration::get()->count());
+
+        $this->actingAs($this->user)
+            ->visit(URL::route('service.registration.create'))
+            ->check('consent')
+            ->press('Save Family')
+            ->seePageIs(URL::route('service.registration.create'))
+            ->seeInElement(
+                '#carer-span',
+                'This field is required'
+            )
+        ;
+
+        // There is still not a Registration.
+        $this->assertEquals(0, Registration::get()->count());
     }
 }
