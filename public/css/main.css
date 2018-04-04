@@ -355,6 +355,12 @@ LOGIN PAGE
 	margin: 2rem 0;
 }
 
+.login .links {
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+}
+
 .login-container {
 	width: 50%;
 	margin: 2rem auto;
@@ -671,8 +677,8 @@ SEARCH PAGE
 
 .pagination {
 	list-style-type: none;
-  display: flex;
-  justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 	margin-bottom: 2rem;
 }
 
@@ -689,8 +695,23 @@ PRIVACY PAGE
 */
 
 .privacy {
-	width: 80%;
-	margin-left: 10%;
+	width: 90%;
+	margin: 5%;
+}
+
+.privacy > div {
+	background-color: #f9f9f9;
+	padding: 2%;
+	margin: 2%;
+}
+
+.privacy h2 {
+	text-align: center;
+	margin-bottom: 5%;
+}
+
+.privacy a {
+	color: #a74e94;
 }
 
 @media only screen

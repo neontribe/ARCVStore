@@ -7,7 +7,7 @@
     <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 30 }};url={{ route('service.login') }}" />
 
     <div class="cookie-notice">
-        <p>We use cookies to authenticate you so we can ensure that we give you the best experience on our website. For more information please read our <a>Privacy Policy</a>.</p>
+        <p>We use cookies to authenticate you so we can ensure that we give you the best experience on our website. For more information please read our <a href="/privacy_policy.html">Privacy Policy</a>.</p>
         <button class="cookie-agree">I agree</button>
     </div>
 @endsection
@@ -43,7 +43,10 @@
                     @endif
                 </div>
                 <button type="submit">Log In</button>
-                <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                <div class="links">
+                    <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                    <a href="/privacy_policy.html">Privacy Policy</a>
+                </div>
             </form>
         </div>
     </div>
