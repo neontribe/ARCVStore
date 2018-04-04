@@ -5,10 +5,10 @@
 @section('hoist-head')
     <!-- specifically to avoid login page timeout -->
     <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 30 }};url={{ route('service.login') }}" />
-    
+
     <div class="cookie-notice">
         <p>We use cookies to authenticate you so we can ensure that we give you the best experience on our website. For more information please read our <a>Privacy Policy</a>.</p>
-        <button>I agree</button>
+        <button class="cookie-agree">I agree</button>
     </div>
 @endsection
 
@@ -47,4 +47,15 @@
             </form>
         </div>
     </div>
+
+     <script>
+        $(document).ready(
+            function () {
+                $('.cookie-agree').click(function (e) {
+                    $('.cookie-notice').addClass('collapsed');
+                    e.preventDefault();
+                });
+            }
+        );
+    </script>
 @endsection
