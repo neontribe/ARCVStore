@@ -25,7 +25,6 @@ h2 {
 ul {
 	margin: 0;
 	text-align: left;
-	font-size: 1.5rem;
 	list-style-type: circle;
 }
 
@@ -254,7 +253,6 @@ input[type="text"].invalid,
 	padding: 0;
 	margin: 1rem 1rem 3rem 1rem;
 	text-align: right;
-	font-size: 1rem;
 }
 
 .header li {
@@ -581,10 +579,6 @@ EDIT PAGE
 	margin: 0 0.5rem;
 }
 
-.collect ul {
-	font-size: 1rem;
-}
-
 .clickable-span {
 	cursor: pointer;
 }
@@ -686,6 +680,17 @@ SEARCH PAGE
 .subnav a {
 	color: black;
 	padding-right: 1rem;
+}
+
+/* 
+
+PRIVACY PAGE
+
+*/
+
+.privacy {
+	width: 80%;
+	margin-left: 10%;
 }
 
 @media only screen
