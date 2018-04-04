@@ -8,9 +8,6 @@ class SearchPageTest extends TestCase
 {
     use DatabaseMigrations;
 
-
-
-
     /** @test */
     public function itShowsTheLoggedInUser()
     {
@@ -328,7 +325,8 @@ class SearchPageTest extends TestCase
         ]);
 
         $this->actingAs($user)
-            ->visit(URL::route('service.registration.index'));
+            ->visit(URL::route('service.registration.index'))
+        ;
 
 
         // Spot  and count the Registrations Family's primary carer names
@@ -349,12 +347,12 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        // Create 9 random registrations, which should be well over the pagination limit.
+        // Create 11 random registrations, which should be over the 10 per-page pagination limit.
         $registrations = factory(App\Registration::class, 11)->create([
             "centre_id" => $centre->id,
         ]);
 
-        // Spot the Registration Family's primary carer name
+        // Spot the pagination links, expecting 2 pages.
         $selector = 'ul.pagination li';
         $this->actingAs($user)
             ->visit(URL::route('service.registration.index'))
@@ -378,7 +376,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        // Create 10 random registrations, which should be well over the pagination limit.
+        // Create 10 random registrations, which should be the per-page pagination limit.
         $registrations = factory(App\Registration::class, 10)->create([
             "centre_id" => $centre->id,
         ]);
@@ -409,7 +407,7 @@ class SearchPageTest extends TestCase
             "centre_id" => $centre->id,
         ]);
 
-        // Create 10 random registrations, which should be well over the pagination limit.
+        // Create 10 random registrations, which should be the per-page pagination limit.
         $registrations = factory(App\Registration::class, 10)->create([
             "centre_id" => $centre->id,
         ]);
