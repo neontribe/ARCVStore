@@ -1,11 +1,15 @@
 <?php
 
+use Carbon\Carbon;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class SearchPageTest extends TestCase
 {
     use DatabaseMigrations;
+
+
+
 
     /** @test */
     public function itShowsTheLoggedInUser()
@@ -306,12 +310,123 @@ class SearchPageTest extends TestCase
     }
 
     /** @test */
-    public function itPreventsAccessToLeftFamilyRegistrations()
+    public function itHasTheExpectedResultsPerPage()
     {
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create 25 random registrations, which should be well over the pagination limit.
+        $registrations = factory(App\Registration::class, 25)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'));
+
+
+        // Spot  and count the Registrations Family's primary carer names
+        $selector = 'td.pri_carer';
+        $this->assertCount(10, $this->crawler->filter($selector));
+    }
+
+    /** @test */
+    public function itCanPaginateWithNumberedPages()
+    {
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create 9 random registrations, which should be well over the pagination limit.
+        $registrations = factory(App\Registration::class, 11)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        // Spot the Registration Family's primary carer name
+        $selector = 'ul.pagination li';
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'))
+            ->seeInElementAtPos($selector, "«", 0)
+            ->seeInElementAtPos($selector, "1", 1)
+            ->seeInElementAtPos($selector, "2", 2)
+            ->seeInElementAtPos($selector, "»", 3)
+        ;
     }
 
     /** @test */
     public function itShowsLeftFamilyRegistrationsAsDistinct()
     {
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create 10 random registrations, which should be well over the pagination limit.
+        $registrations = factory(App\Registration::class, 10)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        // Find and "leave" the first registrations Family
+        $leavingFamily = $registrations->first()->family;
+        $leavingFamily->leaving_on = Carbon::now();
+        $leavingFamily->leaving_reason = config('arc.leaving_reasons')[0];
+        $leavingFamily->save();
+
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'));
+
+        $this->assertCount(1, $this->crawler->filter('tr.inactive'));
+        $this->assertCount(9, $this->crawler->filter('tr.active'));
+    }
+
+    /** @test */
+    public function itPreventsAccessToLeftFamilyRegistrations()
+    {
+        $centre = factory(App\Centre::class)->create();
+
+        // Create a User
+        $user =  factory(App\User::class)->create([
+            "name"  => "test user",
+            "email" => "testuser@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+
+        // Create 10 random registrations, which should be well over the pagination limit.
+        $registrations = factory(App\Registration::class, 10)->create([
+            "centre_id" => $centre->id,
+        ]);
+
+        // Find and "leave" the first registrations Family
+        $leavingFamily = $registrations->first()->family;
+        $leavingFamily->leaving_on = Carbon::now();
+        $leavingFamily->leaving_reason = config('arc.leaving_reasons')[0];
+        $leavingFamily->save();
+
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.index'));
+
+        // Check the number of enabled and disabled buttons.
+        $this->assertCount(1, $this->crawler->filter('tr.inactive button:disabled'));
+        $this->assertCount(0, $this->crawler->filter('tr.inactive button:enabled'));
+        $this->assertCount(0, $this->crawler->filter('tr.active button:disabled'));
+        $this->assertCount(9, $this->crawler->filter('tr.active button:enabled'));
     }
 }
