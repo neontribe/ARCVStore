@@ -267,52 +267,11 @@ input[type="text"].invalid,
 	overflow: auto;
 }
 
-.navigation {
-	height: 80%;
-}
+/* 
 
-.navigation ul {
-	display: inline-flex;
-	padding: 0;
-	width: 100%;
-	font-size: 1.2rem;
-}
+SUBNAV
 
-.navigation li {
-	padding: 1rem;
-	min-height: 120px;
-	display: grid;
-	display: -ms-flexbox;
-	-ms-flex-direction: column;
-	margin: 1rem 0.5rem;
-	font-family: 'Roboto Slab', serif;
-	border-radius: 0.5rem;
-	background-color: #a74e94;
-	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
-	cursor: pointer;
-	list-style-type: none;
-	transform: translate3d(0, 0, 0);
-	overflow: hidden;
-	text-align: center;
-}
-
-.navigation img {
-	width: 70px;
-	max-width: 70px;
-	height: 70px;
-	max-height: 70px;
-	margin: 0 auto;
-}
-
-.navigation a {
-	color: white;
-	text-decoration: none;
-	width: 50%;
-}
-
-.navigation a:hover {
-	text-decoration: underline;
-}
+*/
 
 .subnav {
 	width: 100%;
@@ -371,6 +330,120 @@ COOKIE NOTICE
     margin-left: 5px;
     font-size: 0.9rem;
     height: 30px;
+}
+
+/* 
+
+LOGIN PAGE
+
+*/
+
+.login {
+	height: 88%;
+}
+
+.login h2 {
+	text-align: center;
+	font-size: 2rem;
+	padding-bottom: 1rem;
+}
+
+.login form {
+	display: block;
+}
+
+.login form > div {
+	height: 3rem;
+	margin: 2rem 0;
+}
+
+.login-container {
+	width: 50%;
+	margin: 2rem auto;
+}
+
+.login-input {
+	width: 100%;
+	font-size: 2rem;
+	box-sizing: border-box;
+}
+
+.login-input.email {
+	margin-bottom: 1.5rem;
+}
+
+.login button {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.login label {
+	font-size: 1rem;
+}
+
+.login a {
+	color: #757475;
+}
+
+.login .reset-button {
+	margin: 3rem 0 0 0;
+}
+
+.login .remember {
+	margin-top: 3rem;
+}
+
+/* 
+
+DASHBOARD PAGE 
+
+*/
+
+.navigation {
+	height: 80%;
+}
+
+.navigation ul {
+	display: inline-flex;
+	padding: 0;
+	width: 100%;
+	font-size: 1.2rem;
+}
+
+.navigation li {
+	padding: 1rem;
+	min-height: 120px;
+	display: grid;
+	display: -ms-flexbox;
+	-ms-flex-direction: column;
+	margin: 1rem 0.5rem;
+	font-family: 'Roboto Slab', serif;
+	border-radius: 0.5rem;
+	background-color: #a74e94;
+	box-shadow: 0 3px 12px -1px rgba(0,0,0,.2);
+	cursor: pointer;
+	list-style-type: none;
+	transform: translate3d(0, 0, 0);
+	overflow: hidden;
+	text-align: center;
+}
+
+.navigation img {
+	width: 70px;
+	max-width: 70px;
+	height: 70px;
+	max-height: 70px;
+	margin: 0 auto;
+}
+
+.navigation a {
+	color: white;
+	text-decoration: none;
+	width: 50%;
+}
+
+.navigation a:hover {
+	text-decoration: underline;
 }
 
 /* 
@@ -487,6 +560,12 @@ REGISTER PAGE
 	top: 0;
 }
 
+/* 
+
+EDIT PAGE
+
+*/
+
 .check .col {
 	min-height: 66vh;
 	height: 100%;
@@ -555,6 +634,12 @@ REGISTER PAGE
 	display: none;
 }
 
+/* 
+
+SEARCH PAGE
+
+*/
+
 .search {
 	padding-top: 2rem;
 	background-color: #FFF;
@@ -601,67 +686,6 @@ REGISTER PAGE
 .subnav a {
 	color: black;
 	padding-right: 1rem;
-}
-
-/* 
-
-LOGIN PAGE
-
-*/
-
-.login {
-	height: 88%;
-}
-
-.login h2 {
-	text-align: center;
-	font-size: 2rem;
-	padding-bottom: 1rem;
-}
-
-.login form {
-	display: block;
-}
-
-.login form > div {
-	height: 3rem;
-	margin: 2rem 0;
-}
-
-.login-container {
-	width: 50%;
-	margin: 2rem auto;
-}
-
-.login-input {
-	width: 100%;
-	font-size: 2rem;
-	box-sizing: border-box;
-}
-
-.login-input.email {
-	margin-bottom: 1.5rem;
-}
-
-.login button {
-	width: 100%;
-	margin-bottom: 1rem;
-}
-
-.login label {
-	font-size: 1rem;
-}
-
-.login a {
-	color: #757475;
-}
-
-.login .reset-button {
-	margin: 3rem 0 0 0;
-}
-
-.login .remember {
-	margin-top: 3rem;
 }
 
 @media only screen
