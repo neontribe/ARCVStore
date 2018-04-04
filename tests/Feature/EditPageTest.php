@@ -581,4 +581,55 @@ class EditPageTest extends TestCase
         ;
         //$this->assertResponseStatus(403);
     }
+
+        /**
+     * @test
+     */
+    public function childrensDOBsGiveExpectedAge()
+    {
+        // Set Carbon::now to 01/01/2018
+        Carbon::setTestNow(Carbon::parse('first day of January 2018'));
+
+        // Create a centre, user and registration
+        $centre = factory(Centre::class)->create();
+        $user =  factory(User::class)->create([
+            "name"  => "tester",
+            "email" => "tester@example.com",
+            "password" => bcrypt('test_user_pass'),
+            "centre_id" => $centre->id,
+        ]);
+        $registration = factory(Registration::class)->create([
+            'centre_id' => $centre->id,
+        ]);
+
+        // Amend the first family to add 3 children.
+        $family = $registration->family;
+
+        $family->children()
+            ->saveMany(
+                collect([
+                    factory(Child::class, 'underSchoolAge', 3)->make(),
+                ])->flatten()
+            )
+        ;
+
+        // Amend 3 children's DOB to be 11, 12 + 13 months old.
+        $family->children[0]->dob = "2016-12-01 00:00:00";
+        $family->children[0]->save();
+        $family->children[1]->dob = "2017-01-01 00:00:00";
+        $family->children[1]->save();
+        $family->children[2]->dob = "2017-02-01 00:00:00";
+        $family->children[2]->save();
+
+        // Test that entering children's DOB's gives the expected age.
+        $this->actingAs($user)
+            ->visit(URL::route('service.registration.edit', [ 'id' => $family->id ]))
+            ->see('<td>1 yr, 1 mo</td>')
+            ->see('<td>1 yr, 0 mo</td>')
+            ->see('<td>0 yr, 11 mo</td>')
+            ->see('<div class="warning">');
+
+        // Set Carbon date & time back 
+        Carbon::setTestNow();
+    }
 }
