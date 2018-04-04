@@ -351,7 +351,34 @@ input[type="text"].invalid,
 	justify-content: flex-end;
 }
 
-/* register */
+/*
+
+COOKIE NOTICE
+
+*/
+
+.cookie-notice {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: #EEEEEE;
+	padding: 10px;
+	font-size: 0.9rem;
+}
+
+.cookie-notice > button {
+	min-width: 65px;
+    margin-left: 5px;
+    font-size: 0.9rem;
+    height: 30px;
+}
+
+/* 
+
+REGISTER PAGE
+
+*/
+
 .col {
 	width: 100%;
 	height: 75.8vh;
@@ -576,10 +603,10 @@ input[type="text"].invalid,
 	padding-right: 1rem;
 }
 
-/*
-*
-* LOGIN STYLING
-*
+/* 
+
+LOGIN PAGE
+
 */
 
 .login {
