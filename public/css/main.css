@@ -25,7 +25,6 @@ h2 {
 ul {
 	margin: 0;
 	text-align: left;
-	font-size: 1.5rem;
 	list-style-type: circle;
 }
 
@@ -254,7 +253,6 @@ input[type="text"].invalid,
 	padding: 0;
 	margin: 1rem 1rem 3rem 1rem;
 	text-align: right;
-	font-size: 1rem;
 }
 
 .header li {
@@ -266,6 +264,144 @@ input[type="text"].invalid,
 	background-color: #f9f9f9;
 	overflow: auto;
 }
+
+/* 
+
+SUBNAV
+
+*/
+
+.subnav {
+	width: 100%;
+	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
+	position: relative;
+	height: 8%;
+	display: flex;
+}
+
+.subnav ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0;
+	width: 100%;
+}
+
+.subnav i {
+	padding: 0 0.5rem;
+	text-decoration: none;
+}
+
+.subnav li {
+	font-size: 1rem;
+	list-style-type: none;
+	display: flex;
+	align-items: center;
+}
+
+.subnav .left,
+.subnav .right {
+	flex: 1;
+}
+
+.subnav .right {
+	justify-content: flex-end;
+}
+
+/*
+
+COOKIE NOTICE
+
+*/
+
+.cookie-notice {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	background-color: #EEEEEE;
+	padding: 10px;
+	font-size: 0.9rem;
+}
+
+.cookie-notice > button {
+	min-width: 65px;
+    margin-left: 5px;
+    font-size: 0.9rem;
+    height: 30px;
+}
+
+/* 
+
+LOGIN PAGE
+
+*/
+
+.login {
+	height: 88%;
+}
+
+.login h2 {
+	text-align: center;
+	font-size: 2rem;
+	padding-bottom: 1rem;
+}
+
+.login form {
+	display: block;
+}
+
+.login form > div {
+	height: 3rem;
+	margin: 2rem 0;
+}
+
+.login .links {
+	margin: 0;
+	display: flex;
+	justify-content: space-between;
+}
+
+.login-container {
+	width: 50%;
+	margin: 2rem auto;
+}
+
+.login-input {
+	width: 100%;
+	font-size: 2rem;
+	box-sizing: border-box;
+}
+
+.login-input.email {
+	margin-bottom: 1.5rem;
+}
+
+.login button {
+	width: 100%;
+	margin-bottom: 1rem;
+}
+
+.login label {
+	font-size: 1rem;
+}
+
+.login a {
+	color: #757475;
+}
+
+.login .reset-button {
+	margin: 3rem 0 0 0;
+}
+
+.login .remember {
+	margin-top: 3rem;
+}
+
+/* 
+
+DASHBOARD PAGE 
+
+*/
 
 .navigation {
 	height: 80%;
@@ -314,44 +450,12 @@ input[type="text"].invalid,
 	text-decoration: underline;
 }
 
-.subnav {
-	width: 100%;
-	box-shadow: 0 3px 12px -1px rgba(0,0,0,.15);
-	position: relative;
-	height: 8%;
-	display: flex;
-}
+/* 
 
-.subnav ul {
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 0;
-	width: 100%;
-}
+REGISTER PAGE
 
-.subnav i {
-	padding: 0 0.5rem;
-	text-decoration: none;
-}
+*/
 
-.subnav li {
-	font-size: 1rem;
-	list-style-type: none;
-	display: flex;
-	align-items: center;
-}
-
-.subnav .left,
-.subnav .right {
-	flex: 1;
-}
-
-.subnav .right {
-	justify-content: flex-end;
-}
-
-/* register */
 .col {
 	width: 100%;
 	height: 75.8vh;
@@ -460,6 +564,12 @@ input[type="text"].invalid,
 	top: 0;
 }
 
+/* 
+
+EDIT PAGE
+
+*/
+
 .check .col {
 	min-height: 66vh;
 	height: 100%;
@@ -473,10 +583,6 @@ input[type="text"].invalid,
 
 .collect p {
 	margin: 0 0.5rem;
-}
-
-.collect ul {
-	font-size: 1rem;
 }
 
 .clickable-span {
@@ -528,6 +634,12 @@ input[type="text"].invalid,
 	display: none;
 }
 
+/* 
+
+SEARCH PAGE
+
+*/
+
 .search {
 	padding-top: 2rem;
 	background-color: #FFF;
@@ -565,8 +677,8 @@ input[type="text"].invalid,
 
 .pagination {
 	list-style-type: none;
-  display: flex;
-  justify-content: space-around;
+	display: flex;
+	justify-content: space-around;
 	margin-bottom: 2rem;
 }
 
@@ -576,65 +688,30 @@ input[type="text"].invalid,
 	padding-right: 1rem;
 }
 
-/*
-*
-* LOGIN STYLING
-*
+/* 
+
+PRIVACY PAGE
+
 */
 
-.login {
-	height: 88%;
+.privacy {
+	width: 90%;
+	margin: 5%;
 }
 
-.login h2 {
+.privacy > div {
+	background-color: #f9f9f9;
+	padding: 2%;
+	margin: 2%;
+}
+
+.privacy h2 {
 	text-align: center;
-	font-size: 2rem;
-	padding-bottom: 1rem;
+	margin-bottom: 5%;
 }
 
-.login form {
-	display: block;
-}
-
-.login form > div {
-	height: 3rem;
-	margin: 2rem 0;
-}
-
-.login-container {
-	width: 50%;
-	margin: 2rem auto;
-}
-
-.login-input {
-	width: 100%;
-	font-size: 2rem;
-	box-sizing: border-box;
-}
-
-.login-input.email {
-	margin-bottom: 1.5rem;
-}
-
-.login button {
-	width: 100%;
-	margin-bottom: 1rem;
-}
-
-.login label {
-	font-size: 1rem;
-}
-
-.login a {
-	color: #757475;
-}
-
-.login .reset-button {
-	margin: 3rem 0 0 0;
-}
-
-.login .remember {
-	margin-top: 3rem;
+.privacy a {
+	color: #a74e94;
 }
 
 @media only screen
