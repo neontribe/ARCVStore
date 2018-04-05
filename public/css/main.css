@@ -327,7 +327,9 @@ COOKIE NOTICE
 	min-width: 65px;
     margin-left: 5px;
     font-size: 0.9rem;
-    height: 30px;
+    min-height: 35px;
+    height: 35px;
+    padding: 0;
 }
 
 /* 
