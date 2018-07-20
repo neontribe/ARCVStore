@@ -127,6 +127,7 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
+            $row["Join Date"] = $reg->family->created_at->format('d/m/Y');
             $row["Leaving Date"] = $reg->family->leaving_on ? $reg->family->leaving_on->format('d/m/Y') : null;
             // Would be confusing if an old reason was left in - so check leaving date is there.
             $row["Leaving Reason"] = $reg->family->leaving_on ? $reg->family->leaving_reason : null;
