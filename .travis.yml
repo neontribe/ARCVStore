@@ -25,7 +25,7 @@ deploy:
   skip_cleanup: true
   script: rsync -r --exclude storage --delete-after --quiet $TRAVIS_BUILD_DIR/* $DEPLOY_USER@$DEPLOY_IP:/var/www/$DEPLOY_DIR
   on:
-    branch: 0.3/release
+    branch: 0.4/release
 - provider: script
   skip_cleanup: true
   script: tar -czf $TRAVIS_TAG.tar.gz ARCVStore && scp $TRAVIS_TAG.tar.gz $DEPLOY_USER@$DEPLOY_IP:/home/$DEPLOY_USER/releases/store
