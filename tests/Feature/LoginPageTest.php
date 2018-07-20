@@ -54,14 +54,6 @@ class LoginPageTest extends TestCase
     }
 
     /** @test */
-    public function itShowsARememberMeInput()
-    {
-        $this->visit(URL::route('service.login'))
-            ->seeElement('input[type=checkbox][name=remember]')
-        ;
-    }
-
-    /** @test */
     public function itShowsAUsernameInputBox()
     {
         $this->visit(URL::route('service.login'))

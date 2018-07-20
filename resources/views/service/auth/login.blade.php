@@ -5,6 +5,11 @@
 @section('hoist-head')
     <!-- specifically to avoid login page timeout -->
     <meta http-equiv="refresh" content="{{ (config('session.lifetime') * 60) - 30 }};url={{ route('service.login') }}" />
+
+    <div class="cookie-notice">
+        <p>We use cookies to authenticate you so we can ensure that we give you the best experience on our website. For more information please read our <a href="/privacy_policy.html#cookie">Privacy Policy</a>.</p>
+        <button class="cookie-agree">Dismiss</button>
+    </div>
 @endsection
 
 @section('content')
@@ -37,13 +42,23 @@
                     </span>
                     @endif
                 </div>
-                <div class="remember user-control">
-                    <input type="checkbox" id="remember-me" class="styled-checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <label for="remember-me">Remember Me</label>
-                </div>
                 <button type="submit">Log In</button>
-                <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                <div class="links">
+                    <a href="{{ route('password.request') }}">Forgot Your Password?</a>
+                    <a href="/privacy_policy.html">Privacy Policy</a>
+                </div>
             </form>
         </div>
     </div>
+
+     <script>
+        $(document).ready(
+            function () {
+                $('.cookie-agree').click(function (e) {
+                    $('.cookie-notice').addClass('collapsed');
+                    e.preventDefault();
+                });
+            }
+        );
+    </script>
 @endsection
