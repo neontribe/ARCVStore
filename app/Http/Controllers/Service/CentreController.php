@@ -98,11 +98,10 @@ class CentreController extends Controller
             $eligible = 0;
 
             if ($reg->family) {
-                foreach ($reg->family->children as $index => $child) {
+                $child_index = 0;
+                foreach ($reg->family->children as $child) {
                     // make a 'Child X DoB' key
-                    $child_index = $index + 1;
                     $status = $child->getStatus();
-                    $dob_header = 'Child ' . (string)$child_index . ' DoB';
 
                     // Arrange kids by eligibility
                     switch ($status['eligibility']) {
@@ -110,11 +109,15 @@ class CentreController extends Controller
                             $due_date = $child->dob->format('d/m/Y');
                             break;
                         case 'Eligible':
+                            $dob_header = 'Child ' . (string)$child_index . ' DoB';
                             $kids[$dob_header] = $child->dob->format('m/Y');
                             $eligible += 1;
+                            $child_index += 1;
                             break;
                         case "Ineligible":
+                            $dob_header = 'Child ' . (string)$child_index . ' DoB';
                             $kids[$dob_header] = $child->dob->format('m/Y');
+                            $child_index += 1;
                             break;
                     }
                 }
@@ -127,7 +130,7 @@ class CentreController extends Controller
 
             // Set the last dates.
             $row["Due Date"] = $due_date;
-            $row["Join Date"] = $reg->family->created_at->format('d/m/Y');
+            $row["Join Date"] = $reg->family->created_at ? $reg->family->created_at->format('d/m/Y')  : null;
             $row["Leaving Date"] = $reg->family->leaving_on ? $reg->family->leaving_on->format('d/m/Y') : null;
             // Would be confusing if an old reason was left in - so check leaving date is there.
             $row["Leaving Reason"] = $reg->family->leaving_on ? $reg->family->leaving_reason : null;
