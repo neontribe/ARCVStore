@@ -1,4 +1,8 @@
 # ARCVStore
+
+## This Repo has been archived.
+We merged the functionality in this repo into [neontribe/ARCVService](https://github.com/neontribe/ARCVService). This repo is archived and should not be commited against. 
+
 ## About ARC Voucher Store
 ARCV Store is the a service that permits Children's Centres to perform registration and management of families.
 
@@ -38,7 +42,7 @@ Under contract for
 
 Alexandra Rose Charity (registered in England and Wales #00279157) 
 
-As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; 2018 Alexandra Rose Charity, All Rights Reserved.
+As such, unless otherwise specified in the appropriate component source, associated file or compiled asset, files in this project repository are Copyright &copy; 2019 Alexandra Rose Charity, All Rights Reserved.
 
 If you wish to discuss copyright or licensing issues, please contact:
 
